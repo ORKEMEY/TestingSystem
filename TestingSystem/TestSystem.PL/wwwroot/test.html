@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tests</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary sticky-top">
+        <a href="/index.html" class="navbar-brand">Testing system</a>
+        <div class="btn-group col-6" role="group">
+            <button class="btn btn-large btn-danger col-6" id="btnSignOut">Sign out</button>
+        </div>
+    </nav>
+    <br>
+    <div>
+        <div id="Alert" class="alert alert-danger" role="alert" hidden>
+        </div>
+    </div>
+    <div id="alternationTestDiv" class="container-narrow">
+
+        <form id="alternationTestForm" class="form-signin col-10">
+
+            <h2 id="SendTestFormLabel" class="form-signin-heading">Test</h2><br>
+            <div class="form-block col-sm-14">
+                <div id="AlertTestForm" class="alert alert-danger form-block" role="alert" hidden>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="Id" class="col-sm-2 col-form-label">Id:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Id" id="TestId" class="input-block-level form-control" placeholder="Id" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="Name" class="col-sm-2 col-form-label">Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Name" id="TestName" class="input-block-level form-control" placeholder="Name" required>
+                </div>
+            </div>
+            <h3 id="SendTestFormLabel" class="form-signin-heading">Duration</h3>
+            <div class="form-row">
+                <label for="Name" class="col-sm-2 col-form-label">Hours:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="Name" id="TestHours" class="input-block-level form-control" required>
+                </div>
+                <label for="Name" class="col-sm-2 col-form-label">Minutes:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="Name" id="TestMinutes" class="input-block-level form-control" required>
+                </div>
+            </div>
+            <br>
+            <div class="btn-row">
+                <input type="button" class="btn btn-large btn-success" id="btnTestPutForm" value="Change">
+                <input type="button" class="btn btn-large btn-danger" id="btnTestDeleteForm" value="Delete">
+            </div>
+
+        </form>
+
+    </div>
+
+    <div id="addingQuestionDiv" class="container-narrow" hidden>
+
+        <form id="addingIngredientForm" class="form-signin col-10">
+
+            <h4 class="form-signin-heading">Question</h4><br>
+            <div class="form-block col-sm-14">
+                <div id="AlertQuestionForm" class="alert alert-danger form-block" role="alert" hidden>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="QuestionId" class="col-sm-2 col-form-label">Id:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="IngredientId" id="QuestionId" class="input-block-level form-control" placeholder="1" required>
+                </div>
+            </div>
+            <br>
+            <input type="button" class="btn btn-large btn-success" onclick="" id="btnQuestionPostForm" value="Add">
+
+        </form>
+
+    </div>
+
+
+    <br>
+    <div class="list row">
+        <h3 id="ListLabel">Loading...</h3>
+        &nbsp;
+        <button id="btnAddQuestion" class="btn btn-md btn-success">+</button>
+    </div>
+
+    <hr>
+    <div id="ItemList">
+
+    </div>
+
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <span class="text-muted">© ORKEMEY</span>
+        </div>
+    </footer>
+
+    <script>
+
+        const tokenKey = "accessToken";
+
+        function GetId() {
+
+            var Param = location.search.substring(1);
+
+            if (Param.split('=')[0] === 'id') {
+                return Param.split('=')[1];
+            }
+
+        }
+
+        function QuestionToRow(item) {
+
+            let div = document.createElement('div');
+            let a = document.createElement('a');
+            a.href = 'question.html?id=' + item.id;
+            let h4 = document.createElement('h4');
+            let p = document.createElement('p');
+            h4.className = "list";
+            p.className = "list";
+
+            h4.append(item.id);
+            a.append(h4);
+            p.append(item.query);
+            div.append(a);
+            div.append(p);
+            div.append(document.createElement('hr'));
+            return div;
+
+        }
+
+        function ClearItemList(List) {
+
+            while (List.childNodes.length !== 0) {
+                List.removeChild(List.childNodes[0]);
+            }
+        }
+
+        async function GetTest() {
+
+            const token = sessionStorage.getItem(tokenKey);
+
+            const response = await fetch("/api/Tests/" + GetId(), {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+            let item = await response.json();
+
+            if (response.ok === true) {
+
+
+                var id = document.getElementById('TestId');
+                var name = document.getElementById('TestName');
+                var hours = document.getElementById('TestHours');
+                var minutes = document.getElementById('TestMinutes');
+
+                id.value = item.id;
+                name.value = item.name;
+                hours.value = item.time.hours;
+                minutes.value = item.time.minutes;
+
+                var List = document.getElementById('ItemList');
+
+                var label = document.getElementById('ListLabel');
+                label.textContent = "Questions"
+
+                ClearItemList(List);
+                item.questions.forEach(i => {
+                    List.append(QuestionToRow(i));
+                });
+            }
+            else {
+                var alert = document.getElementById("Alert");
+                alert.textContent = item.errorText;
+                alert.hidden = false;
+                console.log("Error: ", response.status, item.errorText);
+            }
+        }
+
+        function ValidateTestAddingForm() {
+
+            var alert = document.getElementById("AlertTestForm");
+            alert.textContent = '';
+			alert.hidden = true;
+            var name = document.getElementById('TestName').value;
+            var hours = document.getElementById('TestHours').value;
+            var minutes = document.getElementById('TestMinutes').value;
+
+            if (name == '') {
+                alert.textContent = "Name cann't be empty!";
+                alert.hidden = false;
+                return false;
+            }
+            if (isNaN(hours) || isNaN(minutes)) {
+                alert.textContent = "Duration wrong format!";
+                alert.hidden = false;
+                return false;
+            }
+            if (hours == '' && minutes == '') {
+                alert.textContent = "Duration cann't be empty!";
+                alert.hidden = false;
+                return false;
+            }
+            if (hours == '') document.getElementById('TestHours').value = 0;
+            if (minutes == '') document.getElementById('TestMinutes').value = 0;
+
+            if (hours < 0 || hours > 24) {
+                alert.textContent = "Duration must be positive and less than 24!";
+                alert.hidden = false;
+                return false;
+            }
+            if (minutes < 0 || minutes >= 60) {
+                alert.textContent = "Duration must be positive and less than 60!";
+                alert.hidden = false;
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById('btnTestPutForm').onclick = async function () {
+            HideAlert();
+            const token = sessionStorage.getItem(tokenKey);
+
+            if (!ValidateTestAddingForm()) return;
+            var name = document.getElementById('TestName').value;
+            var hours = document.getElementById('TestHours').value;
+            var minutes = document.getElementById('TestMinutes').value;
+
+            const response = await fetch("/api/Tests/" + GetId() + "?name=" + name + "&hours=" + hours + "&minutes=" + minutes, {
+                method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (response.ok !== true) 
+            {
+				let item = await response.json();
+                var alert = document.getElementById("Alert");
+                alert.textContent = item.errorText;
+                alert.hidden = false;
+                console.log("Error: ", response.status, item.errorText);
+            }
+        };
+
+        document.getElementById('btnTestDeleteForm').onclick = async function () {
+            HideAlert();
+            const token = sessionStorage.getItem(tokenKey);
+
+            const response = await fetch("/api/Tests/" + GetId(), {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (response.ok === true) {
+                document.location.href = 'menu.html';
+            }
+            else {
+                let item = await response.json();
+                var alert = document.getElementById("Alert");
+                alert.textContent = item.errorText;
+                alert.hidden = false;
+                console.log("Error: ", response.status, item.errorText);
+            }
+        };
+
+		function ValidateQuestionAddnigForm() {
+            
+			var alert = document.getElementById("AlertQuestionForm");
+            alert.textContent = '';
+			alert.hidden = true;
+			var questionId = document.getElementById('QuestionId').value;
+
+            if (isNaN(questionId) || questionId <= 0) {
+				alert.textContent = "Id must be integer and more than zero!";
+				alert.hidden = false;
+				return false;
+			}
+
+			return true;
+		}
+
+		document.getElementById('btnQuestionPostForm').onclick = async function () {
+
+			HideAlert();
+            const token = sessionStorage.getItem(tokenKey);
+
+			var questionId = document.getElementById('QuestionId').value;
+			document.getElementById('addingQuestionDiv').hidden = true;
+		    document.getElementById('alternationTestDiv').hidden = false;
+
+			if (!ValidateQuestionAddnigForm()) return;
+
+			const response = await fetch("/api/Tests/" + GetId() + "/" + questionId, {
+				method: "POST",
+				headers: {
+					"Accept": "application/json",
+					"Authorization": "Bearer " + token
+				}
+			});
+
+			if (response.ok === true) {
+				GetTest();
+			}else
+            {
+				let item = await response.json();
+				var alert = document.getElementById("Alert");
+				alert.textContent = item.errorText;
+				alert.hidden = false;
+				console.log("Error: ", response.status, item.errorText);
+			}
+		};
+
+        document.getElementById('btnAddQuestion').onclick = function () {
+			HideAlert();
+			var addingQuestionDiv = document.getElementById('addingQuestionDiv');
+			var alternationTestDiv = document.getElementById('alternationTestDiv');
+
+			if (alternationTestDiv.hidden == false) {
+				alternationTestDiv.hidden = true;
+				addingQuestionDiv.hidden = false;
+            } else {
+				addingQuestionDiv.hidden = true;
+				alternationTestDiv.hidden = false;
+			}
+		};
+
+        function HideAlert() {
+            var alert = document.getElementById("Alert");
+            alert.textContent = '';
+            alert.hidden = true;
+        }
+
+		document.getElementById("btnSignOut").onclick = function () {
+			sessionStorage.removeItem(tokenKey);
+			document.location.href = "index.html";
+		};
+
+        window.onload = function () {
+            GetTest();
+        };
+
+
+    </script>
+
+</body>
+</html>

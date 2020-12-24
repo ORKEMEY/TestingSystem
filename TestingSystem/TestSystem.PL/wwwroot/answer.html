@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tests</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary sticky-top">
+        <a href="/index.html" class="navbar-brand">Testing system</a>
+        <div class="btn-group col-6" role="group">
+            <button class="btn btn-large btn-danger col-6" id="btnSignOut">Sign out</button>
+        </div>
+    </nav>
+    <br />
+    <div>
+        <div id="Alert" class="alert alert-danger" role="alert" hidden>
+        </div>
+    </div>
+    <div id="addingAnswerDiv" class="container-narrow">
+
+        <form id="addingAnswerForm" class="form-signin col-10">
+
+            <h4 class="form-signin-heading">Variant of answer</h4><br>
+            <div class="form-block col-sm-14">
+                <div id="AlertAnswerForm" class="alert alert-danger form-block" role="alert" hidden>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="Id" class="col-sm-2 col-form-label">Id:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Id" id="AnsweerId" class="input-block-level form-control" placeholder="Id" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="Name" class="col-sm-2 col-form-label">Answer:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Name" id="Answer" class="input-block-level form-control" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="IsCorrect" class="col-sm-4 col-form-label">Is answer correct?</label>
+                <input type="checkbox" name="IsCorrect" id="IsCorrectAnswer" class="input-block-level form-control form-check-input" required>
+            </div>
+
+            <br>
+            <div class="btn-row">
+                <input type="button" class="btn btn-large btn-success" id="btnAnswerPutForm" value="Change">
+                <input type="button" class="btn btn-large btn-danger" id="btnAnswerDeleteForm" value="Delete">
+            </div>
+
+        </form>
+
+    </div>
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <span class="text-muted">© ORKEMEY</span>
+        </div>
+    </footer>
+
+    <script>
+
+        const tokenKey = "accessToken";
+
+        async function GetAnswer() {
+
+            const token = sessionStorage.getItem(tokenKey);
+
+            const response = await fetch("/api/Answers/" + GetId(), {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+            let item = await response.json();
+
+            if (response.ok === true) {
+
+
+                var id = document.getElementById('AnsweerId');
+                var question = document.getElementById('Answer');
+                var isCorrectAnswer = document.getElementById('IsCorrectAnswer');
+
+                id.value = item.id;
+                question.value = item.answer;
+			    isCorrectAnswer.checked = item.isCorrect;
+            }
+            else {
+                var alert = document.getElementById("Alert");
+                alert.textContent = item.errorText;
+                alert.hidden = false;
+                console.log("Error: ", response.status, item.errorText);
+            }
+        }
+
+		function ValidateAnswerForm() {
+
+			var alert = document.getElementById("AlertAnswerForm");
+            alert.textContent = '';
+			alert.hidden = true;
+			var answer = document.getElementById('Answer').value;
+
+			if (answer == '') {
+				alert.textContent = "Answer cann't be empty!";
+				alert.hidden = false;
+				return false;
+			}
+			return true;
+		}
+
+		document.getElementById('btnAnswerPutForm').onclick = async function () {
+			HideAlert();
+			const token = sessionStorage.getItem(tokenKey);
+
+			var answer = document.getElementById('Answer').value;
+            var isCorrectAnswer = document.getElementById('IsCorrectAnswer').checked;
+
+			if (!ValidateAnswerForm()) return;
+
+			const response = await fetch("/api/Answers/" + GetId() + "?answer=" + answer + "&isCorrect=" + isCorrectAnswer, {
+				method: "PUT",
+				headers: {
+					"Accept": "application/json",
+					"Authorization": "Bearer " + token
+				}
+			});
+
+			if (response.ok !== true) {
+				let item = await response.json();
+				var alert = document.getElementById("Alert");
+				alert.textContent = item.errorText;
+				alert.hidden = false;
+				console.log("Error: ", response.status, item.errorText);
+			}
+		};
+
+		document.getElementById('btnAnswerDeleteForm').onclick = async function () {
+			HideAlert();
+			const token = sessionStorage.getItem(tokenKey);
+
+			const response = await fetch("/api/Answers/" + GetId(), {
+				method: "DELETE",
+				headers: {
+					"Accept": "application/json",
+					"Authorization": "Bearer " + token
+				}
+			});
+
+			if (response.ok === true) {
+				document.location.href = 'menu.html';
+			}
+			else {
+				let item = await response.json();
+				var alert = document.getElementById("Alert");
+				alert.textContent = item.errorText;
+				alert.hidden = false;
+				console.log("Error: ", response.status, item.errorText);
+			}
+		};
+
+		document.getElementById("btnSignOut").onclick = function () {
+			sessionStorage.removeItem(tokenKey);
+			document.location.href = "index.html";
+		};
+		function HideAlert() {
+			var alert = document.getElementById("Alert");
+			alert.textContent = '';
+			alert.hidden = true;
+		}
+        function GetId() {
+
+            var Param = location.search.substring(1);
+
+            if (Param.split('=')[0] === 'id') {
+                return Param.split('=')[1];
+            }
+
+        }
+        window.onload = function () {
+            GetAnswer();
+        };
+
+    </script>
+
+</body>
+</html>
