@@ -12,6 +12,8 @@ namespace TestingSystem.BLL.DTO
 		public string Name { get; set; }
 
 		public UserDTO Owner { get; set; }
+		public int OwnerId { get; set; }
+
 		public IEnumerable<UserDTO> AllowedUsers { get; set; }
 
 		public IEnumerable<TestVariantDTO> TestVariants { get; set; }
