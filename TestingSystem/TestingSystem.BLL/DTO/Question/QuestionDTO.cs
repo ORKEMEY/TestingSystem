@@ -27,9 +27,9 @@ namespace TestingSystem.BLL.DTO
 
 		public string Query { get; set; }
 
-		public int bParam { get; set; }
-		public int aParam { get; set; }
-		public int cParam { get; set; }
+		public double bParam { get; set; }
+		public double aParam { get; set; }
+		public double cParam { get; set; }
 
 
 	}

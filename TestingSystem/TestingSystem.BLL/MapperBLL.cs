@@ -17,6 +17,12 @@ namespace TestingSystem.BLL
 				cfg.CreateMap<User, UserDTO>();
 				cfg.CreateMap<UserDTO, User>();
 
+				cfg.CreateMap<Log, LogDTO>();
+				cfg.CreateMap<LogDTO, Log>();
+
+				cfg.CreateMap<Role, RoleDTO>();
+				cfg.CreateMap<RoleDTO, Role>();
+
 				cfg.CreateMap<RefreshToken, RefreshTokenDTO>();
 				cfg.CreateMap<RefreshTokenDTO, RefreshToken>();
 

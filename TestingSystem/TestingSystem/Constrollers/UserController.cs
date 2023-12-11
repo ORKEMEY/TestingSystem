@@ -63,13 +63,14 @@ namespace TestSystem.PL.Controllers
 			{
 				AccessToken = encodedJwt,
 				Login = identity.Name,
+				Role = userDTO.Role.Name,
 				RefreshToken = userDTO.RefreshToken.Token
 			});
 		}
 
 		// GET: api/<UserController>
 		[HttpGet]
-		[Authorize(Roles = "true")]
+		[Authorize(Roles = "Admin")]
 		public IActionResult Get()
 		{
 			var userDTO = service.GetItems();
@@ -79,7 +80,7 @@ namespace TestSystem.PL.Controllers
 
 		// GET api/<UserController>/5
 		[HttpGet("{id}")]
-		[Authorize(Roles = "true")]
+		[Authorize(Roles = "Admin")]
 		public IActionResult Get(int id)
 		{
 			try
@@ -119,7 +120,7 @@ namespace TestSystem.PL.Controllers
 
 		// PUT api/<UserController>
 		[HttpPut]
-		[Authorize(Roles = "true")]
+		[Authorize(Roles = "Admin")]
 		public IActionResult Put([FromBody] UserViewModel value)
 		{
 			try
@@ -136,7 +137,7 @@ namespace TestSystem.PL.Controllers
 
 		// DELETE api/<UserController>/5
 		[HttpDelete("{id}")]
-		[Authorize(Roles = "true")]
+		[Authorize(Roles = "Admin")]
 		public IActionResult Delete(int id)
 		{
 			try

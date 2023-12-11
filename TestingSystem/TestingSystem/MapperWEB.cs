@@ -18,6 +18,12 @@ namespace TestingSystem.PL
 				cfg.CreateMap<UserViewModel, UserDTO>();
 				cfg.CreateMap<UserDTO, UserViewModel>();
 
+				cfg.CreateMap<LogViewModel, LogDTO>();
+				cfg.CreateMap<LogDTO, LogViewModel>();
+
+				cfg.CreateMap<RoleViewModel, RoleDTO>();
+				cfg.CreateMap<RoleDTO, RoleViewModel>();
+
 				cfg.CreateMap<RefreshTokenViewModel, RefreshTokenDTO>();
 				cfg.CreateMap<RefreshTokenDTO, RefreshTokenViewModel>();
 

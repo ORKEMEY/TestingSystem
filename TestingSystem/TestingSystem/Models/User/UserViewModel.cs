@@ -12,7 +12,9 @@ namespace TestingSystem.PL.Models
 		public string Name { get; set; }
 		public string Surname { get; set; }
 
-		public RefreshTokenViewModel RefreshToken { get; set; }
+		public int RoleId { get; set; }
+		public RoleViewModel Role { get; set; }
 
+		public RefreshTokenViewModel RefreshToken { get; set; }
 	}
 }

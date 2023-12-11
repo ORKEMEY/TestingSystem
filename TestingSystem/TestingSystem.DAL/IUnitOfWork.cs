@@ -14,9 +14,11 @@ namespace TestingSystem.DAL
 
 		IRepository<User> Users { get; }
 		IRepository<RefreshToken> RefreshTokens { get; }
+		IRepository<Role> Roles { get; }
 
 		IRepository<Test> Tests { get; }
 		IRepository<TestVariant> TestVariants { get; }
+		IRepository<Log> Logs { get; }
 
 		IRepository<Tag> Tags { get; }
 

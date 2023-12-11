@@ -14,10 +14,10 @@ namespace TestingSystem.DAL.Models
 
 		public int OwnerId { get; set; }
 		public User Owner { get; set; }
+
 		public IEnumerable<User> AllowedUsers { get; set; }
-
 		public IEnumerable<TestVariant> TestVariants { get; set; }
-
+		public IEnumerable<Log> Logs { get; set; }
 		public IEnumerable<Tag> Tags { get; set; }
 
 		public TimeSpan Duration { get; set; }
@@ -27,7 +27,6 @@ namespace TestingSystem.DAL.Models
 		public bool IsAccessOpen { get; set; }
 		public int NumberOfVariants { get; set; }
 		public string Description { get; set; }
-
 
 	}
 }

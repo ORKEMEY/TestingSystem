@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestingSystem.DAL.Models;
 
 namespace TestingSystem.BLL.DTO
 {
@@ -17,7 +18,7 @@ namespace TestingSystem.BLL.DTO
 		public IEnumerable<UserDTO> AllowedUsers { get; set; }
 
 		public IEnumerable<TestVariantDTO> TestVariants { get; set; }
-
+		public IEnumerable<LogDTO> Logs { get; set; }
 		public IEnumerable<TagDTO> Tags { get; set; }
 
 		public TimeSpan Duration { get; set; }

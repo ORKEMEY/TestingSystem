@@ -9,7 +9,11 @@
 		public string Name { get; set; }
 		public string Surname { get; set; }
 
+		public int RoleId { get; set; }
+		public Role Role { get; set; }
+
 		public RefreshToken RefreshToken { get; set; }
+		public IEnumerable<Log> Logs { get; set; }
 		public IEnumerable<Test> OwnedTests { get; set; }
 		public IEnumerable<Test> AccessibleTests { get; set; }
 		public IEnumerable<QuestionsAssembly> QuestionsAssemblyies{ get; set; }

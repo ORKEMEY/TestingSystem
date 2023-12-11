@@ -17,9 +17,11 @@ namespace TestingSystem.DAL
 
 		private UserRepository _userRepository { get; set; }
 		private RefreshTokenRepository _refreshTokenRepository { get; set; }
+		private RoleRepository _roleRepository { get; set; }
 
 		private TestRepository _testRepository { get; set; }
 		private TestVariantRepository _testVariantRepository { get; set; }
+		private LogRepository _logRepository { get; set; }
 
 		private TagRepository _tagRepository { get; set; }
 
@@ -63,7 +65,15 @@ namespace TestingSystem.DAL
 				return _refreshTokenRepository;
 			}
 		}
-
+		public IRepository<Role> Roles
+		{
+			get
+			{
+				if (_roleRepository == null)
+					_roleRepository = new RoleRepository(db);
+				return _roleRepository;
+			}
+		}
 
 		public IRepository<Test> Tests
 		{
@@ -83,7 +93,15 @@ namespace TestingSystem.DAL
 				return _testVariantRepository;
 			}
 		}
-
+		public IRepository<Log> Logs
+		{
+			get
+			{
+				if (_logRepository == null)
+					_logRepository = new LogRepository(db);
+				return _logRepository;
+			}
+		}
 
 		public IRepository<Tag> Tags
 		{

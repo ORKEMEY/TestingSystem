@@ -67,7 +67,8 @@ namespace TestingSystem.BLL.Infrastructure
 			{
 				var claims = new List<Claim>
 				{
-					new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Login)
+					new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Login),
+					new Claim(ClaimsIdentity.DefaultRoleClaimType, userDTO.Role.Name)
 				};
 				
 				return new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

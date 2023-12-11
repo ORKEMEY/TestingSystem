@@ -14,9 +14,11 @@ namespace TestingSystem.DAL
 	{
 		public DbSet<User> Users { get; set; }
 		public DbSet<RefreshToken> RefreshTokens { get; set; }
+		public DbSet<Role> Roles { get; set; }
 
 		public DbSet<Test> Tests { get; set; }
 		public DbSet<TestVariant> TestVariants { get; set; }
+		public DbSet<Log> Logs { get; set; }
 
 		public DbSet<Tag> Tags { get; set; }
 
@@ -38,8 +40,11 @@ namespace TestingSystem.DAL
 		public void Seed()
 		{
 
-			var firstU = new User { Login = "first", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1" }; //pas: 12345
-			var secondU = new User { Login = "second", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1" }; //pas: 12345
+			var firstRole = new Role() { Name = "Admin" };
+			var secondRole = new Role() { Name = "Customer" };
+
+			var firstU = new User { Login = "first", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = firstRole }; //pas: 12345
+			var secondU = new User { Login = "second", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = secondRole }; //pas: 12345
 
 			this.Users.AddRange(firstU, secondU);
 
@@ -123,7 +128,17 @@ namespace TestingSystem.DAL
 					"AllowList",
 					j => j.HasOne<User>().WithMany().OnDelete(DeleteBehavior.NoAction),
 					j => j.HasOne<Test>().WithMany().OnDelete(DeleteBehavior.NoAction));
-			
+
+
+			modelBuilder.Entity<Log>()
+				.HasOne(c => c.Test)
+				.WithMany(s => s.Logs)
+				.OnDelete(DeleteBehavior.NoAction);
+
+			modelBuilder.Entity<Log>()
+				.HasOne(c => c.User)
+				.WithMany(s => s.Logs)
+				.OnDelete(DeleteBehavior.NoAction);
 
 			modelBuilder.Entity<Question>()
 				.HasMany(c => c.TestVariants)
