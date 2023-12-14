@@ -21,7 +21,7 @@ export default class UserService {
             this.credentialsService.saveCredentials({
               accessToken: res.accessToken,
               login: res.login,
-              isAdmin: res.isAdmin,
+              role: res.role,
               refreshToken: res.refreshToken,
             } as Credentials);
           },
@@ -50,7 +50,7 @@ export default class UserService {
             this.credentialsService.saveCredentials({
               accessToken: res.accessToken,
               login: res.login,
-              isAdmin: res.isAdmin,
+              role: res.role,
               refreshToken: res.refreshToken,
             } as Credentials);
           },
@@ -73,7 +73,7 @@ export default class UserService {
             this.credentialsService.saveCredentials({
               accessToken: res.accessToken,
               login: res.login,
-              isAdmin: res.isAdmin,
+              role: res.role,
               refreshToken: res.refreshToken,
             } as Credentials);
           },

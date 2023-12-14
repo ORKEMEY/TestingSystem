@@ -7,6 +7,11 @@ import ForbiddenComponent from './shared/forbidden.component';
 // import AuthGuard from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'users', pathMatch: 'full' },
+  {
+    path: 'users',
+    loadChildren: () => import('./user/user.module').then((m) => m.default),
+  },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: '**', component: NotFoundComponent },
 ];
