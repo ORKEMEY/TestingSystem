@@ -1,0 +1,19 @@
+<nav class="navbar navbar-dark bg-primary sticky-top">
+  <a href="" class="navbar-brand">Testing system</a>
+  <div class="btn-group col-3" role="group">
+    <button [routerLink]="btnSignInUpHref" class="btn btn-large btn-success col-10" #btnSignInUp>
+      {{ btnSignInUpName }}
+    </button>
+  </div>
+</nav>
+<br />
+<router-outlet></router-outlet>
+
+<div class="fixed-footer-container">
+  <footer class="fixed-footer">
+    <div class="container">
+      <span class="text-muted">© Artem Poshukailo</span>
+    </div>
+  
+  </footer>
+</div>

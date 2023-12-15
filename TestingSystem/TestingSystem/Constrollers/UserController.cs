@@ -47,25 +47,35 @@ namespace TestSystem.PL.Controllers
 		[HttpPost("token")]
 		public IActionResult GetToken([FromBody] UserViewModel user)
 		{
-
-			var userDTO = service.Authentificate(user.Login, user.Password);
-			var identity = AuthOptions.GetIdentity(userDTO);
-
-			if (userDTO == null || identity == null)
+			try
 			{
-				return new BadRequestObjectResult(new { errorText = "Invalid login or password." });
+				var userDTO = service.Authentificate(user.Login, user.Password);
+				var identity = AuthOptions.GetIdentity(userDTO);
+
+				if (userDTO == null || identity == null)
+				{
+					return new BadRequestObjectResult(new { errorText = "Invalid login or password." });
+				}
+
+				var encodedJwt = AuthOptions.GenerateAccessToken(identity.Claims);
+
+
+				return new JsonResult(new TokenViewModel
+				{
+					AccessToken = encodedJwt,
+					Login = identity.Name,
+					Role = userDTO.Role.Name,
+					RefreshToken = userDTO.RefreshToken.Token
+				});
 			}
-
-			var encodedJwt = AuthOptions.GenerateAccessToken(identity.Claims);
-
-
-			return new JsonResult(new TokenViewModel
+			catch (ValidationException e)
 			{
-				AccessToken = encodedJwt,
-				Login = identity.Name,
-				Role = userDTO.Role.Name,
-				RefreshToken = userDTO.RefreshToken.Token
-			});
+				return new BadRequestObjectResult(new
+				{
+					errorText = e.Message
+				});
+			}
+			
 		}
 
 		// GET: api/<UserController>
@@ -104,11 +114,7 @@ namespace TestSystem.PL.Controllers
 		{
 			try
 			{
-				service.AddItem(MapperWEB.Mapper.Map<UserDTO>(new UserViewModel()
-				{
-					Login = user.Login,
-					Password = user.Password
-				}));
+				service.AddItem(MapperWEB.Mapper.Map<UserDTO>(user));
 			}
 			catch (ValidationException e)
 			{

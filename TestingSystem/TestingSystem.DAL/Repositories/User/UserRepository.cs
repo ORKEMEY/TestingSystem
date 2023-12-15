@@ -22,7 +22,6 @@ namespace TestingSystem.DAL.Repositories
 		public User GetItem(int id)
 		{
 			return db.Users.Include(u => u.RefreshToken)
-				.Include(u => u.Role)
 				.FirstOrDefault(x => x.Id == id);
 		}
 
