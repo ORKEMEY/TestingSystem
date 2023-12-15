@@ -7,9 +7,8 @@ using TestingSystem.BLL.DTO;
 
 namespace TestingSystem.BLL.Interfaces
 {
-	public interface IUserService : ICRUDService<UserDTO>
+	public interface IPasswordService
 	{
-		IEnumerable<UserDTO> GetItems(string login);
-		public UserDTO Authentificate(string login, string password);
+		void HashPassword(UserDTO user);
 	}
 }

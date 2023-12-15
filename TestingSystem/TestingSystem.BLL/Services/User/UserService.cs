@@ -6,21 +6,20 @@ using TestingSystem.BLL.DTO;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
 
 namespace TestingSystem.BLL.Services
 {
 	public class UserService : IUserService
 	{
 		protected IUnitOfWork uof { get; set; }
+		protected IRefreshTokenService rts { get; set; }
+		protected IPasswordService ps { get; set; }
 
-
-		public UserService(IUnitOfWork uof)
+		public UserService(IUnitOfWork uof, IRefreshTokenService rts, IPasswordService ps)
 		{
 			this.uof = uof;
+			this.rts = rts;
+			this.ps = ps;
 		}
 
 		public void AddItem(UserDTO userDTO)
@@ -36,8 +35,8 @@ namespace TestingSystem.BLL.Services
 			if (user != null)
 				throw new Infrastructure.ValidationException("This Login is already taken", "Login");
 
-			HashPassword(userDTO);
-			AssignRefreshToken(userDTO);
+			ps.HashPassword(userDTO);
+			rts.AssignRefreshToken(userDTO);
 			AssignCustomerRole(userDTO);
 			
 
@@ -69,7 +68,7 @@ namespace TestingSystem.BLL.Services
 				userDAL.Login = userDTO.Login;
 			if (userDTO.Password != null)
 			{
-				HashPassword(userDTO);
+				ps.HashPassword(userDTO);
 				userDAL.Password = userDTO.Password;
 			}
 
@@ -108,12 +107,12 @@ namespace TestingSystem.BLL.Services
 
 			try
 			{
-				HashPassword(searchedUser);
+				ps.HashPassword(searchedUser);
 
 				User item = uof.Users.GetItems(u => u.Login == searchedUser.Login & u.Password == searchedUser.Password).FirstOrDefault();
 
 				userDTO = MapperBLL.Mapper.Map<UserDTO>(item);
-				AssignRefreshToken(userDTO);
+				rts.AssignRefreshToken(userDTO);
 
 				item.RefreshToken = MapperBLL.Mapper.Map<RefreshToken>(userDTO.RefreshToken) ;
 
@@ -136,86 +135,7 @@ namespace TestingSystem.BLL.Services
 			if (user == null) throw new Infrastructure.ValidationException("No user was found");
 			return MapperBLL.Mapper.Map<UserDTO>(user);
 		}
-
-
-		/// <exception cref="Infrastructure.ValidationException"></exception>
-		public TokenDTO RefreshToken(TokenDTO token)
-		{
-
-			try
-			{
-				var principal = AuthOptions.GetPrincipalFromExpiredToken(token.AccessToken);
-
-				User user = uof.Users.GetItems(u => u.Login == principal.Identity.Name).FirstOrDefault();
-				if (user == null) throw new Infrastructure.ValidationException("No user was found");
-
-				if (user.RefreshToken == null || user.RefreshToken.Token != token.RefreshToken || user.RefreshToken.ExpiryTime <= DateTime.Now)
-					throw new Infrastructure.ValidationException("Refresh token isn't valid, reauthentificate");
-
-				token.AccessToken = AuthOptions.GenerateAccessToken(principal.Claims);
-				token.Login = user.Login;
-
-			}
-			catch (SecurityTokenException)
-			{
-				throw new Infrastructure.ValidationException("Access token isn't valid, reauthentificate");
-			}
-			catch (Exception)
-			{
-				throw new Infrastructure.ValidationException("Wrong or empty properties");
-			}
-
-			return token;
-		}
-
-		private void HashPassword(UserDTO user)
-		{
-			if (user == null || user?.Password == null)
-			{
-				throw new ArgumentNullException();
-			}
-
-			using (var sha = new SHA256Managed())
-			{
-				byte[] textBytes = Encoding.UTF8.GetBytes(user?.Password);
-				byte[] hashBytes = sha.ComputeHash(textBytes);
-
-				string hash = BitConverter
-					.ToString(hashBytes)
-					.Replace("-", String.Empty);
-
-				user.Password = hash;
-			}
-
-		}
-
-		private void AssignRefreshToken(UserDTO user)
-		{
-			if (user == null || user?.Password == null)
-			{
-				throw new ArgumentNullException();
-			}
-
-			using (var sha = new SHA256Managed())
-			{
-				byte[] textBytes = Encoding.UTF8.GetBytes(user?.Password + DateTime.Now.ToString());
-				byte[] hashBytes = sha.ComputeHash(textBytes);
-
-				string hash = BitConverter
-					.ToString(hashBytes)
-					.Replace("-", String.Empty);
-
-				
-				if(user.RefreshToken == null)
-				{
-					user.RefreshToken = new RefreshTokenDTO();
-				}
-				user.RefreshToken.Token = hash;
-				user.RefreshToken.ExpiryTime = DateTime.Now.AddDays(10);
-			}
-
-		}
-
+					
 		public void AssignCustomerRole(UserDTO user)
 		{
 			if (user == null)

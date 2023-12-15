@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TestingSystem.BLL.DTO;
 
+
 namespace TestingSystem.BLL.Interfaces
 {
-	public interface IUserService : ICRUDService<UserDTO>
+	public interface IRefreshTokenService
 	{
-		IEnumerable<UserDTO> GetItems(string login);
-		public UserDTO Authentificate(string login, string password);
+		TokenDTO RefreshToken(TokenDTO token);
+		void AssignRefreshToken(UserDTO user);
 	}
 }

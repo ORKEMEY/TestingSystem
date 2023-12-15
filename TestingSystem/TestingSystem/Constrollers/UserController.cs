@@ -19,10 +19,12 @@ namespace TestSystem.PL.Controllers
 	{
 
 		private IUserService service { get; set; }
+		private IRefreshTokenService rts { get; set; }
 
-		public UserController(IUserService service)
+		public UserController(IUserService service, IRefreshTokenService rts)
 		{
 			this.service = service;
+			this.rts = rts;
 		}
 
 		[HttpPost("refresh")]
@@ -30,7 +32,7 @@ namespace TestSystem.PL.Controllers
 		{
 			try
 			{
-				var newToken = service.RefreshToken(MapperWEB.Mapper.Map<TokenDTO>(token));
+				var newToken = rts.RefreshToken(MapperWEB.Mapper.Map<TokenDTO>(token));
 
 				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(newToken));
 			}

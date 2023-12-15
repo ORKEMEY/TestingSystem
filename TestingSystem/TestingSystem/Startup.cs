@@ -29,6 +29,8 @@ namespace TestingSystem.PL
 			services.AddControllers();
 			
 			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IRefreshTokenService, RefreshTokenService>();
+			services.AddTransient<IPasswordService, PasswordService>();
 			
 			services.AddDbContext<TestContext>(optionsBuilder =>
 			{
