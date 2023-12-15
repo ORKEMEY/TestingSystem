@@ -1,3 +1,5 @@
+import Role from './role.model';
+
 export default class User {
   public Id: number;
 
@@ -9,7 +11,7 @@ export default class User {
 
   public RoleId: number;
 
-  public Role: string = 'Customer';
+  public Role: Role;
 
   public RoleName: string;
 
