@@ -43,8 +43,8 @@ namespace TestingSystem.DAL
 			var firstRole = new Role() { Name = "Admin" };
 			var secondRole = new Role() { Name = "Customer" };
 
-			var firstU = new User { Login = "first", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = firstRole }; //pas: 12345
-			var secondU = new User { Login = "second", Password = "5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = secondRole }; //pas: 12345
+			var firstU = new User { Login = "first", Password = "94C90AC0AC9BAD790BB6483D3CBB8C55373F846CE88795DC832BFEED595928B9", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = firstRole }; // pas: 1234aa //65800af5a937d433c0febd5bd96c47edd5f24e5e0389900b216749612ebd223f
+			var secondU = new User { Login = "second", Password = "96E11B06FE0745A5AEEF080E64E7A36174009EEE1554FA19F61DA1E366FFEB49", EMail = "email1@gmail.com", Name = "Name1", Surname = "Surname1", Role = secondRole }; // pas: 1234aa //34cf2bc17c49ee04bf4c859378167dc83b24bdc093ba23adb8061b1c473ca068
 
 			this.Users.AddRange(firstU, secondU);
 
