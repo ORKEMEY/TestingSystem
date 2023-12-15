@@ -25,6 +25,8 @@ namespace TestingSystem.BLL.Services
 
 		public void AddItem(UserDTO userDTO)
 		{
+			if(userDTO == null)		
+				throw new Infrastructure.ValidationException("Empty object");
 			if (String.IsNullOrEmpty(userDTO.Login))
 				throw new Infrastructure.ValidationException("Wrong or empty properties", "Login");
 			if (String.IsNullOrEmpty(userDTO.Password))
@@ -36,12 +38,16 @@ namespace TestingSystem.BLL.Services
 
 			HashPassword(userDTO);
 			AssignRefreshToken(userDTO);
+			AssignCustomerRole(userDTO);
+			
 
 			var userDAL = MapperBLL.Mapper.Map<User>(userDTO);
 
 			uof.Users.Create(userDAL);
 			uof.Save();
 		}
+
+		
 
 		public void DeleteItem(UserDTO userDTO)
 		{
@@ -208,6 +214,23 @@ namespace TestingSystem.BLL.Services
 				user.RefreshToken.ExpiryTime = DateTime.Now.AddDays(10);
 			}
 
+		}
+
+		public void AssignCustomerRole(UserDTO user)
+		{
+			if (user == null)
+			{
+				throw new ArgumentNullException();
+			}
+
+			if (user.Role == null)
+			{
+				var role = uof.Roles.GetItems(r => r.Name == "Customer").First();
+				if(role != null)
+				{
+					user.RoleId = role.Id;
+				}
+			}
 		}
 
 	}

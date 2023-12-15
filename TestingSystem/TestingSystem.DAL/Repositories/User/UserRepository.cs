@@ -21,7 +21,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public User GetItem(int id)
 		{
-			return db.Users.Include(u => u.RefreshToken)
+			return db.Users.Include(u => u.RefreshToken).Include(u => u.Role)
 				.FirstOrDefault(x => x.Id == id);
 		}
 
@@ -46,7 +46,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public IEnumerable<User> GetItems(Expression<Func<User, bool>> predicate)
 		{
-			return db.Users.Where(predicate).Include(u => u.RefreshToken);
+			return db.Users.Where(predicate).Include(u => u.Role).Include(u => u.RefreshToken);
 		}
 
 
