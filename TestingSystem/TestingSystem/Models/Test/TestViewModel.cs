@@ -12,8 +12,7 @@ namespace TestingSystem.PL.Models
 		public int Id { get; set; }
 		public string Name { get; set; }
 
-		public UserViewModel Owner { get; set; }
-		public IEnumerable<UserViewModel> AllowedUsers { get; set; }
+		public int OwnerId { get; set; }
 
 		public IEnumerable<TestVariantViewModel> TestVariants { get; set; }
 

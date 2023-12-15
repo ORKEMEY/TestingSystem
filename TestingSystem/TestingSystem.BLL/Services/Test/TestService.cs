@@ -24,6 +24,49 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
+		#region Admin
+
+		public IEnumerable<TestDTO> GetItems()
+		{
+			IEnumerable<Test> items = uof.Tests.GetItems(c => true);
+			return MapperBLL.Mapper.Map<IEnumerable<TestDTO>>(items);
+		}
+
+		public IEnumerable<TestDTO> GetItems(string name)
+		{
+			if (String.IsNullOrEmpty(name))
+				throw new ValidationException("Wrong or empty property Id");
+
+			IEnumerable<Test> items = uof.Tests.GetItems(c => c.Name == name);
+			return MapperBLL.Mapper.Map<IEnumerable<TestDTO>>(items);
+		}
+
+		public TestDTO GetItem(int? id)
+		{
+			if (id == null) throw new ValidationException("Id of test isn't set", "id");
+			var test = uof.Tests.GetItem(id.Value);
+
+			if (test == null) throw new ValidationException("No test was found");
+			return MapperBLL.Mapper.Map<TestDTO>(test);
+
+		}
+
+		public void UpdateItem(TestDTO testDTO)
+		{
+			if (testDTO.Id <= 0)
+				throw new ValidationException("Wrong or empty properties");
+
+			var testDALold = uof.Tests.GetItem(testDTO.Id);
+			if (testDALold == null) throw new ValidationException("Item not found");
+
+			var testDALnew = MapperBLL.Mapper.Map<Test>(testDTO);
+
+			testDALnew.Id = testDALold.Id;
+
+			uof.Tests.Update(testDALnew);
+			uof.Save();
+		}
+
 		public void AddItem(TestDTO testDTO)
 		{
 			if (String.IsNullOrEmpty(testDTO.Name))
@@ -51,63 +94,73 @@ namespace TestingSystem.BLL.Services
 			uof.Save();
 		}
 
-		public void UpdateItem(TestDTO testDTO)
+		#endregion
+
+		#region Customer
+
+		public IEnumerable<TestDTO> GetOwnedItems(int ownerId)
 		{
-			if (testDTO.Id <= 0)
-				throw new ValidationException("Wrong or empty properties");
+			if (ownerId <= 0)
+				throw new ValidationException("Wrong or empty property ownerId");
 
-			var testDALold = uof.Tests.GetItem(testDTO.Id);
-			if (testDALold == null) throw new ValidationException("Item not found");
-
-			var testDALnew = MapperBLL.Mapper.Map<Test>(testDTO);
-
-			testDALnew.Id = testDALold.Id;
-
-			uof.Tests.Update(testDALnew);
-			uof.Save();
-		}
-
-		public void UpdateItem(QuestionsAssemblyDTO questionsAssemblyDTO)
-		{
-			if (questionsAssemblyDTO.Id <= 0)
-				throw new ValidationException("Wrong or empty properties");
-
-			var questionsAssemblyDALold = uof.QuestionsAssemblies.GetItem(questionsAssemblyDTO.Id);
-			if (questionsAssemblyDALold == null) throw new ValidationException("Item not found");
-
-			var questionsAssemblyDALnew = MapperBLL.Mapper.Map<QuestionsAssembly>(questionsAssemblyDTO);
-
-			questionsAssemblyDALnew.Id = questionsAssemblyDALold.Id;
-
-			uof.QuestionsAssemblies.Update(questionsAssemblyDALnew);
-			uof.Save();
-		}
-
-		public IEnumerable<TestDTO> GetItems()
-		{
-			IEnumerable<Test> items = uof.Tests.GetItems(c => true);
+			IEnumerable<Test> items = uof.Tests.GetItems(c => c.OwnerId == ownerId);
 			return MapperBLL.Mapper.Map<IEnumerable<TestDTO>>(items);
 		}
 
-		public IEnumerable<TestDTO> GetItems(string name)
+		public IEnumerable<TestDTO> SearchOwnedItems(int ownerId, string name)
 		{
 			if (String.IsNullOrEmpty(name))
 				throw new ValidationException("Wrong or empty property Id");
 
-			IEnumerable<Test> items = uof.Tests.GetItems(c => c.Name == name);
+			IEnumerable<Test> items = uof.Tests.GetItems(c => c.OwnerId == ownerId && c.Name == name);
 			return MapperBLL.Mapper.Map<IEnumerable<TestDTO>>(items);
 		}
 
-		public TestDTO GetItem(int? id)
+		public TestDTO GetOwnedItem(int ownerId, int? id)
 		{
 			if (id == null) throw new ValidationException("Id of test isn't set", "id");
-			var test = uof.Tests.GetItem(id.Value);
+			var test = GetOwnedItems(ownerId).Where(c => c.Id == id.Value).FirstOrDefault();
 
 			if (test == null) throw new ValidationException("No test was found");
 			return MapperBLL.Mapper.Map<TestDTO>(test);
 
 		}
-		
+
+		public void AddOwnedItem(int ownerId, TestDTO testDTO)
+		{
+			if(ownerId != testDTO.OwnerId)
+				throw new ValidationException("Operation is not permitted");
+
+			this.AddItem(testDTO);
+		}
+
+		public void UpdateOwnedItem(int ownerId, TestDTO testDTO)
+		{
+			var testDALold = uof.Tests.GetItems(c => c.OwnerId == ownerId && c.Id == testDTO.Id).FirstOrDefault();
+			if (testDALold == null) throw new ValidationException("Item is not found in you collection");
+
+			this.UpdateItem(testDTO);
+		}
+
+		public void DeleteOwendItem(int ownerId, TestDTO testDTO)
+		{
+			if (testDTO.Id <= 0)
+				throw new ValidationException("Wrong or empty property Id");
+			try
+			{
+				var test = uof.Tests.GetItems(c => c.OwnerId == ownerId && c.Id == testDTO.Id).Single();
+				uof.Tests.Delete(test.Id);
+				uof.Save();
+			}
+			catch(Exception e)
+			{
+				throw new ValidationException("Couldn't delete test");
+			}
+		}
+
+		#endregion
+
+
 	}
 	
 }

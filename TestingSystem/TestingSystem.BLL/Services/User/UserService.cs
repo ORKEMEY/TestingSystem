@@ -135,7 +135,17 @@ namespace TestingSystem.BLL.Services
 			if (user == null) throw new Infrastructure.ValidationException("No user was found");
 			return MapperBLL.Mapper.Map<UserDTO>(user);
 		}
-					
+
+		public UserDTO GetUserByAccessToken(TokenDTO token)
+		{
+			var principal = AuthOptions.GetPrincipalFromExpiredToken(token.AccessToken);
+
+			var user = uof.Users.GetItems(u => u.Login == principal.Identity.Name).FirstOrDefault();
+			if (user == null) throw new Infrastructure.ValidationException("No user was found");
+
+			return MapperBLL.Mapper.Map<UserDTO>(user);
+		}
+
 		public void AssignCustomerRole(UserDTO user)
 		{
 			if (user == null)

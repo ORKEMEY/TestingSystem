@@ -22,6 +22,7 @@ namespace TestingSystem.DAL.Repositories
 		public Test GetItem(int id)
 		{
 			return db.Tests.Include(u => u.AllowedUsers)
+				.Include(u => u.Owner)
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)
 				.Include(u => u.Tags)
@@ -51,6 +52,7 @@ namespace TestingSystem.DAL.Repositories
 		{
 			return db.Tests.Where(predicate)
 				.Include(u => u.AllowedUsers)
+				.Include(u => u.Owner)
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)
 				.Include(u => u.Tags);

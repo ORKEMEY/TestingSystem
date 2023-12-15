@@ -31,6 +31,7 @@ namespace TestingSystem.PL
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 			services.AddTransient<IPasswordService, PasswordService>();
+			services.AddTransient<ITestService, TestService>();
 			
 			services.AddDbContext<TestContext>(optionsBuilder =>
 			{

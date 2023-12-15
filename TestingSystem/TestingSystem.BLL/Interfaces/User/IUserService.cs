@@ -11,5 +11,6 @@ namespace TestingSystem.BLL.Interfaces
 	{
 		IEnumerable<UserDTO> GetItems(string login);
 		public UserDTO Authentificate(string login, string password);
+		public UserDTO GetUserByAccessToken(TokenDTO token);
 	}
 }

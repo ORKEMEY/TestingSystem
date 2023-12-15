@@ -15,7 +15,7 @@ namespace TestingSystem.BLL.Infrastructure
 		public const string ISSUER = "TestingServer";
 		public const string AUDIENCE = "TestingClient";
 		const string KEY = "secretsecretsecr";
-		public const int LIFETIME = 1;
+		public const int LIFETIME = 60;
 		public static SymmetricSecurityKey GetSymmetricSecurityKey()
 		{
 			return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
