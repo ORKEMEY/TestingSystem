@@ -34,38 +34,6 @@
   height: 60px;
 }
 
-.form-signin {
-  padding: 19px 29px 29px;
-  margin: 0 auto 20px;
-  background-color: #fff;
-  border: 1px solid #a0a0a0;
-  width: 400pt;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.form-signin.form-send {
-  max-width: 400pt;
-  max-height: 250pt;
-}
-
-.form-signin .form-signin-heading,
-.form-signin {
-  margin-bottom: 10px;
-}
-
-.form-signin input[type='text'],
-.form-signin input[type='password'] {
-  font-size: 16px;
-  height: auto;
-  margin-bottom: 15px;
-  padding: 7px 9px;
-}
-
 #maindiv {
   display: flex;
   flex-direction: row;
@@ -104,7 +72,7 @@
 }
 
 
-.loading::after{
+.loader-title::after{
   content: '';
 
   animation-name: dotsAnumation;
@@ -114,13 +82,37 @@
 }
 
 @keyframes dotsAnumation {
-  33% {
+  0% {
+    content: ''
+  }
+  25% {
       content: '.'
   }
-  66% {
+  50% {
       content: '..'
   }
-  100%{
+  75%{
       content: '...'
   }
+}
+
+.loader-spinner {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

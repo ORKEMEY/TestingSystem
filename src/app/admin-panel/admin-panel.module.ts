@@ -22,15 +22,7 @@ import AdminPanelTestsComponent from './admin-panel-tests/admin-panel-tests.comp
 
     SharedModule,
   ],
-  declarations: [
-    AdminPanelComponent,
-    AdminPanelNavComponent,
-    AdminPanelTestsComponent,
-  ],
-  exports: [
-    AdminPanelComponent,
-    AdminPanelNavComponent,
-    AdminPanelTestsComponent,
-  ],
+  declarations: [AdminPanelComponent, AdminPanelNavComponent, AdminPanelTestsComponent],
+  exports: [AdminPanelComponent, AdminPanelNavComponent, AdminPanelTestsComponent],
 })
 export default class AdminPanelModule {}

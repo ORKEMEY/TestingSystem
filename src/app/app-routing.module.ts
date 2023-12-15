@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import NotFoundComponent from './shared/not-found.component';
-import ForbiddenComponent from './shared/forbidden.component';
+import NotFoundComponent from './shared/not-found/not-found.component';
+import ForbiddenComponent from './shared/forbidden/forbidden.component';
 
 import AuthGuard from './core/guards/auth.guard';
 

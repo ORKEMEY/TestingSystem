@@ -5,7 +5,7 @@ import AdminPanelComponent from './admin-panel.component';
 import AdminPanelNavComponent from './admin-panel-nav/admin-panel-nav.component';
 import AdminPanelTestsComponent from './admin-panel-tests/admin-panel-tests.component';
 
-import NotFoundComponent from '../shared/not-found.component';
+import NotFoundComponent from '../shared/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/admin-panel/menu/(tests//nav:adminmenunav)', pathMatch: 'full' },

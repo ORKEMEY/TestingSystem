@@ -5,7 +5,7 @@ import UserComponent from './user.component';
 import LoginComponent from './login/login.component';
 import RegistrationComponent from './registration/registration.component';
 
-import NotFoundComponent from '../shared/not-found.component';
+import NotFoundComponent from '../shared/not-found/not-found.component';
 
 // routes definition
 const appRoutes: Routes = [
