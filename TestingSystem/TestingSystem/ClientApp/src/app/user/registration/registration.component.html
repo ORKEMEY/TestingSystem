@@ -1,0 +1,96 @@
+<div id="RegisterDiv" class="container-narrow">
+  <form [formGroup]="form" (ngSubmit)="submit()" id="RegisterForm" class="form-signin col-10">
+    <h2 id="SendRegiserFormLabel" class="form-signin-heading">Sign up</h2>
+    <br />
+    
+    <div class="form-block col-sm-12">
+      <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden></div>
+    </div>
+    <div>
+      <!-- Login -->
+      <div class="form-block">
+        <label for="Login" class="col-sm-2 col-form-label">Login:</label>
+        <div class="col-sm-12">
+          <input type="text" name="Login" id="LoginRegister" (ngModelChange)="loginChange()"
+            class="input-block-level form-control" placeholder="Login" formControlName="Login" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertLoginDiv hidden></div>
+      </div>
+    </div>
+  
+    <div>
+      <!-- Name -->
+      <div class="form-block">
+        <label for="Name" class="col-sm-2 col-form-label">Name:</label>
+        <div class="col-sm-12">
+          <input type="text" name="Name" id="NameRegister" (ngModelChange)="nameChange()"
+            class="input-block-level form-control" placeholder="Name" formControlName="Name" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertNameDiv hidden></div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Surname -->
+      <div class="form-block">
+        <label for="Surname" class="col-sm-2 col-form-label">Surname:</label>
+        <div class="col-sm-12">
+          <input type="text" name="Surname" id="SurnameRegister" (ngModelChange)="surnameChange()"
+            class="input-block-level form-control" placeholder="Surname" formControlName="Surname" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertSurnameDiv hidden></div>
+      </div>
+    </div>
+
+    <div>
+      <!-- EMail -->
+      <div class="form-block">
+        <label for="EMail" class="col-sm-2 col-form-label">E-Mail:</label>
+        <div class="col-sm-12">
+          <input type="text" name="EMail" id="EMailRegister" (ngModelChange)="emailChange()"
+            class="input-block-level form-control" placeholder="E-Mail" formControlName="EMail" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertEMailDiv hidden></div>
+      </div>
+    </div>
+
+    <div formGroupName="Passwords">
+      <!-- Passwords -->
+      <div class="form-block">
+        <!-- Password -->
+        <label for="Password" class="col-sm-2 col-form-label">Password:</label>
+        <div class="col-sm-12">
+          <input type="password" (ngModelChange)="passwordChange()" name="Password" id="PasswordRegiser"
+            class="input-block-level form-control" placeholder="Password" formControlName="Password" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertPasswordDiv hidden></div>
+      </div>
+
+      <div class="form-block">
+        <!-- Password Confirmation-->
+        <label for="ConfirmPassword" class="col-sm-5 col-form-label">Confirm password:</label>
+        <div class="col-sm-12">
+          <input type="password" name="ConfirmPassword" (ngModelChange)="confirmPasswordChange()"
+            id="ConfirmPasswordRegiser" class="input-block-level form-control" placeholder="Password"
+            formControlName="ConfirmPassword" required />
+        </div>
+      </div>
+      <div class="form-block col-sm-12">
+        <div class="alert alert-danger form-block" role="alert" #alertConfirmPasswordDiv hidden></div>
+      </div>
+    </div>
+    <br />
+    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnRegiserForm"
+      value="Sign up" />
+  </form>
+</div>
