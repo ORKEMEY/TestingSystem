@@ -8,6 +8,7 @@ import AppRoutingModule from './app-routing.module';
 import SharedModule from './shared/shared.module';
 import UserModule from './user/user.module';
 import AdminPanelModule from './admin-panel/admin-panel.module';
+import MenuModule from './menu/menu.module';
 
 import AppComponent from './app.component';
 
@@ -28,6 +29,7 @@ import AuthGuard from './core/guards/auth.guard';
     SharedModule,
     UserModule,
     AdminPanelModule,
+    MenuModule,
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
