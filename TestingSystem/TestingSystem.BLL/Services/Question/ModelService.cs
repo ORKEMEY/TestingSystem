@@ -50,9 +50,9 @@ namespace TestingSystem.BLL.Services
 
 			var modelDALnew = MapperBLL.Mapper.Map<Model>(modelDTO);
 
-			modelDALnew.Id = modelDALold.Id;
+			modelDALold.Name = modelDALnew.Name;
 
-			uof.Models.Update(modelDALnew);
+			uof.Models.Update(modelDALold);
 			uof.Save();
 		}
 

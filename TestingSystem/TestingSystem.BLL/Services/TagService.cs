@@ -50,9 +50,9 @@ namespace TestingSystem.BLL.Services
 
 			var tagDALnew = MapperBLL.Mapper.Map<Tag>(tagDTO);
 
-			tagDALnew.Id = tagDALold.Id;
+			tagDALold.Name = tagDALnew.Name;
 
-			uof.Tags.Update(tagDALnew);
+			uof.Tags.Update(tagDALold);
 			uof.Save();
 		}
 

@@ -32,7 +32,7 @@ namespace TestingSystem.DAL
 		{
 
 				//Database.EnsureDeleted();
-				Database.EnsureCreated();
+				//Database.EnsureCreated();
 				//this.Seed();
 
 		}
@@ -113,6 +113,9 @@ namespace TestingSystem.DAL
 
 			this.Tests.AddRange(firstT, secondT);
 
+			var firstLog = new Log() { User = firstU, Test = firstT, VariantNumer = 1, ExpiredTime = new TimeSpan(0, 1, 0), Mark = 12, DateTime = new DateTime(2024, 07, 01) };
+
+			this.Logs.Add(firstLog);
 
 			this.SaveChanges();
 		}
@@ -126,14 +129,14 @@ namespace TestingSystem.DAL
 				.WithMany(s => s.AccessibleTests)
 				.UsingEntity<Dictionary<string, object>>(
 					"AllowList",
-					j => j.HasOne<User>().WithMany().OnDelete(DeleteBehavior.NoAction),
-					j => j.HasOne<Test>().WithMany().OnDelete(DeleteBehavior.NoAction));
+					j => j.HasOne<User>().WithMany(),
+					j => j.HasOne<Test>().WithMany().OnDelete(DeleteBehavior.ClientCascade));
 
 
 			modelBuilder.Entity<Log>()
 				.HasOne(c => c.Test)
 				.WithMany(s => s.Logs)
-				.OnDelete(DeleteBehavior.NoAction);
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<Log>()
 				.HasOne(c => c.User)
@@ -145,8 +148,8 @@ namespace TestingSystem.DAL
 				.WithMany(s => s.Questions)
 				.UsingEntity<Dictionary<string, object>>(
 					"QuestionTestVariant",
-					j => j.HasOne<TestVariant>().WithMany().OnDelete(DeleteBehavior.NoAction),
-					j => j.HasOne<Question>().WithMany().OnDelete(DeleteBehavior.NoAction));
+					j => j.HasOne<TestVariant>().WithMany(),
+					j => j.HasOne<Question>().WithMany().OnDelete(DeleteBehavior.ClientCascade));
 
 			modelBuilder.Entity<Test>()
 				.HasOne(p => p.Owner)

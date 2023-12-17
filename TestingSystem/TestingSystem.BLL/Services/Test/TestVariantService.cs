@@ -9,6 +9,7 @@ using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
 using AutoMapper.Execution;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -50,9 +51,9 @@ namespace TestingSystem.BLL.Services
 
 			var testVariantDALnew = MapperBLL.Mapper.Map<TestVariant>(testVariantDTO);
 
-			testVariantDALnew.Id = testVariantDALold.Id;
+			TestVariantPatcher.Patch(testVariantDALold, testVariantDALnew);
 
-			uof.TestVariants.Update(testVariantDALnew);
+			uof.TestVariants.Update(testVariantDALold);
 			uof.Save();
 		}
 

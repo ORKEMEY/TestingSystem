@@ -49,9 +49,9 @@ namespace TestingSystem.BLL.Services
 
 			var questionTypeDALnew = MapperBLL.Mapper.Map<QuestionType>(questionTypeDTO);
 
-			questionTypeDALnew.Id = questionTypeDALold.Id;
+			questionTypeDALold.Name = questionTypeDALnew.Name;
 
-			uof.QuestionTypes.Update(questionTypeDALnew);
+			uof.QuestionTypes.Update(questionTypeDALold);
 			uof.Save();
 		}
 

@@ -8,6 +8,7 @@ using TestingSystem.BLL.Interfaces;
 using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -46,14 +47,14 @@ namespace TestingSystem.BLL.Services
 			if (answerDTO.Id <= 0)
 				throw new ValidationException("Wrong or empty properties");
 
-			var answerDAL = uof.VariantsOfAnswer.GetItem(answerDTO.Id);
-			if (answerDAL == null) throw new ValidationException("Item not found");
+			var answerDALold = uof.VariantsOfAnswer.GetItem(answerDTO.Id);
+			if (answerDALold == null) throw new ValidationException("Item not found");
 
-			if (!String.IsNullOrEmpty(answerDTO.Answer))
-				answerDAL.Answer = answerDTO.Answer;
-			answerDAL.IsCorrect = answerDTO.IsCorrect;
+			var answerDALnew = MapperBLL.Mapper.Map<VariantOfAnswer>(answerDTO);
 
-			uof.VariantsOfAnswer.Update(answerDAL);
+			VariantOfAnswerPatcher.Patch(answerDALold, answerDALnew);
+
+			uof.VariantsOfAnswer.Update(answerDALold);
 			uof.Save();
 		}
 

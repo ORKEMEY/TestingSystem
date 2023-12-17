@@ -50,7 +50,10 @@ namespace TestingSystem.BLL.Services
 
 		public void UpdateItem(LogDTO logDTO)
 		{
-			if (logDTO.Id <= 0)
+
+			throw new NotImplementedException();
+
+			/*if (logDTO.Id <= 0)
 				throw new ValidationException("Wrong or empty properties");
 
 			var logDALold = uof.Logs.GetItem(logDTO.Id);
@@ -61,7 +64,7 @@ namespace TestingSystem.BLL.Services
 			logDALnew.Id = logDALold.Id;
 
 			uof.Logs.Update(logDALnew);
-			uof.Save();
+			uof.Save();*/
 		}
 
 		public IEnumerable<LogDTO> GetItems()

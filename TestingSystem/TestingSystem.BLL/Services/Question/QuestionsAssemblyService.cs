@@ -8,6 +8,7 @@ using TestingSystem.BLL.Interfaces;
 using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -52,9 +53,9 @@ namespace TestingSystem.BLL.Services
 
 			var questionsAssemblyDALnew = MapperBLL.Mapper.Map<QuestionsAssembly>(questionsAssemblyDTO);
 
-			 questionsAssemblyDALnew.Id = questionsAssemblyDALold.Id;
+			QuestionsAssemblyPatcher.Patch(questionsAssemblyDALold, questionsAssemblyDALnew);
 
-			uof.QuestionsAssemblies.Update( questionsAssemblyDALnew);
+			uof.QuestionsAssemblies.Update(questionsAssemblyDALold);
 			uof.Save();
 		}
 

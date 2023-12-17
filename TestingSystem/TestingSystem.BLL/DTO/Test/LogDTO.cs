@@ -11,10 +11,10 @@ namespace TestingSystem.BLL.DTO
 	{
 		public int Id { get; set; }
 
-		public int UserId { get; set; }
+		public int? UserId { get; set; }
 		public UserDTO User { get; set; }
 
-		public int TestId { get; set; }
+		public int? TestId { get; set; }
 		public TestDTO Test { get; set; }
 
 		public TimeSpan ExpiredTime { get; set; }

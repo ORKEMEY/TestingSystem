@@ -8,6 +8,7 @@ using TestingSystem.BLL.Interfaces;
 using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -61,9 +62,9 @@ namespace TestingSystem.BLL.Services
 
 			var testDALnew = MapperBLL.Mapper.Map<Test>(testDTO);
 
-			testDALnew.Id = testDALold.Id;
+			TestPatcher.Patch(testDALold, testDALnew);
 
-			uof.Tests.Update(testDALnew);
+			uof.Tests.Update(testDALold);
 			uof.Save();
 		}
 

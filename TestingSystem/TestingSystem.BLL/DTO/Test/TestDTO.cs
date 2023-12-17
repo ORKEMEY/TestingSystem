@@ -21,11 +21,11 @@ namespace TestingSystem.BLL.DTO
 		public IEnumerable<LogDTO> Logs { get; set; }
 		public IEnumerable<TagDTO> Tags { get; set; }
 
-		public TimeSpan Duration { get; set; }
+		public TimeSpan? Duration { get; set; }
 		public DateTime? OpeningTime { get; set; }
 		public DateTime? ClosureTime { get; set; }
 
-		public bool IsAccessOpen { get; set; }
+		public bool? IsAccessOpen { get; set; }
 		public int NumberOfVariants { get; set; }
 		public string Description { get; set; }
 

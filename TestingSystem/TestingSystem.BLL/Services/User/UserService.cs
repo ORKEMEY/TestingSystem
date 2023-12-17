@@ -6,6 +6,7 @@ using TestingSystem.BLL.DTO;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
 using System.Linq;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -46,7 +47,6 @@ namespace TestingSystem.BLL.Services
 			uof.Save();
 		}
 
-		
 
 		public void DeleteItem(UserDTO userDTO)
 		{
@@ -61,18 +61,17 @@ namespace TestingSystem.BLL.Services
 			if (userDTO.Id <= 0)
 				throw new Infrastructure.ValidationException("Wrong or empty properties");
 
-			var userDAL = uof.Users.GetItem(userDTO.Id);
-			if (userDAL == null) throw new Infrastructure.ValidationException("Item not found");
+			var userDALold = uof.Users.GetItem(userDTO.Id);
+			if (userDALold == null) throw new Infrastructure.ValidationException("Item not found");
 
-			if (userDTO.Login != null)
-				userDAL.Login = userDTO.Login;
 			if (userDTO.Password != null)
-			{
 				ps.HashPassword(userDTO);
-				userDAL.Password = userDTO.Password;
-			}
 
-			uof.Users.Update(userDAL);
+			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
+
+			UserPatcher.Patch(userDALold, userDALnew);
+
+			uof.Users.Update(userDALold);
 			uof.Save();
 		}
 

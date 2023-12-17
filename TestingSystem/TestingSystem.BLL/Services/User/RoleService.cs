@@ -49,9 +49,9 @@ namespace TestingSystem.BLL.Services
 
 			var roleDALnew = MapperBLL.Mapper.Map<Role>(roleDTO);
 
-			roleDALnew.Id = roleDALold.Id;
+			roleDALold.Name = roleDALnew.Name;
 
-			uof.Roles.Update(roleDALnew);
+			uof.Roles.Update(roleDALold);
 			uof.Save();
 		}
 

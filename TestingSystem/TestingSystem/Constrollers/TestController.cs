@@ -90,7 +90,7 @@ namespace TestingSystem.PL.Controllers
 		}
 
 		// PUT api/<TestsController>/5
-		[HttpPut("{id}")]
+		[HttpPut]
 		[Authorize(Roles = "Admin")]
 		public IActionResult Put(int id, [FromBody] TestViewModel test)
 		{
@@ -227,8 +227,8 @@ namespace TestingSystem.PL.Controllers
 
 		// PUT api/<TestsController>/owned/5
 		//[Route("owned")]
-		[HttpPut("owned/{id:int}")]
-		public IActionResult UpdateOwned(int id, [FromBody] TestViewModel test)
+		[HttpPut("owned")]
+		public IActionResult UpdateOwned([FromBody] TestViewModel test)
 		{
 			try
 			{
@@ -250,7 +250,6 @@ namespace TestingSystem.PL.Controllers
 		// DELETE api/<TestsController>/owned/5
 		//[Route("owned")]
 		[HttpDelete("owned/{id}")]
-		[Authorize(Roles = "Admin")]
 		public IActionResult DeleteOwned(int id)
 		{
 			try
