@@ -15,12 +15,8 @@
                     +
                 </button>
             </div>
-            <div class ="item">
-                Item 2
-            </div>
-            <div class ="item">
-                Item 2
-            </div>
+            <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item">
+            </test-list-item-component>
         </div>
     </div>
 

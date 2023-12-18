@@ -9,6 +9,7 @@ import SharedModule from '../../shared/shared.module';
 
 import TestMenuComponent from './test-menu.component';
 import TestListComponent from './test-list/test-list.component';
+import TestListItemComponent from './test-list-item/test-list-item.component'
 
 @NgModule({
   imports: [
@@ -19,9 +20,9 @@ import TestListComponent from './test-list/test-list.component';
     TestMenuRoutingModule,
     SharedModule,
   ],
-  declarations: [TestMenuComponent, TestListComponent],
+  declarations: [TestMenuComponent, TestListComponent, TestListItemComponent],
   bootstrap: [],
   providers: [],
-  exports: [TestMenuComponent, TestListComponent],
+  exports: [TestMenuComponent, TestListComponent, TestListItemComponent],
 })
 export default class TestMenuModule {}
