@@ -7,6 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import TestMenuRoutingModule from './test-menu-routing.module';
 import SharedModule from '../../shared/shared.module';
 
+import TestMenuComponent from './test-menu.component';
+import TestListComponent from './test-list/test-list.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,9 +19,9 @@ import SharedModule from '../../shared/shared.module';
     TestMenuRoutingModule,
     SharedModule,
   ],
-  declarations: [],
+  declarations: [TestMenuComponent, TestListComponent],
   bootstrap: [],
   providers: [],
-  exports: [],
+  exports: [TestMenuComponent, TestListComponent],
 })
 export default class TestMenuModule {}
