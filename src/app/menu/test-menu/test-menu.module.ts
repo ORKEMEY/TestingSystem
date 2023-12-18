@@ -9,7 +9,7 @@ import SharedModule from '../../shared/shared.module';
 
 import TestMenuComponent from './test-menu.component';
 import TestListComponent from './test-list/test-list.component';
-import TestListItemComponent from './test-list-item/test-list-item.component'
+import TestListItemComponent from './test-list-item/test-list-item.component';
 
 @NgModule({
   imports: [
