@@ -107,4 +107,20 @@ ul.pagination-carousel li:hover{
 
 }
 
+.msg-box{
+    width: 100%;
+}
+
+
+.invisible {
+    opacity: 0;
+    display: none;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
 

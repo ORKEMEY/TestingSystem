@@ -16,9 +16,9 @@ export default class TestService {
     this.dataTests$ = this.dataTests.asObservable();
   }
 
-  public getById(id: number, observer?: Observer<Test>) {
+  public getOwnedById(id: number, observer?: Observer<Test>) {
     this.http
-      .get(`api/Tests/${id}`)
+      .get(`api/Tests/owned/${id}`)
       .pipe(map((data) => data as Test))
       .subscribe({
         next: (data) => observer?.next?.(data),
@@ -33,9 +33,9 @@ export default class TestService {
       });
   }
 
-  public refreshTests() {
+  public refreshOwnedTests() {
     this.http
-      .get('api/Tests')
+      .get('api/Tests/owned')
       .pipe(map((data) => data as Test[]))
       .subscribe({
         next: (data: Test[]) => this.dataTests.next(data),
@@ -46,17 +46,59 @@ export default class TestService {
       });
   }
 
-  public searchTestsByName(name: string) {
+  public searchOwnedTestsByName(name: string) {
     this.http
-      .get('api/Tests')
+      .get(`api/Tests/owned/${name}`)
       .pipe(map((data) => data as Test[]))
       .subscribe({
-        next: (data: Test[]) => this.dataTests.next(data.filter((el) => el.name.includes(name))),
+        next: (data: Test[]) => this.dataTests.next(data),
         error: (err) => {
           console.error(err);
           this.dataTests.next(null);
         },
       });
+  }
+
+  public postTest(test: Test, observer?: Observer<void>) {
+    this.http.post('api/Tests/owned', test).subscribe({
+      next: () => observer?.next?.(),
+      error: (err) => {
+        if (err.status === 400) {
+          observer?.error?.(err.error.errorText);
+        } else {
+          console.error(err);
+        }
+      },
+      complete: () => observer?.complete?.(),
+    });
+  }
+
+  public putTest(test: Test, observer?: Observer<void>) {
+    this.http.put('api/Tests/owned', test).subscribe({
+      next: () => observer?.next?.(),
+      error: (err) => {
+        if (err.status === 400) {
+          observer?.error?.(err.error.errorText);
+        } else {
+          console.error(err);
+        }
+      },
+      complete: () => observer?.complete?.(),
+    });
+  }
+
+  public async DeleteOwnedTestAsync(testId: number, observer?: Observer<void>) {
+    await this.http.delete(`api/Tests/owned/${testId}`).subscribe({
+      next: () => observer?.next?.(),
+      error: (err) => {
+        if (err.status === 400) {
+          observer?.error?.(err.error.errorText);
+        } else {
+          console.error(err);
+        }
+      },
+      complete: () => observer?.complete?.(),
+    });
   }
   /*
   public post(test: Test, observer?: Observer<void>) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import Paginator from '../../../shared/paginator';
 import Test from '../../../core/models/test.model';
@@ -24,9 +24,13 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   @ViewChild('alertDiv', { static: false })
   alertDiv: ElementRef | undefined;
 
+  isWarningVisible: Boolean = false;
+
+  warningMessage: string = '';
+
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
-    this.tests = [
+    /* this.tests = [
       new Test('name1', 1, null, null, null, 1, 'description'),
       new Test('name2', 1, null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description'),
       new Test('name3', 1, null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description'),
@@ -42,19 +46,16 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       new Test('name13', 1, null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description'),
       new Test('name14', 1, null, null, null, 1, 'description'),
       new Test('name15', 1, null, null, null, 1, 'description'),
-    ];
+    ]; */
   }
 
   ngOnInit(): void {
-    console.log('onInit test list');
-    /* 
     this.testsSub = this.testService.dataTests$.subscribe((data: Test[] | null) => {
       this.tests = data;
       this.toFirstPage();
       this.checkCollection();
     });
-    this.testService.refreshTests(); 
-    */
+    this.testService.refreshOwnedTests();
   }
 
   ngOnDestroy(): void {
@@ -63,21 +64,27 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   onSearchLineEmpty() {
     if (this.searchLine === '') {
-      this.testService.refreshTests();
+      this.testService.refreshOwnedTests();
     }
   }
 
   searchItems() {
     if (this.searchLine !== '' && this.searchLine !== undefined) {
-      this.testService.searchTestsByName(this.searchLine.trim());
+      this.testService.searchOwnedTestsByName(this.searchLine.trim());
     } else {
       console.log('searching line is empty');
     }
   }
 
   deleteItem(test: Test) {
-    const index = this.tests.indexOf(test);
-    this.tests.splice(index, 1);
+    this.testService.DeleteOwnedTestAsync(
+      test.id as number,
+      {
+        error: (errMsg: string) => this.Warn(errMsg),
+      } as Observer<void>,
+    );
+    /* const index = this.tests.indexOf(test);
+    this.tests.splice(index, 1); */
   }
 
   private checkCollection() {
@@ -86,5 +93,15 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
     } else {
       Alert.hideAlertMessage(this.alertDiv);
     }
+  }
+
+  Warn(msg: string) {
+    this.warningMessage = msg;
+    this.isWarningVisible = true;
+  }
+
+  hideWarning() {
+    this.warningMessage = '';
+    this.isWarningVisible = false;
   }
 }

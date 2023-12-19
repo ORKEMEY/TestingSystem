@@ -10,11 +10,17 @@
     </div>
 
     <div class="outer content">
+
         <div class="h-center">
-            <div id="Alert" class="alert alert-danger col-10" role="alert" #alertDiv hidden>
+            <div id="Alert" class="alert alert-danger col-10" #alertDiv hidden>
             </div>
         </div>
-        <div class="grid">
+    
+        <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
+            (closeButtonPushed)="hideWarning()" class="h-center msg-box" [message]="warningMessage">
+        </warning-component>
+
+        <div class="grid" >
             <div class="item">
                 <button class="add-item" tabindex="-1">
                     +
