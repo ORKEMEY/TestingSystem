@@ -1,7 +1,16 @@
 <div class="item-container">
-    <div class="item grid">
-        <div class="header h-end">
-            <p class="settings-dots" >...</p>
+    <div class="item grid"
+    (mouseleave)="isSettingsVisible = false">
+        <div class="header h-end setings-container">
+            <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
+            (mouseleave)="isSettingsVisible = false">
+                <ul>
+                    <li [routerLink]="['settings']"> Settings </li>
+                    <li (click)="this.delete()"> Delete </li>
+                </ul>
+            </div>
+            <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>      
+
         </div>
         <div class="content center">
             <p>
@@ -9,7 +18,7 @@
             </p>
         </div>
         <div class="footer h-end">
-            <span class="badge badge-success">Tag</span>
+            <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>
         </div>
 
     </div>

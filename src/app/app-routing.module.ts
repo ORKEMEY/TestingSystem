@@ -22,6 +22,7 @@ const appRoutes: Routes = [
   {
     path: 'menus',
     loadChildren: () => import('./menu/menu.module').then((m) => m.default),
+    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
   },
   { path: 'forbidden', component: ForbiddenComponent },

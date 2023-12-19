@@ -2,20 +2,26 @@
     <div class="header h-center">
         <div class="input-group col-9">
             <div class="input-group-prepend">
-                <button class="input-group-text" id="btnSearch">Search</button>
+                <button (click)="searchItems()" class="input-group-text" id="btnSearch">Search</button>
             </div>
-            <input id="searchLine" type="text" class="form-control" placeholder="Example">
+            <input [(ngModel)]="searchLine" (ngModelChange)="onSearchLineEmpty()" id="searchLine" type="text"
+                class="form-control" placeholder="Example">
         </div>
     </div>
 
     <div class="outer content">
+        <div class="h-center">
+            <div id="Alert" class="alert alert-danger col-10" role="alert" #alertDiv hidden>
+            </div>
+        </div>
         <div class="grid">
-            <div class ="item">
+            <div class="item">
                 <button class="add-item" tabindex="-1">
                     +
                 </button>
             </div>
-            <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item">
+            <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
+                (deleteButtonPushed)="deleteItem($event)">
             </test-list-item-component>
         </div>
     </div>
@@ -23,9 +29,9 @@
     <div class="footer">
         <div class="carousel-container">
             <ul class=" pagination-carousel">
-                <li> Prev </li>
-                <li> Page </li>
-                <li> Next </li>
+                <li (click)="previous()"> Prev </li>
+                <li> {{CurrentPage}} </li>
+                <li (click)="next()"> Next </li>
             </ul>
         </div>
     </div>
