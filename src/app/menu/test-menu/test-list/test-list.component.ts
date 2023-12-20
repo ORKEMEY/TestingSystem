@@ -31,21 +31,21 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
     /* this.tests = [
-      new Test('name1', 1, null, null, null, 1, 'description'),
-      new Test('name2', 1, null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description'),
-      new Test('name3', 1, null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description'),
-      new Test('name4', 1, null, '2023-06-01T13:45:30', '2023-07-01T13:45:30', 1, 'description'),
-      new Test('name5', 1, null, '2023-06-01T13:45:30', null, 1, 'description'),
-      new Test('name6', 1, null, '2024-06-01T13:45:30', null, 1, 'description'),
-      new Test('name7', 1, null, null, '2024-06-01T13:45:30', 1, 'description'),
-      new Test('name8', 1, null, null, '2023-06-01T13:45:30', 1, 'description'),
-      new Test('name9', 1, null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description'),
-      new Test('name10', 1, null, null, null, 1, 'description'),
-      new Test('name11', 1, null, '2023-06-01T13:45:30', null, 1, 'description'),
-      new Test('name12', 1, null, null, null, 1, 'description'),
-      new Test('name13', 1, null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description'),
-      new Test('name14', 1, null, null, null, 1, 'description'),
-      new Test('name15', 1, null, null, null, 1, 'description'),
+      new Test('name1', null, null, null, 1, 'description', 1),
+      new Test('name2', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
+      new Test('name3', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
+      new Test('name4', null, '2023-06-01T13:45:30', '2023-07-01T13:45:30', 1, 'description', 1),
+      new Test('name5', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
+      new Test('name6', null, '2024-06-01T13:45:30', null, 1, 'description', 1),
+      new Test('name7', null, null, '2024-06-01T13:45:30', 1, 'description', 1),
+      new Test('name8', null, null, '2023-06-01T13:45:30', 1, 'description', 1),
+      new Test('name9', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
+      new Test('name10', null, null, null, 1, 'description', 1),
+      new Test('name11', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
+      new Test('name12', null, null, null, 1, 'description', 1),
+      new Test('name13', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
+      new Test('name14', null, null, null, 1, 'description', 1),
+      new Test('name15', null, null, null, 1, 'description', 1),
     ]; */
   }
 

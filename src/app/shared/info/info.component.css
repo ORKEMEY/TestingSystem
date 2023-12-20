@@ -1,0 +1,14 @@
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close{
+    text-decoration: none;
+    transform: rotate(45deg);
+}
+
+.close:hover{
+    color: red;
+    cursor: pointer;
+}

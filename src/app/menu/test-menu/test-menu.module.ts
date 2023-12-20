@@ -10,6 +10,10 @@ import SharedModule from '../../shared/shared.module';
 import TestMenuComponent from './test-menu.component';
 import TestListComponent from './test-list/test-list.component';
 import TestListItemComponent from './test-list-item/test-list-item.component';
+import TestSettingsComponent from './test-settings/test-settings.component';
+import TestMenuNavComponent from './test-menu-nav/test-menu-nav.component';
+
+import BasicSettingsFormService from './shared/basic-settings-form.service';
 
 @NgModule({
   imports: [
@@ -20,9 +24,21 @@ import TestListItemComponent from './test-list-item/test-list-item.component';
     TestMenuRoutingModule,
     SharedModule,
   ],
-  declarations: [TestMenuComponent, TestListComponent, TestListItemComponent],
+  declarations: [
+    TestMenuComponent,
+    TestListComponent,
+    TestListItemComponent,
+    TestSettingsComponent,
+    TestMenuNavComponent,
+  ],
   bootstrap: [],
-  providers: [],
-  exports: [TestMenuComponent, TestListComponent, TestListItemComponent],
+  providers: [BasicSettingsFormService],
+  exports: [
+    TestMenuComponent,
+    TestListComponent,
+    TestListItemComponent,
+    TestSettingsComponent,
+    TestMenuNavComponent,
+  ],
 })
 export default class TestMenuModule {}

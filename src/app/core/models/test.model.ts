@@ -4,13 +4,13 @@ import Tag from './tag.model';
 
 export default class Test {
   constructor(
-    public name: String,
-    public ownerId: number,
-    public duration: TimeSpan,
-    public openingTime: string,
-    public closureTime: string,
-    public numberOfVariants: number,
-    public description: String,
+    public name?: String,
+    public duration?: TimeSpan,
+    public openingTime?: string,
+    public closureTime?: string,
+    public numberOfVariants?: number,
+    public description?: String,
+    public ownerId?: number,
   ) {}
 
   public isAccessOpen?: boolean;

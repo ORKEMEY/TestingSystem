@@ -6,7 +6,7 @@
             (mouseleave)="isSettingsVisible = false">
                 <ul>
                     <li [routerLink]="['settings']"> Settings </li>
-                    <li (click)="this.delete()"> Delete </li>
+                    <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>
             </div>
             <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>      

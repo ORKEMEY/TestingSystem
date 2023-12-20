@@ -107,8 +107,9 @@ ul.pagination-carousel li:hover{
 
 }
 
-.msg-box{
+.warning-component{
     width: 100%;
+    padding: 0;
 }
 
 

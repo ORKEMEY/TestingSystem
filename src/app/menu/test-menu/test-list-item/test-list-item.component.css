@@ -111,11 +111,17 @@
     text-decoration: none;
 }
 
-.setings ul li:hover{
+.setings ul li:hover:not(.delete-btn){
     background-color: lightgray;
     color: blue;
     cursor: pointer;
 
+}
+
+.setings ul li.delete-btn:hover{
+    background-color: lightgray;
+    color: red;
+    cursor: pointer;
 }
 
 .invisible {

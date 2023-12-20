@@ -59,7 +59,7 @@ export default class TestService {
       });
   }
 
-  public postTest(test: Test, observer?: Observer<void>) {
+  public postOwnedTest(test: Test, observer?: Observer<void>) {
     this.http.post('api/Tests/owned', test).subscribe({
       next: () => observer?.next?.(),
       error: (err) => {
@@ -73,7 +73,7 @@ export default class TestService {
     });
   }
 
-  public putTest(test: Test, observer?: Observer<void>) {
+  public putOwnedTest(test: Test, observer?: Observer<void>) {
     this.http.put('api/Tests/owned', test).subscribe({
       next: () => observer?.next?.(),
       error: (err) => {
