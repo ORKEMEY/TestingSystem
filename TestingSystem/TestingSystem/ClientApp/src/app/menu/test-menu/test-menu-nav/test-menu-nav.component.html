@@ -1,0 +1,12 @@
+<div class="navigation">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-light" (click)="activateBtn('BasicSettings')"
+         [ngClass]="{active: this.isBtnActive['BasicSettings']}">Basic Settings</button>
+        <button type="button" class="btn btn-light" (click)="activateBtn('QuestionsManager')"
+        [ngClass]="{active: this.isBtnActive['QuestionsManager']}">Questions Manager</button>
+        <button type="button" class="btn btn-light" (click)="activateBtn('TestAccess')"
+        [ngClass]="{active: this.isBtnActive['TestAccess']}">Test Access</button>
+        <button type="button" class="btn btn-light" (click)="activateBtn('Results')"
+        [ngClass]="{active: this.isBtnActive['Results']}">Results</button>
+      </div>
+</div>

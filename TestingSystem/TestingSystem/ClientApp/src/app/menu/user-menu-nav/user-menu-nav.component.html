@@ -1,0 +1,19 @@
+<nav class="navbar navbar-dark bg-primary sticky-top">
+    <a class="col-3" [routerLink]="['/menus']" class="navbar-brand">Testing system</a>
+    <div class="col-7">
+        <div class="btn-group col-9" role="group">
+            <button class="btn btn-large btn-success col-4" id="btnGetTests"
+            [routerLink]="['/menus/menu/testmenu/tests/list']">Tests
+            </button>
+            <button class="btn btn-large btn-success col-4" id="btnGetTests">Questions Bank
+            </button>
+            <button class="btn btn-large btn-success col-4" id="btnGetTests">My Account
+            </button>
+        </div>
+        <div class="btn-group col-3" role="group">
+            <button class="btn btn-large btn-danger" id="btnSignOut" [routerLink]="['/users']"
+                (click)="LogOut()">Sign out
+            </button>
+        </div>
+    </div>
+</nav>
