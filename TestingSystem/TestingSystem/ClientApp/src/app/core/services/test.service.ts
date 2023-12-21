@@ -48,7 +48,7 @@ export default class TestService {
 
   public searchOwnedTestsByName(name: string) {
     this.http
-      .get(`api/Tests/owned/${name}`)
+      .get(`api/Tests/owned/search?name=${name}`)
       .pipe(map((data) => data as Test[]))
       .subscribe({
         next: (data: Test[]) => this.dataTests.next(data),
@@ -59,9 +59,9 @@ export default class TestService {
       });
   }
 
-  public postOwnedTest(test: Test, observer?: Observer<void>) {
+  public postOwnedTest(test: Test, observer?: Observer<number>) {
     this.http.post('api/Tests/owned', test).subscribe({
-      next: () => observer?.next?.(),
+      next: (id) => observer?.next?.(id as number),
       error: (err) => {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);

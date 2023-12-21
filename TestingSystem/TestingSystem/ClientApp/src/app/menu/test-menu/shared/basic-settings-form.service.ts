@@ -9,7 +9,6 @@ import {
 import { Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
-import TimeSpan from '../../../core/models/time-span.model';
 
 @Injectable()
 export default class BasicSettingsFormService {
@@ -120,7 +119,7 @@ export default class BasicSettingsFormService {
     return null;
   }
 
-  submitPost(observer?: Observer<void>) {
+  submitPost(observer?: Observer<number>) {
     if (!this.form.valid) {
       throw new Error('submit on invalid form');
     } else {
@@ -149,12 +148,25 @@ export default class BasicSettingsFormService {
     let duration;
     const hours = this.form.controls.Duration.get('Hours').value;
     const minutes = this.form.controls.Duration.get('Minutes').value;
-    if (hours === '' && minutes === '') {
+    if (
+      (hours === '' && minutes === '') ||
+      (Number.parseInt(hours, 10) === 0 && Number.parseInt(minutes, 10) === 0)
+    ) {
       duration = null;
     } else {
-      duration = new TimeSpan();
-      duration.hours = hours || 0;
-      duration.minutes = minutes || 0;
+      let strHours;
+      let strMin;
+      if (hours !== '') {
+        strHours = hours < 10 ? `0${hours}` : `${hours}`;
+      } else {
+        strHours = '00';
+      }
+      if (minutes !== '') {
+        strMin = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      } else {
+        strMin = '00';
+      }
+      duration = `${strHours}:${strMin}:00`;
     }
 
     const opTime = this.form.controls.Time.get('OpeningTime').value || null;
@@ -165,17 +177,22 @@ export default class BasicSettingsFormService {
     return test;
   }
 
-  private setFormVals(test: Test): void {
-    if (test === null) return;
-    this.form.controls.Name.setValue(test.name || '');
-    this.form.controls.Description.setValue(test.description || '');
-    this.form.controls.NumberOfVariants.setValue(test.numberOfVariants || 1);
-    this.form.controls.IsAccessOpen.setValue(test.isAccessOpen || true);
+  private setFormVals(test: Test | null): void {
+    this.form.controls.Name.setValue(test?.name || '');
+    this.form.controls.Description.setValue(test?.description || '');
+    this.form.controls.NumberOfVariants.setValue(test?.numberOfVariants || '');
+    this.form.controls.IsAccessOpen.setValue(test?.isAccessOpen || true);
 
-    this.form.controls.Duration.get('Hours').setValue(test.duration?.hours || '');
-    this.form.controls.Duration.get('Minutes').setValue(test.duration?.minutes || '');
+    const duration = test?.duration?.split(':') || null;
+    if (duration !== null) {
+      this.form.controls.Duration.get('Hours').setValue(duration[0] || '');
+      this.form.controls.Duration.get('Minutes').setValue(duration[1] || '');
+    } else {
+      this.form.controls.Duration.get('Hours').setValue('');
+      this.form.controls.Duration.get('Minutes').setValue('');
+    }
 
-    this.form.controls.Time.get('OpeningTime').setValue(test.openingTime || '');
-    this.form.controls.Time.get('ClosureTime').setValue(test.closureTime || '');
+    this.form.controls.Time.get('OpeningTime').setValue(test?.openingTime || '');
+    this.form.controls.Time.get('ClosureTime').setValue(test?.closureTime || '');
   }
 }

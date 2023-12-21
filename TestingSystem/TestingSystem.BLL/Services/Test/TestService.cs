@@ -122,8 +122,8 @@ namespace TestingSystem.BLL.Services
 		public TestDTO GetOwnedItem(int ownerId, int? id)
 		{
 			if (id == null) throw new ValidationException("Id of test isn't set", "id");
-			var test = GetOwnedItems(ownerId).Where(c => c.Id == id.Value).FirstOrDefault();
-
+			var tests = GetOwnedItems(ownerId);
+			var test = tests.Where(c => c.Id == id.Value).FirstOrDefault();
 			if (test == null) throw new ValidationException("No test was found");
 			return MapperBLL.Mapper.Map<TestDTO>(test);
 
