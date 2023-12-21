@@ -8,7 +8,6 @@ using TestingSystem.BLL.Infrastructure;
 using TestingSystem.PL.Models;
 using Microsoft.Extensions.Primitives;
 using TestingSystem.BLL.Services;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TestingSystem.PL.Controllers
 {
@@ -58,7 +57,7 @@ namespace TestingSystem.PL.Controllers
 		[Route("search")]
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
-		public IActionResult Get([FromQuery] string name)
+		public IActionResult GetTestByName([FromQuery] string name)
 		{
 			
 			try
@@ -93,7 +92,7 @@ namespace TestingSystem.PL.Controllers
 		// PUT api/<TestsController>/5
 		[HttpPut]
 		[Authorize(Roles = "Admin")]
-		public IActionResult Put(int id, [FromBody] TestViewModel test)
+		public IActionResult Put([FromBody] TestViewModel test)
 		{
 			try
 			{

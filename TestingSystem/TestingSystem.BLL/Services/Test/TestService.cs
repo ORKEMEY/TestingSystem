@@ -81,6 +81,13 @@ namespace TestingSystem.BLL.Services
 			if (testDTO.NumberOfVariants <= 0)
 				throw new ValidationException("Wrong or empty properties", "NumberOfVariants");
 
+			var testVars = new List<TestVariantDTO>();
+			for (int i = 0; i < testDTO.NumberOfVariants; i++)
+			{
+				testVars.Add(new TestVariantDTO() { Number = i + 1});
+			}
+			testDTO.TestVariants = testVars;
+
 
 			var testDAL = MapperBLL.Mapper.Map<Test>(testDTO);
 			uof.Tests.Create(testDAL);

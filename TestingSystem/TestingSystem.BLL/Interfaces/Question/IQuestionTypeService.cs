@@ -10,5 +10,6 @@ namespace TestingSystem.BLL.Interfaces
 	public interface IQuestionTypeService : ICRUDService<QuestionTypeDTO>
 	{
 		IEnumerable<QuestionTypeDTO> GetItems(string name);
+		QuestionTypeDTO GetQuestionTypeByName(string name);
 	}
 }

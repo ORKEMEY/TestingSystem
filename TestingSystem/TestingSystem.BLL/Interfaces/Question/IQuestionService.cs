@@ -9,6 +9,7 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface IQuestionService : ICRUDService<QuestionDTO>
 	{
-		IEnumerable<QuestionDTO> GetItems(string query);
+		IEnumerable<QuestionDTO> GetQuestionsByQuery(string query);
+		IEnumerable<QuestionDTO> GetQuestionsByTestVar(int testVarId);
 	}
 }

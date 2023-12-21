@@ -20,7 +20,7 @@ namespace TestingSystem.DAL.Models
 		public int QuestionTypeId { get; set; }
 		public QuestionType QuestionType { get; set; }
 
-		public int QuestionsAssemblyId { get; set; }
+		public int? QuestionsAssemblyId { get; set; }
 		public QuestionsAssembly QuestionsAssembly { get; set; }
 
 		public IEnumerable<TestVariant> TestVariants { get; set; }

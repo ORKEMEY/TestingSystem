@@ -7,8 +7,9 @@ using TestingSystem.BLL.DTO;
 
 namespace TestingSystem.BLL.Interfaces
 {
-	internal interface IVariantOfAnswerService : ICRUDService<VariantOfAnswerDTO>
+	public interface IVariantOfAnswerService : ICRUDService<VariantOfAnswerDTO>
 	{
-		IEnumerable<VariantOfAnswerDTO> GetItems(string answer);
+		IEnumerable<VariantOfAnswerDTO> GetAnswers(string answer);
+		VariantOfAnswerDTO GetAnswer(string answer);
 	}
 }

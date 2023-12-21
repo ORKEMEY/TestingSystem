@@ -32,7 +32,12 @@ namespace TestingSystem.PL
 			services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 			services.AddTransient<IPasswordService, PasswordService>();
 			services.AddTransient<ITestService, TestService>();
-			
+			services.AddTransient<ITestVariantService, TestVariantService>();
+			services.AddTransient<IQuestionService, QuestionService>();
+			services.AddTransient<IModelService, ModelService>();
+			services.AddTransient<IQuestionTypeService, QuestionTypeService>();
+			services.AddTransient<IVariantOfAnswerService, VariantOfAnswerService>();
+
 			services.AddDbContext<TestContext>(optionsBuilder =>
 			{
 				optionsBuilder.UseSqlServer(

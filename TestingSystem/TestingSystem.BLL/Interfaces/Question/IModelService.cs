@@ -9,6 +9,6 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface IModelService : ICRUDService<ModelDTO>
 	{
-		IEnumerable<ModelDTO> GetItems(string name);
+		ModelDTO GetModelByName(string name);
 	}
 }

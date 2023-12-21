@@ -64,10 +64,10 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<ModelDTO>>(items);
 		}
 
-		public IEnumerable<ModelDTO> GetItems(string name)
+		public ModelDTO GetModelByName(string name)
 		{
-			IEnumerable<Model> items = uof.Models.GetItems(c => c.Name == name);
-			return MapperBLL.Mapper.Map<IEnumerable<ModelDTO>>(items);
+			Model items = uof.Models.GetItems(c => c.Name == name).FirstOrDefault();
+			return MapperBLL.Mapper.Map<ModelDTO>(items);
 		}
 
 		public ModelDTO GetItem(int? id)

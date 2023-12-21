@@ -20,7 +20,7 @@ namespace TestingSystem.BLL.DTO
 		public int QuestionTypeId { get; set; }
 		public QuestionTypeDTO QuestionType { get; set; }
 
-		public int QuestionsAssemblyId { get; set; }
+		public int? QuestionsAssemblyId { get; set; }
 		public QuestionsAssemblyDTO QuestionsAssembly { get; set; }
 
 		public IEnumerable<TestVariantDTO> TestVariants { get; set; }

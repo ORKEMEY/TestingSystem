@@ -26,6 +26,8 @@ namespace TestingSystem.BLL.Services
 		{
 			if (testVariantDTO.Number <= 0)
 				throw new ValidationException("Wrong or empty properties", "Number");
+			if (testVariantDTO.TestId <= 0)
+				throw new ValidationException("Wrong or empty properties", "TestId");
 
 
 			var testVariantDAL = MapperBLL.Mapper.Map<TestVariant>(testVariantDTO);
@@ -65,9 +67,15 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<TestVariantDTO>>(items);
 		}
 
-		public IEnumerable<TestVariantDTO> GetItems(int number)
+		public IEnumerable<TestVariantDTO> GetTestVarsByNumber(int number)
 		{
 			IEnumerable<TestVariant> items = uof.TestVariants.GetItems(c => c.Number == number);
+			return MapperBLL.Mapper.Map<IEnumerable<TestVariantDTO>>(items);
+		}
+
+		public IEnumerable<TestVariantDTO> GetTestVarsByTestId(int testId)
+		{
+			IEnumerable<TestVariant> items = uof.TestVariants.GetItems(c => c.TestId == testId);
 			return MapperBLL.Mapper.Map<IEnumerable<TestVariantDTO>>(items);
 		}
 

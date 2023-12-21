@@ -20,7 +20,7 @@ namespace TestingSystem.PL.Models
 		public int QuestionTypeId { get; set; }
 		public QuestionTypeViewModel QuestionType { get; set; }
 
-		public int QuestionsAssemblyId { get; set; }
+		public int? QuestionsAssemblyId { get; set; }
 
 
 		public string Query { get; set; }

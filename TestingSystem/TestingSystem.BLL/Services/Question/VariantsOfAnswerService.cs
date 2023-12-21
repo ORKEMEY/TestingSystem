@@ -67,10 +67,16 @@ namespace TestingSystem.BLL.Services
 
 		}
 
-		public IEnumerable<VariantOfAnswerDTO> GetItems(string answer)
+		public IEnumerable<VariantOfAnswerDTO> GetAnswers(string answer)
 		{
 			IEnumerable<VariantOfAnswer> items = uof.VariantsOfAnswer.GetItems(c => c.Answer == answer);
 			return MapperBLL.Mapper.Map<IEnumerable<VariantOfAnswerDTO>>(items);
+		}
+
+		public VariantOfAnswerDTO GetAnswer(string answer)
+		{
+			VariantOfAnswer items = uof.VariantsOfAnswer.GetItems(c => c.Answer == answer).FirstOrDefault();
+			return MapperBLL.Mapper.Map<VariantOfAnswerDTO>(items);
 		}
 
 		public VariantOfAnswerDTO GetItem(int? id)

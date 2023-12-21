@@ -70,9 +70,18 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<QuestionDTO>>(items);
 		}
 
-		public IEnumerable<QuestionDTO> GetItems(string quey)
+		public IEnumerable<QuestionDTO> GetQuestionsByQuery(string query)
 		{
-			IEnumerable<Question> items = uof.Questions.GetItems(c => c.Query == quey);
+			IEnumerable<Question> items = uof.Questions.GetItems(c => c.Query == query);
+			return MapperBLL.Mapper.Map<IEnumerable<QuestionDTO>>(items);
+		}
+
+		public IEnumerable<QuestionDTO> GetQuestionsByTestVar(int testVarId)
+		{
+			IEnumerable<Question> items = uof.Questions.GetItems(
+			c => c.TestVariants
+			.Where(tv => tv.Id == testVarId)
+			.FirstOrDefault() == null ? false : true);
 			return MapperBLL.Mapper.Map<IEnumerable<QuestionDTO>>(items);
 		}
 

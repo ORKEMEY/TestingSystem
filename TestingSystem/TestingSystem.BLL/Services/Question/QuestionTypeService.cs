@@ -69,6 +69,12 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<QuestionTypeDTO>>(items);
 		}
 
+		public QuestionTypeDTO GetQuestionTypeByName(string name)
+		{
+			QuestionType item = uof.QuestionTypes.GetItems(c => c.Name == name).FirstOrDefault();
+			return MapperBLL.Mapper.Map<QuestionTypeDTO>(item);
+		}
+
 		public QuestionTypeDTO GetItem(int? id)
 		{
 			if (id == null) throw new ValidationException("Id of question type isn't set", "id");

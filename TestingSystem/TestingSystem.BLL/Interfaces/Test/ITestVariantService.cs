@@ -9,6 +9,7 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface ITestVariantService : ICRUDService<TestVariantDTO>
 	{
-		IEnumerable<TestVariantDTO> GetItems(int number);
+		IEnumerable<TestVariantDTO> GetTestVarsByNumber(int number);
+		IEnumerable<TestVariantDTO> GetTestVarsByTestId(int testId);
 	}
 }
