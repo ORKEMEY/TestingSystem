@@ -1,11 +1,10 @@
 import TestVariant from './test-variant.model';
-import TimeSpan from './time-span.model';
 import Tag from './tag.model';
 
 export default class Test {
   constructor(
-    public name?: String,
-    public duration?: TimeSpan,
+    public name?: string,
+    public duration?: string,
     public openingTime?: string,
     public closureTime?: string,
     public numberOfVariants?: number,

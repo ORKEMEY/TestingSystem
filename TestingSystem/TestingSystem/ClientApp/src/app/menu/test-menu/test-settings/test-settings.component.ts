@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Observer } from 'rxjs';
 import BasicSettingsFormService from '../shared/basic-settings-form.service';
@@ -48,25 +48,31 @@ export default class TestSettingsComponent {
     return this.test;
   }
 
+  public set Test(item: Test) {
+    this.test = item;
+    this.basicSettingsForm.Test = this.test;
+  }
+
   constructor(
     private basicSettingsForm: BasicSettingsFormService,
     private testService: TestService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
   ) {
     this.id = Number.parseInt(this.activatedRoute.snapshot.params.id, 10);
+    this.loadTest();
   }
 
   private loadTest() {
     if (this.id !== 0) {
       this.testService.getOwnedById(this.id, {
         next: (item) => {
-          this.test = item;
-          this.basicSettingsForm.Test = this.test;
+          this.Test = item;
         },
         error: (err) => this.Warn(err),
         complete: () => console.log('comlete'),
       } as Observer<Test>);
+    } else {
+      this.Test = null;
     }
   }
 
@@ -104,9 +110,13 @@ export default class TestSettingsComponent {
     try {
       if (this.id === 0) {
         this.basicSettingsForm.submitPost({
-          next: () => this.Info('Test succesfully created!'),
+          next: (itemId) => {
+            this.id = itemId;
+            this.loadTest();
+            this.Info('Test succesfully created!');
+          },
           error: (errMsg: string) => this.Warn(errMsg),
-        } as Observer<void>);
+        } as Observer<number>);
       } else {
         this.basicSettingsForm.submitPut(this.id, {
           next: () => this.Info('Changes saved!'),

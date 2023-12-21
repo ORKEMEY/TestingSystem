@@ -19,10 +19,15 @@
                 (closeButtonPushed)="hideWarning()" class="col-10 warning-component" [message]="warningMessage">
             </warning-component>
         </div>
+        <div class=" h-center">
+            <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
+                (closeButtonPushed)="hideInfo()" class="col-10 warning-component" [message]="infoMessage">
+            </info-component>
+        </div>
         
         <div class="grid" >
             <div class="item">
-                <button class="add-item" tabindex="-1">
+                <button [routerLink]="['../',{ outlets: { primary: ['settings', 0], nav: 'testmenunav' } }]" class="add-item" tabindex="-1">
                     +
                 </button>
             </div>
