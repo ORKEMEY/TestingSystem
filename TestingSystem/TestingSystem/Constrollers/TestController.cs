@@ -141,7 +141,7 @@ namespace TestingSystem.PL.Controllers
 				}); ;
 
 				var testDTO = service.GetOwnedItem(userDTO.Id, Id);
-				return new JsonResult(MapperWEB.Mapper.Map<IEnumerable<TestViewModel>>(testDTO));
+				return new JsonResult(MapperWEB.Mapper.Map<TestViewModel>(testDTO));
 			}
 			catch (ArgumentNullException)
 			{
