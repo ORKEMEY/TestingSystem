@@ -48,7 +48,7 @@ export default class TestService {
 
   public searchOwnedTestsByName(name: string) {
     this.http
-      .get(`api/Tests/owned/search/${name}`)
+      .get(`api/Tests/owned/search?name=${name}`)
       .pipe(map((data) => data as Test[]))
       .subscribe({
         next: (data: Test[]) => this.dataTests.next(data),

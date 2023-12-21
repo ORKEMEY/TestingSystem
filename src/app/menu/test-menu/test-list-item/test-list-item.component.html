@@ -5,7 +5,7 @@
             <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
             (mouseleave)="isSettingsVisible = false">
                 <ul>
-                    <li [routerLink]="['../',{ outlets: { primary: ['settings', 1], nav: 'testmenunav' } }]" > Settings </li>
+                    <li [routerLink]="['../',{ outlets: { primary: ['settings', item?.id], nav: 'testmenunav' } }]" > Settings </li>
                     <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>
             </div>
