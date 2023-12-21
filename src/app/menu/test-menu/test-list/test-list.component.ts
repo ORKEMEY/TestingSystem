@@ -26,7 +26,11 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   isWarningVisible: Boolean = false;
 
+  isInfoVisible: Boolean = false;
+
   warningMessage: string = '';
+
+  infoMessage: string = '';
 
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
@@ -80,6 +84,10 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
     this.testService.DeleteOwnedTestAsync(
       test.id as number,
       {
+        next: () => {
+          this.Info('Test succesfully deleted!');
+          this.testService.refreshOwnedTests();
+        },
         error: (errMsg: string) => this.Warn(errMsg),
       } as Observer<void>,
     );
@@ -103,5 +111,15 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   hideWarning() {
     this.warningMessage = '';
     this.isWarningVisible = false;
+  }
+
+  Info(msg: string) {
+    this.infoMessage = msg;
+    this.isInfoVisible = true;
+  }
+
+  hideInfo() {
+    this.infoMessage = '';
+    this.isInfoVisible = false;
   }
 }
