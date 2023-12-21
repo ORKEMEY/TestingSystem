@@ -23,7 +23,7 @@ namespace TestingSystem.BLL.Services
 			this.ps = ps;
 		}
 
-		public void AddItem(UserDTO userDTO)
+		public UserDTO AddItem(UserDTO userDTO)
 		{
 			if(userDTO == null)		
 				throw new Infrastructure.ValidationException("Empty object");
@@ -45,6 +45,8 @@ namespace TestingSystem.BLL.Services
 
 			uof.Users.Create(userDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<UserDTO>(userDAL);
 		}
 
 

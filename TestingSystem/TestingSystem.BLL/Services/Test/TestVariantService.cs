@@ -22,7 +22,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(TestVariantDTO testVariantDTO)
+		public TestVariantDTO AddItem(TestVariantDTO testVariantDTO)
 		{
 			if (testVariantDTO.Number <= 0)
 				throw new ValidationException("Wrong or empty properties", "Number");
@@ -31,6 +31,8 @@ namespace TestingSystem.BLL.Services
 			var testVariantDAL = MapperBLL.Mapper.Map<TestVariant>(testVariantDTO);
 			uof.TestVariants.Create(testVariantDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<TestVariantDTO>(testVariantDAL);
 		}
 
 		public void DeleteItem(TestVariantDTO testVariantDTO)

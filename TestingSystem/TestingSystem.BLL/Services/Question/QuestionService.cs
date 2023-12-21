@@ -22,7 +22,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(QuestionDTO questionDTO)
+		public QuestionDTO AddItem(QuestionDTO questionDTO)
 		{
 			if (questionDTO.Query == null)
 				throw new ValidationException("Wrong or empty properties", "Query");
@@ -36,6 +36,8 @@ namespace TestingSystem.BLL.Services
 			var questionDAL = MapperBLL.Mapper.Map<Question>(questionDTO);
 			uof.Questions.Create(questionDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<QuestionDTO>(questionDAL);
 		}
 
 		public void DeleteItem(QuestionDTO questionDTO)

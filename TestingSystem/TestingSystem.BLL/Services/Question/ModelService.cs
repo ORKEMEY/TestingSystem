@@ -21,7 +21,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(ModelDTO modelDTO)
+		public ModelDTO AddItem(ModelDTO modelDTO)
 		{
 			if (modelDTO.Name == null)
 				throw new ValidationException("Wrong or empty properties", "Name");
@@ -30,6 +30,8 @@ namespace TestingSystem.BLL.Services
 			var modelDAL = MapperBLL.Mapper.Map<Model>(modelDTO);
 			uof.Models.Create(modelDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<ModelDTO>(modelDAL);
 		}
 
 		public void DeleteItem(ModelDTO modelDTO)

@@ -22,7 +22,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(QuestionsAssemblyDTO  questionsAssemblyDTO)
+		public QuestionsAssemblyDTO AddItem(QuestionsAssemblyDTO  questionsAssemblyDTO)
 		{
 			if ( questionsAssemblyDTO.Name == null)
 				throw new ValidationException("Wrong or empty properties", "Name");
@@ -33,6 +33,8 @@ namespace TestingSystem.BLL.Services
 			var  questionsAssemblyDAL = MapperBLL.Mapper.Map<QuestionsAssembly>( questionsAssemblyDTO);
 			uof.QuestionsAssemblies.Create(questionsAssemblyDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<QuestionsAssemblyDTO>(questionsAssemblyDAL);
 		}
 
 		public void DeleteItem(QuestionsAssemblyDTO  questionsAssemblyDTO)

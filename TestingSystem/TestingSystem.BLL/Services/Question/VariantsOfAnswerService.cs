@@ -21,7 +21,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(VariantOfAnswerDTO answerDTO)
+		public VariantOfAnswerDTO AddItem(VariantOfAnswerDTO answerDTO)
 		{
 			if (answerDTO.Answer == null || answerDTO.QuestionId <= 0)
 				throw new ValidationException("Wrong or empty properties", "Answer");
@@ -32,6 +32,8 @@ namespace TestingSystem.BLL.Services
 			var answerDAL = MapperBLL.Mapper.Map<VariantOfAnswer>(answerDTO);
 			uof.VariantsOfAnswer.Create(answerDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<VariantOfAnswerDTO>(answerDAL);
 		}
 
 		public void DeleteItem(VariantOfAnswerDTO answerDTO)

@@ -20,7 +20,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(LogDTO logDTO)
+		public LogDTO AddItem(LogDTO logDTO)
 		{
 			if (logDTO.UserId <= 0)
 				throw new ValidationException("Wrong or empty properties", "UserId");
@@ -38,6 +38,8 @@ namespace TestingSystem.BLL.Services
 			var logDAL = MapperBLL.Mapper.Map<Log>(logDTO);
 			uof.Logs.Create(logDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<LogDTO>(logDAL);
 		}
 
 		public void DeleteItem(LogDTO logDTO)

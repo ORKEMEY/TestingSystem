@@ -68,7 +68,7 @@ namespace TestingSystem.BLL.Services
 			uof.Save();
 		}
 
-		public void AddItem(TestDTO testDTO)
+		public TestDTO AddItem(TestDTO testDTO)
 		{
 			if (String.IsNullOrEmpty(testDTO.Name))
 				throw new ValidationException("Wrong or empty properties", "Name");
@@ -85,6 +85,8 @@ namespace TestingSystem.BLL.Services
 			var testDAL = MapperBLL.Mapper.Map<Test>(testDTO);
 			uof.Tests.Create(testDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<TestDTO>(testDAL);
 		}
 
 		public void DeleteItem(TestDTO testDTO)
@@ -127,12 +129,10 @@ namespace TestingSystem.BLL.Services
 
 		}
 
-		public void AddOwnedItem(int ownerId, TestDTO testDTO)
+		public TestDTO AddOwnedItem(int ownerId, TestDTO testDTO)
 		{
-			if(ownerId != testDTO.OwnerId)
-				throw new ValidationException("Operation is not permitted");
-
-			this.AddItem(testDTO);
+			testDTO.OwnerId = ownerId;
+			return this.AddItem(testDTO);
 		}
 
 		public void UpdateOwnedItem(int ownerId, TestDTO testDTO)
@@ -150,10 +150,15 @@ namespace TestingSystem.BLL.Services
 			try
 			{
 				var test = uof.Tests.GetItems(c => c.OwnerId == ownerId && c.Id == testDTO.Id).Single();
+				if (test == null) throw new ValidationException("Item is not found in you collection");
 				uof.Tests.Delete(test.Id);
 				uof.Save();
 			}
-			catch(Exception e)
+			catch (ValidationException e)
+			{
+				throw new ValidationException(e.Message);
+			}
+			catch (Exception e)
 			{
 				throw new ValidationException("Couldn't delete test");
 			}

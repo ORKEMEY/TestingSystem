@@ -8,6 +8,7 @@ using TestingSystem.BLL.Infrastructure;
 using TestingSystem.PL.Models;
 using Microsoft.Extensions.Primitives;
 using TestingSystem.BLL.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TestingSystem.PL.Controllers
 {
@@ -214,19 +215,18 @@ namespace TestingSystem.PL.Controllers
 					AccessToken = GetAccessToken()
 				});
 
-				service.AddOwnedItem(userDTO.Id, MapperWEB.Mapper.Map<TestDTO>(test));
+				var createdTest = service.AddOwnedItem(userDTO.Id, MapperWEB.Mapper.Map<TestDTO>(test));
+
+				return Created(Url.RouteUrl(createdTest.Id), createdTest.Id);
 			}
 			catch (ValidationException e)
 			{
 				return new BadRequestObjectResult(new { errorText = e.Message });
 			}
 
-			return Ok();
-
 		}
 
-		// PUT api/<TestsController>/owned/5
-		//[Route("owned")]
+		// PUT api/<TestsController>/owned
 		[HttpPut("owned")]
 		public IActionResult UpdateOwned([FromBody] TestViewModel test)
 		{
@@ -248,7 +248,6 @@ namespace TestingSystem.PL.Controllers
 		}
 			
 		// DELETE api/<TestsController>/owned/5
-		//[Route("owned")]
 		[HttpDelete("owned/{id}")]
 		public IActionResult DeleteOwned(int id)
 		{

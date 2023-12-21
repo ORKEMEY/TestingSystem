@@ -20,7 +20,7 @@ namespace TestingSystem.BLL.Services
 			this.uof = uof;
 		}
 
-		public void AddItem(RoleDTO roleDTO)
+		public RoleDTO AddItem(RoleDTO roleDTO)
 		{
 			if (roleDTO.Name == null)
 				throw new ValidationException("Wrong or empty properties", "Name");
@@ -29,6 +29,8 @@ namespace TestingSystem.BLL.Services
 			var roleDAL = MapperBLL.Mapper.Map<Role>(roleDTO);
 			uof.Roles.Create(roleDAL);
 			uof.Save();
+
+			return MapperBLL.Mapper.Map<RoleDTO>(roleDAL);
 		}
 
 		public void DeleteItem(RoleDTO roleDTO)

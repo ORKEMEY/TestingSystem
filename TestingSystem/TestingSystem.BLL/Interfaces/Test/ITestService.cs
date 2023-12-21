@@ -11,7 +11,7 @@ namespace TestingSystem.BLL.Interfaces
 		IEnumerable<TestDTO> GetOwnedItems(int ownerId);
 		IEnumerable<TestDTO> SearchOwnedItems(int ownerId, string name);
 		TestDTO GetOwnedItem(int ownerId, int? id);
-		void AddOwnedItem(int ownerId, TestDTO testDTO);
+		TestDTO AddOwnedItem(int ownerId, TestDTO testDTO);
 		void UpdateOwnedItem(int ownerId, TestDTO testDTO);
 		void DeleteOwendItem(int ownerId, TestDTO testDTO);
 	}

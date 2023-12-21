@@ -8,7 +8,7 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface ICRUDService<T> where T : class
 	{
-		void AddItem(T item);
+		T AddItem(T item);
 		void DeleteItem(T item);
 		void UpdateItem(T item);
 		IEnumerable<T> GetItems();
