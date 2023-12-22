@@ -12,6 +12,9 @@ import TestListComponent from './test-list/test-list.component';
 import TestListItemComponent from './test-list-item/test-list-item.component';
 import TestSettingsComponent from './test-settings/test-settings.component';
 import TestMenuNavComponent from './test-menu-nav/test-menu-nav.component';
+import QuestionsManagerComponent from './questions-manager/questions-manager.component';
+import QuestionsListComponent from './questions-list/questions-list.component';
+import QuestionsListItemComponent from './questions-list-item/questions-list-item.component';
 
 import BasicSettingsFormService from './shared/basic-settings-form.service';
 
@@ -30,6 +33,9 @@ import BasicSettingsFormService from './shared/basic-settings-form.service';
     TestListItemComponent,
     TestSettingsComponent,
     TestMenuNavComponent,
+    QuestionsManagerComponent,
+    QuestionsListComponent,
+    QuestionsListItemComponent,
   ],
   bootstrap: [],
   providers: [BasicSettingsFormService],
@@ -39,6 +45,9 @@ import BasicSettingsFormService from './shared/basic-settings-form.service';
     TestListItemComponent,
     TestSettingsComponent,
     TestMenuNavComponent,
+    QuestionsManagerComponent,
+    QuestionsListComponent,
+    QuestionsListItemComponent,
   ],
 })
 export default class TestMenuModule {}

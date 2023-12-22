@@ -1,0 +1,36 @@
+<div class="page">
+
+    <div class="search h-center">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button (click)="searchItems()" class="input-group-text" id="btnSearch">Search</button>
+            </div>
+            <input [(ngModel)]="searchLine" (ngModelChange)="onSearchLineEmpty()" id="searchLine" type="text"
+                class="form-control" placeholder="Query">
+        </div>
+    </div>
+
+    <div class="alert-grid h-center">
+        <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
+        </div>
+    </div>
+
+    <div class="add">
+        <div class="item">
+            <button class="add-item" tabindex="-1">
+                +
+            </button>
+        </div>
+    </div>
+
+
+    <div class="content-grid">
+        <questions-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
+         (deleteButtonPushed)="deleteItem($event)">
+            </questions-list-item-component>
+    </div>
+
+
+</div>
+
+

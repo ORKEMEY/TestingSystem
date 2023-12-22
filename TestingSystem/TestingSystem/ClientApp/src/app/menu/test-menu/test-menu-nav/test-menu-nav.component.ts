@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'test-menu-nav-component',
@@ -12,6 +13,12 @@ export default class TestMenuNavComponent {
     TestAccess: false,
     Results: false,
   };
+
+  testId: number = 0;
+
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.testId = Number.parseInt(this.activatedRoute.snapshot.params.id, 10);
+  }
 
   activateBtn(name: string) {
     Object.keys(this.isBtnActive).forEach((key) => {

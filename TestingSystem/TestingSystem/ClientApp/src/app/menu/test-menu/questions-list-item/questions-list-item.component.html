@@ -1,0 +1,49 @@
+<div class="item-container">
+    <div class="item grid" (mouseleave)="isSettingsVisible = false">
+        <div class="header h-end setings-container">
+            <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
+                (mouseleave)="isSettingsVisible = false">
+                <ul>
+                    <!--[routerLink]="['../',{ outlets: { primary: ['settings', item?.id || 0], nav: ['testmenunav', item?.id || 0] } }]"-->
+                    <li> Settings </li>
+                    <li class="delete-btn" (click)="this.delete()"> Delete </li>
+                </ul>
+            </div>
+            <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
+
+        </div>
+        <div class="query h-start">
+            <p>
+                {{Query}}
+            </p>
+        </div>
+
+        <div class="answers ">
+            <div class="answers-container">
+                <div *ngFor="let answer of item?.answers" class="answer h-start">
+                    <div *ngIf="item?.questionType?.name === 'Single Choise' || 
+                            item?.questionType?.name === 'True / False'">
+                        
+                            <input *ngIf="answer?.isCorrect === true; else unchecked" type="radio" checked disabled>
+                            <ng-template #unchecked>
+                                <input  type="radio" disabled>
+                            </ng-template>
+                           
+                        
+                            <label class="check-label">
+                            {{answer?.answer}}
+                        </label>
+                    </div>
+                    <div *ngIf="item?.questionType.name === 'Short Answer'">
+                        <input class="input-block-level form-control" type="text" value="{{answer?.answer}}" disabled>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+        </div>
+
+    </div>
+</div>

@@ -4,21 +4,25 @@ import Model from './model.model';
 import QuestionType from './question-type.model';
 
 export default class Question {
-  constructor(
-    public modelId: number,
-    public model: Model,
-    public questionTypeId: number,
-    public questionType: QuestionType,
-    public questionsAssemblyId: number,
-    public query: String,
-    public bParam: number,
-    public aParam: number,
-    public cParam: number,
-  ) {}
+  public modelId: number;
+
+  public model: Model;
+
+  public questionTypeId: number;
+
+  public questionType: QuestionType;
+
+  public questionsAssemblyId: number;
+
+  public bParam: number;
+
+  public aParam: number;
+
+  public cParam: number;
+
+  constructor(public query: String, public answers?: VariantOfAnswer[]) {}
 
   public id?: Number;
-
-  public answers?: VariantOfAnswer[];
 
   public tags?: Tag[];
 }
