@@ -1,0 +1,27 @@
+<div class="page">
+
+    <div class="header">
+        <div class="h-center">
+            <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content h-center">
+        <questions-list-component class="list-container" [testVariant]="testVariants?.[CurrentPage - 1]"></questions-list-component>
+       
+    </div>
+
+    <div class="footer">
+        <div class="carousel-container">
+            <ul class=" pagination-carousel">
+                <li (click)="previous()"> Prev </li>
+                <li> {{CurrentPage}} </li>
+                <li (click)="next()"> Next </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>

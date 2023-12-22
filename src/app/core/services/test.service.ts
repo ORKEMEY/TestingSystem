@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import CredentialsService from './credentials.service';
 import Test from '../models/test.model';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +10,7 @@ export default class TestService {
 
   public dataTests$: Observable<Test[] | null>;
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
+  constructor(private http: HttpClient) {
     this.dataTests = new BehaviorSubject<Test[] | null>(null);
     this.dataTests$ = this.dataTests.asObservable();
   }
@@ -100,55 +99,6 @@ export default class TestService {
       complete: () => observer?.complete?.(),
     });
   }
-  /*
-  public post(test: Test, observer?: Observer<void>) {
-    return this.http
-      .post(
-        `api/Tests?name=${test.name}&hours=${test.time.hours}&minutes=${test.time.minutes}`,
-        null,
-      )
-      .subscribe({
-        next: () => observer?.next?.(),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
-  } */
-  /*
-  public async AddQuestionAsync(testId: number, questionId: number, observer?: Observer<void>) {
-    await this.http.post(`api/Tests/${testId}/${questionId}`, null).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
-  }
-*/
-  /*
-  public async DeleteQuestionAsync(testId: number, questionId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Tests/${testId}/${questionId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
-  }
-*/
   /*
   public CheckTest(testId: number, answerid: number[], observer?: Observer<CheckResponse>) {
     console.log(answerid);
