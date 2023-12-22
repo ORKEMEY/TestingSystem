@@ -70,7 +70,9 @@ namespace TestingSystem.PL.Controllers
 		{
 			try
 			{
-				service.AddItem(MapperWEB.Mapper.Map<TestVariantDTO>(testv));
+				var createdtestv = service.AddItem(MapperWEB.Mapper.Map<TestVariantDTO>(testv));
+
+				return Created(Url.RouteUrl(createdtestv.Id), createdtestv.Id);
 			}
 			catch (ValidationException e)
 			{

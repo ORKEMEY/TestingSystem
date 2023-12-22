@@ -76,16 +76,17 @@ namespace TestingSystem.PL.Controllers
 		[Authorize(Roles = "Admin")]
 		public IActionResult Post([FromBody] TestViewModel test)
 		{
+
 			try
 			{
-				service.AddItem(MapperWEB.Mapper.Map<TestDTO>(test));
+				var createdTest =  service.AddItem(MapperWEB.Mapper.Map<TestDTO>(test));
+
+				return Created(Url.RouteUrl(createdTest.Id), createdTest.Id);
 			}
 			catch (ValidationException e)
 			{
 				return new BadRequestObjectResult(new { errorText = e.Message });
 			}
-
-			return Ok();
 
 		}
 
