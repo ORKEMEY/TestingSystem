@@ -24,8 +24,17 @@ export default class QuestionsListComponent
 
   public searchLine: string | null;
 
+  private testVar: TestVariant = null;
+
   @Input()
-  testVariant: TestVariant = null;
+  public set testVariant(testVar: TestVariant) {
+    this.testVar = testVar;
+    this.questionService.searchQuestionsByTestVarId(testVar?.id);
+  }
+
+  public get testVariant(): TestVariant {
+    return this.testVar;
+  }
 
   private get testVariantId(): number {
     return this.testVariant?.id || 0;
