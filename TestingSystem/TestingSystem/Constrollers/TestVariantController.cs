@@ -79,8 +79,6 @@ namespace TestingSystem.PL.Controllers
 				return new BadRequestObjectResult(new { errorText = e.Message });
 			}
 
-			return Ok();
-
 		}
 
 		// PUT api/<TestsController>

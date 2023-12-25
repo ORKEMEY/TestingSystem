@@ -48,7 +48,7 @@ namespace TestingSystem.PL.Controllers
 			}
 		}
 
-		[Route("search")]
+		[Route("search/name")]
 		[HttpGet]
 		public IActionResult GetAnswerByName([FromQuery] string name)
 		{
@@ -56,6 +56,22 @@ namespace TestingSystem.PL.Controllers
 			try
 			{
 				var ansDTO = service.GetAnswer(name);
+				return new JsonResult(MapperWEB.Mapper.Map<VariantOfAnswerViewModel>(ansDTO));
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
+		}
+
+		[Route("search/questionId")]
+		[HttpGet]
+		public IActionResult GetAnswerByQuestionId([FromQuery] int questionId)
+		{
+
+			try
+			{
+				var ansDTO = service.GetAnswersByQuestionId(questionId);
 				return new JsonResult(MapperWEB.Mapper.Map<VariantOfAnswerViewModel>(ansDTO));
 			}
 			catch (ValidationException e)
@@ -78,8 +94,6 @@ namespace TestingSystem.PL.Controllers
 			{
 				return new BadRequestObjectResult(new { errorText = e.Message });
 			}
-
-			return Ok();
 
 		}
 
