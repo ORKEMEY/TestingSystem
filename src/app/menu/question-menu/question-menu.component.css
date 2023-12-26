@@ -1,0 +1,15 @@
+.navigation {
+    display: flex;
+    justify-content: center;
+
+    margin: 0;
+    margin-bottom: 0.5em;
+}
+
+.navigation button:first-child {
+    border-top-left-radius: 0;
+}
+
+.navigation button:last-child {
+    border-top-right-radius: 0;
+}

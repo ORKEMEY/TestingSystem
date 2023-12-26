@@ -1,5 +1,9 @@
 export default class VariantOfAnswer {
-  constructor(public answer: String, public questionId: Number) {}
+  public questionId: Number;
+
+  constructor(public answer: String, questionId?: Number) {
+    this.questionId = questionId;
+  }
 
   public isCorrect?: Boolean;
 

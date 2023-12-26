@@ -1,0 +1,104 @@
+.garland {
+    --red: #ff2c2c;
+    --yellow: #ffeb00;
+    --green: #00ff5d;
+    --blue: #0095ff;
+    --speed: 1.5s;
+
+    position: absolute;
+    top: 0;
+    z-index: 100000;
+}
+
+.invisible {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+  
+  .red {
+    fill: var(--red);
+    box-shadow:  -5px -5px 5px black;
+    animation: var(--speed) alternate 0s infinite blinkRed;
+  }
+  
+  .yellow {
+    fill: var(--yellow);
+    animation: var(--speed) alternate 0s infinite blinkYellow;
+  }
+  
+  .blue {
+    fill: var(--blue);
+    animation: var(--speed) alternate 0s infinite blinkBlue;
+  }
+  
+  .green {
+    fill: var(--green);
+    animation: var(--speed) alternate 0s infinite blinkGreen;
+  }
+  
+  @keyframes blinkRed {
+    0%{
+      fill: var(--red);
+    }
+    25% {
+      fill: var(--blue);
+    }
+    50% {
+      fill: var(--green);
+    }
+    75% {
+      fill: var(--yellow);
+    }
+  }
+  
+  @keyframes blinkYellow {
+    0%{
+      fill: var(--yellow);
+    }
+    25% {
+      fill: var(--red);
+    }
+    50% {
+      fill: var(--blue);
+    }
+    75% {
+      fill: var(--green);
+    }
+  }
+  
+  @keyframes blinkBlue {
+    0%{
+      fill: var(--blue);
+    }
+    25% {
+      fill: var(--green);
+    }
+    50% {
+      fill: var(--yellow);
+    }
+    75% {
+      fill: var(--red);
+    }
+  }
+  
+  @keyframes blinkGreen {
+    0%{
+      fill: var(--green);
+    }
+    25% {
+      fill: var(--yellow);
+    }
+    50% {
+      fill: var(--red);
+    }
+    75% {
+      fill: var(--blue);
+    }
+  }
+  

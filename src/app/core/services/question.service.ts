@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import TestVariantService from './test-variant.service';
 import Question from '../models/question.model';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +11,7 @@ export default class QuestionService {
 
   public dataQuestions$: Observable<Question[] | null>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private testVariantService: TestVariantService) {
     this.dataQuestions = new BehaviorSubject<Question[] | null>(null);
     this.dataQuestions$ = this.dataQuestions.asObservable();
   }
@@ -72,6 +73,14 @@ export default class QuestionService {
     });
   }
 
+  public postQuestionToTestVariant(
+    testVariantId: number,
+    questionId: number,
+    observer?: Observer<void>,
+  ) {
+    this.testVariantService.postQuestionToTestVariant(testVariantId, questionId, observer);
+  }
+
   public putQuestion(question: Question, observer?: Observer<void>) {
     this.http.put('api/Questions', question).subscribe({
       next: () => observer?.next?.(),
@@ -84,6 +93,14 @@ export default class QuestionService {
       },
       complete: () => observer?.complete?.(),
     });
+  }
+
+  public DeleteQuestionFromTestVariant(
+    testVariantId: number,
+    questionId: number,
+    observer?: Observer<void>,
+  ) {
+    this.testVariantService.DeleteQuestionFromTestVariant(testVariantId, questionId, observer);
   }
 
   public async DeleteQuestionAsync(questiontId: number, observer?: Observer<void>) {

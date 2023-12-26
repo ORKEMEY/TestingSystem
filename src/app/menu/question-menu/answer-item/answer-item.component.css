@@ -1,0 +1,17 @@
+.answer-input{
+    display: flex;
+    justify-content: center;
+    margin: 0.5em 0;
+}
+
+.answer-input input{
+    margin: 0 1em;
+}
+
+.answer-input input:first-child{
+    margin-left: 0;
+}
+
+.answer-input input:last-child{
+    margin-right: 0;
+}

@@ -15,6 +15,10 @@ const routes: Routes = [
         path: 'testmenu',
         loadChildren: () => import('./test-menu/test-menu.module').then((m) => m.default),
       },
+      {
+        path: 'questionmenu',
+        loadChildren: () => import('./question-menu/question-menu.module').then((m) => m.default),
+      },
       { path: '**', component: NotFoundComponent },
     ],
   },

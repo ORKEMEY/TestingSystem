@@ -1,0 +1,69 @@
+.page{
+    min-height: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: ". . ."
+                        ". form ."
+                        ". . ."
+                        ". list ."
+                        ". . .";
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 1.5em auto 1.5em 1fr 1em;
+    
+}
+
+.form {
+    grid-area: form;
+    margin: 0 1em;
+    padding: 0;
+}
+
+.list {
+    grid-area: list;
+    margin: 0 1em;
+    padding: 0;
+}
+
+/*------------------------------------*/
+
+.answer-input{
+    display: flex;
+    justify-content: center;
+    margin: 0.5em 0;
+}
+
+.answer-input input{
+    margin: 0 1em;
+}
+
+.answer-input input:first-child{
+    margin-left: 0;
+}
+
+.answer-input input:last-child{
+    margin-right: 0;
+}
+
+/*------------------------------------*/
+
+.submit-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+/*------------------------------------*/
+.invisible {
+    opacity: 0;
+    display: none !important;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.warning-component{
+    width: 100%;
+    padding: 0;
+}
