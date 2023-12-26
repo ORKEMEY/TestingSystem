@@ -13,5 +13,11 @@ namespace TestingSystem.DAL.Models
 
 		public IEnumerable<Question> Questions { get; set; }
 		public IEnumerable<Test> Tests { get; set; }
+
+		public Tag()
+		{
+			Questions = new List<Question>();
+			Tests = new List<Test>();
+		}
 	}
 }

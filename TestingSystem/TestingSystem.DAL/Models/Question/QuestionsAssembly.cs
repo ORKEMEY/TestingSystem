@@ -16,5 +16,10 @@ namespace TestingSystem.DAL.Models
 		public User Owner { get; set; }
 
 		public IEnumerable<Question> Questions { get; set; }
+
+		public QuestionsAssembly()
+		{
+			Questions = new List<Question>();
+		}
 	}
 }

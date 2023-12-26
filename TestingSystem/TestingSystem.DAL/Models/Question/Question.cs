@@ -31,6 +31,12 @@ namespace TestingSystem.DAL.Models
 		public double aParam { get; set; }
 		public double cParam { get; set; }
 
+		public Question()
+		{
+			TestVariants = new List<TestVariant>();
+			Tags = new List<Tag>();
+			Answers = new List<VariantOfAnswer>();
+		}
 
 	}
 }

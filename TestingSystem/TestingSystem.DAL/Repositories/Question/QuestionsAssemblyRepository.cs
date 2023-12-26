@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -21,7 +22,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public QuestionsAssembly GetItem(int id)
 		{
-			return db.QuestionsAssemblies
+			return db.QuestionsAssemblies.Include(c => c.Questions)
 				.FirstOrDefault(x => x.Id == id);
 
 		}
@@ -47,7 +48,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public IEnumerable<QuestionsAssembly> GetItems(Expression<Func<QuestionsAssembly, bool>> predicate)
 		{
-			return db.QuestionsAssemblies.Where(predicate);
+			return db.QuestionsAssemblies.Where(predicate).Include(c => c.Questions);
 		}
 	}
 }

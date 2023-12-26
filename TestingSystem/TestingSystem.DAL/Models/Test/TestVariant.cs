@@ -15,5 +15,10 @@ namespace TestingSystem.DAL.Models
 		public Test Test { get; set; }
 
 		public IEnumerable<Question> Questions { get; set; }
+
+		public TestVariant()
+		{
+			Questions = new List<Question>();
+		}
 	}
 }
