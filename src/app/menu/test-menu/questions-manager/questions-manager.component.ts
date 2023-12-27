@@ -33,7 +33,10 @@ export default class QuestionsManagerComponent
     private activatedRoute: ActivatedRoute,
   ) {
     super(1);
-    this.testId = Number.parseInt(this.activatedRoute.snapshot.params.id, 10);
+    this.activatedRoute.parent.params.subscribe((params) => {
+      this.testId = Number.parseInt(params.id, 10);
+      this.loadTestVariants();
+    });
   }
 
   ngOnInit(): void {
@@ -44,7 +47,13 @@ export default class QuestionsManagerComponent
         this.checkCollection();
       },
     );
-    this.testVariantService.searchTestVariantsByTestId(this.testId);
+    this.loadTestVariants();
+  }
+
+  loadTestVariants() {
+    if (this.testId !== 0) {
+      this.testVariantService.searchTestVariantsByTestId(this.testId);
+    }
   }
 
   ngOnDestroy(): void {
