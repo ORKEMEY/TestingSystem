@@ -22,12 +22,17 @@ export default class AnswerFormService {
       this.basicSettingsFormService.submitPost({
         next: (questionId) => {
           this.answerEditorFormService.submit(questionId, observer);
-          this.BSFormPostCalled = false;
-          this.BSPostObserver = null;
-          observer.next(questionId);
+          this.BSPostObserver.next(questionId);
+          this.clear();
         },
-        error: (err) => observer.error(err),
-        complete: () => observer.complete(),
+        error: (err) => {
+          observer.error(err);
+          this.clear();
+        },
+        complete: () => {
+          observer.complete();
+          this.clear();
+        },
       });
     }
   }
@@ -39,6 +44,11 @@ export default class AnswerFormService {
 
   submitBasicSettingsFormPut(id: number, observer?: Observer<void>) {
     this.basicSettingsFormService.submitPut(id, observer);
+  }
+
+  clear() {
+    this.BSFormPostCalled = false;
+    this.BSPostObserver = null;
   }
 
   public isNewQuestionSaved(): boolean {

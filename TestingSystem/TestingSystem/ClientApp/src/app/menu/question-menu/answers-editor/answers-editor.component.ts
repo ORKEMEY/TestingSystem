@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Observer, Subscription } from 'rxjs';
 import AnswerFormService from '../shared/answer-form.service';
@@ -61,9 +61,14 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     private questionService: QuestionService,
     private answerFormService: AnswerFormService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
-    this.questionId = Number.parseInt(this.activatedRoute.parent.snapshot.params.id, 10);
-    this.loadQuestion();
+    this.activatedRoute.parent.params.subscribe((params) => {
+      this.questionId = Number.parseInt(params.id, 10);
+      this.loadQuestion().then(() => {
+        this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
+      });
+    });
 
     /* this.answers = [
       new VariantOfAnswer('answer 1', 1),
@@ -77,18 +82,24 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     }); */
   }
 
-  private loadQuestion() {
-    if (this.questionId !== 0) {
-      this.questionService.getById(this.questionId, {
-        next: (item) => {
-          this.Question = item;
-        },
-        error: (err) => this.Warn(err),
-        complete: () => console.log('comlete'),
-      } as Observer<Question>);
-    } else {
-      this.Question = null;
-    }
+  private loadQuestion(): Promise<void> {
+    return new Promise((res, rej) => {
+      if (this.questionId !== 0) {
+        this.questionService.getById(this.questionId, {
+          next: (item) => {
+            this.Question = item;
+            res();
+          },
+          error: (err) => {
+            this.Warn(err);
+            rej();
+          },
+        } as Observer<Question>);
+      } else {
+        this.Question = null;
+        rej();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -148,7 +159,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       this.answerFormService.submitAnswerEditorForm({
         next: (itemId) => {
           this.Info('Answer succesfully created!');
-          console.log(itemId);
+          this.router.navigate(['menus/menu/questionmenu/question', itemId, 'answerseditor']);
         },
         error: (errMsg: string) => this.Warn(errMsg),
       } as Observer<number>);
@@ -162,6 +173,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       this.answerEditorFormService.submit(this.questionId, {
         next: (itemId) => {
           this.Info('Answer succesfully created!');
+          this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
           console.log(itemId);
         },
         error: (errMsg: string) => this.Warn(errMsg),

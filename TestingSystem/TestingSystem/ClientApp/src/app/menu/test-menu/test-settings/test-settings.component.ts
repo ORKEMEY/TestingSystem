@@ -59,8 +59,10 @@ export default class TestSettingsComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    this.id = Number.parseInt(this.activatedRoute.snapshot.params.id, 10);
-    this.loadTest();
+    this.activatedRoute.parent.params.subscribe((params) => {
+      this.id = Number.parseInt(params.id, 10);
+      this.loadTest();
+    });
   }
 
   private loadTest() {
@@ -122,13 +124,12 @@ export default class TestSettingsComponent {
   private submitPost() {
     this.basicSettingsForm.submitPost({
       next: (itemId) => {
-        /* this.id = itemId;
-        this.loadTest(); */
-        this.Info('Test succesfully created!');
         this.router.navigate([
-          '/menus/menu/testmenu/tests/',
-          { outlets: { primary: ['settings', itemId], nav: ['testmenunav', itemId] } },
+          '/menus/menu/testmenu/test/',
+          itemId,
+          { outlets: { primary: ['settings'], nav: ['testmenunav'] } },
         ]);
+        this.Info('Test succesfully created!');
       },
       error: (errMsg: string) => this.Warn(errMsg),
     } as Observer<number>);

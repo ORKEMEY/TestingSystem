@@ -82,8 +82,13 @@
                         <h6>*Variants Number:</h6>
                     </label> 
                     <div>
-                        <input formControlName="NumberOfVariants" type="number" class="input-block-level form-control"
+                        <input *ngIf="this.Test === null; else disabledInput" formControlName="NumberOfVariants" type="number" class="input-block-level form-control"
                         (ngModelChange)="onNumberOfVariantsChange()" placeholder="1" min="1" max="100" required>
+                        
+                        <ng-template #disabledInput>
+                            <input formControlName="NumberOfVariants" type="number" class="input-block-level form-control"
+                        (ngModelChange)="onNumberOfVariantsChange()" placeholder="1" min="1" max="100" disabled required>
+                        </ng-template>
                     </div>
                 </div>
                 <div class="form-group col-12">

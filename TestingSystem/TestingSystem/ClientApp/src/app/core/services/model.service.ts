@@ -48,9 +48,9 @@ export default class ModelService {
   public searchModelsByName(name: string) {
     this.http
       .get(`api/Models/search?name=${name}`)
-      .pipe(map((data) => data as Model[]))
+      .pipe(map((data) => data as Model))
       .subscribe({
-        next: (data: Model[]) => this.dataModels.next(data),
+        next: (data: Model) => this.dataModels.next([data]),
         error: (err) => {
           console.error(err);
           this.dataModels.next(null);

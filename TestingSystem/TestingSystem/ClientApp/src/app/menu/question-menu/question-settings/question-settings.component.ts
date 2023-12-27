@@ -68,8 +68,10 @@ export default class QuestionSettingsComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    this.id = Number.parseInt(this.activatedRoute.parent.snapshot.params.id, 10);
-    this.loadQuestion();
+    this.activatedRoute.parent.params.subscribe((params) => {
+      this.id = Number.parseInt(params.id, 10);
+      this.loadQuestion();
+    });
   }
 
   private loadQuestion() {
@@ -144,11 +146,14 @@ export default class QuestionSettingsComponent {
         if (this.questionAddingService.isActivated) {
           this.questionAddingService.pushQuestionId(itemId);
         }
-        this.router.navigate([`/menus/menu/questionmenu/question/${itemId}/answerseditor`]);
+        this.Info("Question's successfully created!");
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        this.Warn(errMsg);
+      },
     } as Observer<number>);
     this.Info("Question's saved and will be created after adding answers!");
+    // this.router.navigate(['/menus/menu/questionmenu/question', 0, 'answerseditor']);
   }
 
   private submitPut() {
