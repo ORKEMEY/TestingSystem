@@ -38,3 +38,8 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
   margin-bottom: 15px;
   padding: 7px 9px;
 }
+
+.submit-btn-container {
+  display: flex;
+  justify-content: end;
+}

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observer, Subscription } from 'rxjs';
 import QuestionService from '../../../core/services/question.service';
+import TestVariantQuestionAddingService from '../../shared/test-var-question-adding.service';
 import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
@@ -21,6 +23,10 @@ export default class QuestionsListComponent
 
   @ViewChild('alertDiv', { static: false })
   alertDiv: ElementRef | undefined;
+
+  isWarningVisible: Boolean = false;
+
+  warningMessage: string = '';
 
   public searchLine: string | null;
 
@@ -46,8 +52,12 @@ export default class QuestionsListComponent
     return this.questions;
   }
 
-  constructor(private questionService: QuestionService) {
-    super(100);
+  constructor(
+    private router: Router,
+    private questionService: QuestionService,
+    private questionAddingService: TestVariantQuestionAddingService,
+  ) {
+    super(1000);
     /*
     const qTypes = [
       new QuestionType('Single Choise'),
@@ -76,6 +86,7 @@ export default class QuestionsListComponent
 
     this.questions.forEach((q, ind) => {
       q.questionType = qTypes[ind % 3];
+      q.id = ind;
     }); */
   }
 
@@ -93,7 +104,8 @@ export default class QuestionsListComponent
   }
 
   deleteItem(question: Question) {
-    this.questionService.DeleteQuestionAsync(
+    this.questionService.DeleteQuestionFromTestVariant(
+      this.testVariant.id,
       question.id as number,
       {
         next: () => {
@@ -104,6 +116,16 @@ export default class QuestionsListComponent
     );
     /* const index = this.questions.indexOf(question);
     this.questions.splice(index, 1); */
+  }
+
+  addQuestion() {
+    if (this.testVariantId === 0) {
+      this.Warn('Firstly create question!');
+      return;
+    }
+    this.questionAddingService.clear();
+    this.questionAddingService.pushTestVariant(this.testVariantId);
+    this.router.navigate(['/menus/menu/questionmenu/question/0/settings']);
   }
 
   onSearchLineEmpty() {
@@ -126,5 +148,15 @@ export default class QuestionsListComponent
     } else {
       Alert.hideAlertMessage(this.alertDiv);
     }
+  }
+
+  Warn(msg: string) {
+    this.warningMessage = msg;
+    this.isWarningVisible = true;
+  }
+
+  hideWarning() {
+    this.warningMessage = '';
+    this.isWarningVisible = false;
   }
 }

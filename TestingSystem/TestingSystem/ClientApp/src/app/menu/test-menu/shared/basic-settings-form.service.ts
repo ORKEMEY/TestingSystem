@@ -49,11 +49,11 @@ export default class BasicSettingsFormService {
     if (this.form.controls.Name.valid || this.form.controls.Name.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Name.errors?.required) {
-      res = "Name cann't be empty!";
+      return "Name cann't be empty!";
     }
-    return res;
+    return null;
   }
 
   public validateNumberOfVariants(): string | null {

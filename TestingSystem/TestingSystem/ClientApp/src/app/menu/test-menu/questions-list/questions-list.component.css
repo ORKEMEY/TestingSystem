@@ -4,14 +4,17 @@
     width: 100%;
     display: grid;
     grid-template-areas: ". "
-                        " search"
+                        " search "
+                        " . "
+                        " label "
                         " . "
                         " alert"
                         " . "
                         " add "
                         " content"
                         " . ";
-    grid-template-rows: 0.5em auto 1em auto 1em auto auto 1em;  
+    grid-template-rows:  repeat(2, 0.5em auto) repeat(2, 1em auto) auto 1em; 
+    
 }
 
 .search{
@@ -20,6 +23,10 @@
 
 .alert-grid{
     grid-area: alert;
+}
+
+.label {
+    grid-area: label;
 }
 
 .add{
@@ -62,4 +69,25 @@
     width: 100%;
     border-radius: 1em;
     border: 1px solid gray;
+}
+
+.label p {
+    margin-bottom: 0;
+}
+
+/*---------------------------------*/
+.invisible {
+    opacity: 0;
+    display: none !important;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.warning-component{
+    width: 100%;
+    padding: 0;
 }

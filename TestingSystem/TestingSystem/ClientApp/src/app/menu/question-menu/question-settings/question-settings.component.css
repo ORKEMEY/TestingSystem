@@ -30,6 +30,11 @@
     width: 100%;
 }
 
+.submit-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
 /*-----------------------------------*/
 
 .invisible {
@@ -45,11 +50,12 @@
 
 /*-----------------------------------*/
 
-input.ng-touched.ng-invalid.ng-dirty {
+input.ng-touched.ng-invalid.ng-dirty, textarea.ng-touched.ng-invalid.ng-dirty {
     border: solid red 1px;
   }
   
-  div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
+  div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty, 
+  div.ng-touched.ng-invalid.ng-dirty textarea.ng-touched.ng-dirty {
     border: solid red 1px;
   }
 
@@ -74,11 +80,6 @@ input.ng-touched.ng-invalid.ng-dirty {
 .form-group .card-header{
     padding-left: 0;
     padding-right: 0;
-}
-
-.submit-btn-container {
-    display: flex;
-    justify-content: end;
 }
 
 .btn-collapse{

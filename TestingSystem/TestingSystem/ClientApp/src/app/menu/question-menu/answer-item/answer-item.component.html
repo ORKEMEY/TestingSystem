@@ -1,0 +1,11 @@
+<div class="answer-input">
+            
+   <input *ngIf="item?.isCorrect === true; else unchecked" type="checkbox" checked disabled/>
+    <ng-template #unchecked>
+        <input type="checkbox" disabled/>
+    </ng-template>
+
+    <input type="text" name="Answer" class="input-block-level form-control"
+        value="{{item?.answer}}" placeholder="Answer"/>
+    <button (click)="this.delete()" type="button" class="btn btn-danger">Del</button>
+</div>

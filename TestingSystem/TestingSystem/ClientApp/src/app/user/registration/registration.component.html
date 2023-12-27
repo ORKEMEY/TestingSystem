@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="submit()" id="RegisterForm" class="form-signin col-10">
     <h2 id="SendRegiserFormLabel" class="form-signin-heading">Sign up</h2>
     <br />
-    
+
     <div class="form-block col-sm-12">
       <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden></div>
     </div>
@@ -19,7 +19,7 @@
         <div class="alert alert-danger form-block" role="alert" #alertLoginDiv hidden></div>
       </div>
     </div>
-  
+
     <div>
       <!-- Name -->
       <div class="form-block">
@@ -90,7 +90,10 @@
       </div>
     </div>
     <br />
-    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnRegiserForm"
-      value="Sign up" />
+    <div class="submit-btn-container col-12">
+      <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnRegiserForm"
+        value="Sign up" />
+    </div>
+
   </form>
 </div>

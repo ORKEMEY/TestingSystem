@@ -1,0 +1,69 @@
+<div class="page">
+
+    <div class="form">
+
+        <div>
+            <div class=" h-center">
+                <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
+                    (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+                </warning-component>
+            </div>
+            <div class=" h-center">
+                <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
+                    (closeButtonPushed)="hideInfo()" class="col-12 warning-component" [message]="infoMessage">
+                </info-component>
+            </div>
+
+        </div>
+
+        <form id="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+            <div class="form-group col-12">
+                <!-- Answer -->
+                <label for="Answer" class="col-form-label">
+                    <h6>Add Answer:</h6>
+                </label>
+
+                <div class="answer-input">
+                    <input formControlName="IsCorrect" type="checkbox" />
+                    <input formControlName="Answer" (ngModelChange)="onAnswerChange()" type="text" name="Answer"
+                        class="input-block-level form-control" placeholder="Answer" required />
+                </div>
+
+            </div>
+            <div class="form-group col-12">
+                <!-- Answer Alert-->
+                <div class="alert alert-danger" role="alert" #alertAnswerDiv hidden>
+                </div>
+            </div>
+
+            <div class="submit-btn-container col-12">
+                <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Add Answer" />
+            </div>
+        </form>
+
+    </div>
+
+    <div class="list">
+
+        <div class="alert-grid h-center col-12">
+            <div id="Alert" class="alert alert-danger" #alertListDiv hidden>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <!-- Answers -->
+            <label class="col-form-label">
+                <h6>Answers:</h6>
+            </label>
+
+            <div *ngFor="let answer of answers">
+
+                <answer-item-component [item]="answer" (deleteButtonPushed)="deleteItem($event)">
+                </answer-item-component>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+<div class="navigation">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-light" (click)="activateBtn('BasicSettings')"
+        [ngClass]="{active: this.isBtnActive['BasicSettings']}"
+        [routerLink]="['./', { outlets: { primary: ['settings'] } }]"
+        >Basic Settings</button>
+
+        <button type="button" class="btn btn-light" (click)="activateBtn('AnswersEditor')"
+        [ngClass]="{active: this.isBtnActive['AnswersEditor']}"
+        [routerLink]="['./', { outlets: { primary: ['answerseditor'] } }]"
+        >Answers Editor</button>
+
+      </div>
+</div>
+<router-outlet name="primary"></router-outlet>
+

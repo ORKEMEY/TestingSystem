@@ -4,8 +4,7 @@
             <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
                 (mouseleave)="isSettingsVisible = false">
                 <ul>
-                    <!--[routerLink]="['../',{ outlets: { primary: ['settings', item?.id || 0], nav: ['testmenunav', item?.id || 0] } }]"-->
-                    <li> Settings </li>
+                    <li  [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings </li>
                     <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>
             </div>
@@ -24,15 +23,15 @@
                     <div *ngIf="item?.questionType?.name === 'Single Choise' || 
                             item?.questionType?.name === 'True / False'">
                         
-                            <input *ngIf="answer?.isCorrect === true; else unchecked" type="radio" checked disabled>
+                            <input *ngIf="answer?.isCorrect; else unchecked" type="radio" checked disabled>
                             <ng-template #unchecked>
                                 <input  type="radio" disabled>
                             </ng-template>
                            
                         
                             <label class="check-label">
-                            {{answer?.answer}}
-                        </label>
+                                {{answer?.answer}}
+                            </label>
                     </div>
                     <div *ngIf="item?.questionType.name === 'Short Answer'">
                         <input class="input-block-level form-control" type="text" value="{{answer?.answer}}" disabled>

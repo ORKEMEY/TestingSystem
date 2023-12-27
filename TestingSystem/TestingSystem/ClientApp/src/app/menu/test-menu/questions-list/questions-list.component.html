@@ -10,14 +10,29 @@
         </div>
     </div>
 
-    <div class="alert-grid h-center">
-        <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
+    <div class="label h-center">
+        <div *ngIf="!this.testVariant">
+            <p>Variant Number: {{this.testVariant?.number}}</p>
         </div>
     </div>
 
+    <div class="alert-grid">
+        <div class=" h-center">
+            <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
+            </div>
+        </div>
+
+        <div class=" h-center">
+            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
+                (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+            </warning-component>
+        </div>
+    </div>
+
+
     <div class="add">
         <div class="item">
-            <button class="add-item" tabindex="-1">
+            <button (click)="addQuestion()" class="add-item" tabindex="-1">
                 +
             </button>
         </div>
@@ -26,11 +41,9 @@
 
     <div class="content-grid">
         <questions-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
-         (deleteButtonPushed)="deleteItem($event)">
-            </questions-list-item-component>
+            (deleteButtonPushed)="deleteItem($event)">
+        </questions-list-item-component>
     </div>
 
 
 </div>
-
-

@@ -72,8 +72,44 @@ export default class TestVariantService {
     });
   }
 
+  public postQuestionToTestVariant(
+    testVariantId: number,
+    questionId: number,
+    observer?: Observer<void>,
+  ) {
+    this.http.post(`api/TestVariants/${testVariantId}/${questionId}`, null).subscribe({
+      next: () => observer?.next?.(),
+      error: (err) => {
+        if (err.status === 400) {
+          observer?.error?.(err.error.errorText);
+        } else {
+          console.error(err);
+        }
+      },
+      complete: () => observer?.complete?.(),
+    });
+  }
+
   public putTestVariant(testVariant: TestVariant, observer?: Observer<void>) {
     this.http.put('api/TestVariants', testVariant).subscribe({
+      next: () => observer?.next?.(),
+      error: (err) => {
+        if (err.status === 400) {
+          observer?.error?.(err.error.errorText);
+        } else {
+          console.error(err);
+        }
+      },
+      complete: () => observer?.complete?.(),
+    });
+  }
+
+  public DeleteQuestionFromTestVariant(
+    testVariantId: number,
+    questionId: number,
+    observer?: Observer<void>,
+  ) {
+    this.http.put(`api/TestVariants/${testVariantId}/${questionId}`, null).subscribe({
       next: () => observer?.next?.(),
       error: (err) => {
         if (err.status === 400) {
