@@ -57,7 +57,7 @@ namespace TestingSystem.PL.Controllers
 		[Route("search")]
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
-		public IActionResult GetTestByName([FromQuery] string name)
+		public IActionResult GetTestsByName([FromQuery] string name)
 		{
 			
 			try

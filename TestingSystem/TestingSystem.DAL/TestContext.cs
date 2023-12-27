@@ -62,9 +62,9 @@ namespace TestingSystem.DAL
 
 			this.QuestionsAssemblies.AddRange(firstQa, secondQa);
 
-			var firstM = new Model() { Name = "first" };
-			var secondM = new Model() { Name = "second"};
-			var thirdM = new Model() { Name = "third"};
+			var firstM = new Model() { Name = "1PL" };
+			var secondM = new Model() { Name = "2PL" };
+			var thirdM = new Model() { Name = "3PL" };
 
 			this.Models.AddRange(firstM, secondM, thirdM);
 

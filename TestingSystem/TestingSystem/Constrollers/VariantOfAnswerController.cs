@@ -66,13 +66,13 @@ namespace TestingSystem.PL.Controllers
 
 		[Route("search/questionId")]
 		[HttpGet]
-		public IActionResult GetAnswerByQuestionId([FromQuery] int questionId)
+		public IActionResult GetAnswersByQuestionId([FromQuery] int questionId)
 		{
 
 			try
 			{
 				var ansDTO = service.GetAnswersByQuestionId(questionId);
-				return new JsonResult(MapperWEB.Mapper.Map<VariantOfAnswerViewModel>(ansDTO));
+				return new JsonResult(MapperWEB.Mapper.Map<IEnumerable<VariantOfAnswerViewModel>>(ansDTO));
 			}
 			catch (ValidationException e)
 			{
