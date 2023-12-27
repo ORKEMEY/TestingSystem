@@ -11,5 +11,7 @@ namespace TestingSystem.BLL.Interfaces
 	{
 		IEnumerable<TestVariantDTO> GetTestVarsByNumber(int number);
 		IEnumerable<TestVariantDTO> GetTestVarsByTestId(int testId);
+		void DeleteQuestion(int testVariantId, int questionId);
+		void AddQuestion(int testVariantId, int questionId);
 	}
 }

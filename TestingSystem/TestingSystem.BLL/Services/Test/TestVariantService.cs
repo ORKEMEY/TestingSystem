@@ -45,6 +45,39 @@ namespace TestingSystem.BLL.Services
 			uof.Save();
 		}
 
+		public void AddQuestion(int testVariantId, int questionId)
+		{
+			if (testVariantId <= 0 || questionId <= 0)
+				throw new ValidationException("Wrong or empty property Id");
+
+
+			var testVarDAL = uof.TestVariants.GetItem(testVariantId);
+			if (testVarDAL == null) throw new ValidationException("No test variant was found");
+
+			var questionDAL = uof.Questions.GetItems(c => c.Id == questionId).FirstOrDefault();
+			if (questionDAL == null) throw new ValidationException("No question was found");
+
+			(testVarDAL.Questions as List<Question>).Add(questionDAL); ;
+			
+			uof.Save();
+		}
+
+		public void DeleteQuestion(int testVariantId, int questionId)
+		{
+			if (testVariantId <= 0 || questionId <= 0)
+				throw new ValidationException("Wrong or empty property Id");
+
+
+			var testVarDAL = uof.TestVariants.GetItem(testVariantId);
+			if (testVarDAL == null) throw new ValidationException("No test variant was found");
+
+			var questionDAL = testVarDAL.Questions.Where(c => c.Id == questionId).FirstOrDefault();
+			if (questionDAL == null) throw new ValidationException("No question was found");
+			
+			(testVarDAL.Questions as List<Question>).Remove(questionDAL);
+			uof.Save();
+		}
+
 		public void UpdateItem(TestVariantDTO testVariantDTO)
 		{
 			if (testVariantDTO.Id <= 0)

@@ -11,5 +11,6 @@ namespace TestingSystem.BLL.Interfaces
 	{
 		IEnumerable<VariantOfAnswerDTO> GetAnswers(string answer);
 		VariantOfAnswerDTO GetAnswer(string answer);
+		IEnumerable<VariantOfAnswerDTO> GetAnswersByQuestionId(int questionId);
 	}
 }

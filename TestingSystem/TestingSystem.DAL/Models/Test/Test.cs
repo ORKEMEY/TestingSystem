@@ -28,5 +28,13 @@ namespace TestingSystem.DAL.Models
 		public int NumberOfVariants { get; set; }
 		public string Description { get; set; }
 
+		public Test()
+		{
+			AllowedUsers = new List<User>();
+			TestVariants = new List<TestVariant>();
+			Logs = new List<Log>();
+			Tags = new List<Tag>();
+		}
+
 	}
 }

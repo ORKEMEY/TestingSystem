@@ -79,7 +79,22 @@ namespace TestingSystem.PL.Controllers
 				return new BadRequestObjectResult(new { errorText = e.Message });
 			}
 
-			return Ok();
+		}
+
+		// POST api/<TestsController>
+		[HttpPost("{id}/{questionId}")]
+		public IActionResult PostQuestionToTestVariant(int id, int questionId)
+		{
+			try
+			{
+				service.AddQuestion(id, questionId);
+
+				return Ok();
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
 
 		}
 
@@ -99,6 +114,24 @@ namespace TestingSystem.PL.Controllers
 			return Ok();
 
 		}
+
+		// PUT api/<TestsController>/5/2
+		[HttpPut("{id}/{questionId}")]
+		public IActionResult DeleteQuestionFromTestVariant(int id, int questionId)
+		{
+			try
+			{
+				service.DeleteQuestion(id, questionId);
+			}
+			catch (ValidationException e)
+			{
+				return new NotFoundObjectResult(new { errorText = e.Message });
+			}
+
+			return Ok();
+		}
+
+
 
 		// DELETE api/<TestsController>/5
 		[HttpDelete("{id}")]

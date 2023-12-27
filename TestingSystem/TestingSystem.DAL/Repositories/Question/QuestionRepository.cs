@@ -22,7 +22,6 @@ namespace TestingSystem.DAL.Repositories
 		{
 			return db.Questions.Include(u => u.Model)
 				.Include(u => u.QuestionType)
-				.Include(u => u.QuestionsAssembly)
 				.Include(u => u.Answers)
 				.Include(u => u.Tags)
 				.FirstOrDefault(x => x.Id == id);
@@ -53,7 +52,6 @@ namespace TestingSystem.DAL.Repositories
 			return db.Questions.Where(predicate)
 				.Include(u => u.Model)
 				.Include(u => u.QuestionType)
-				.Include(u => u.QuestionsAssembly)
 				.Include(u => u.Answers)
 				.Include(u => u.Tags);
 		}

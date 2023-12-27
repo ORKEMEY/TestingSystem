@@ -18,5 +18,13 @@
 		public IEnumerable<Test> AccessibleTests { get; set; }
 		public IEnumerable<QuestionsAssembly> QuestionsAssemblyies{ get; set; }
 
+		public User()
+		{
+			Logs = new List<Log>();
+			OwnedTests = new List<Test>();
+			AccessibleTests = new List<Test>();
+			QuestionsAssemblyies = new List<QuestionsAssembly>();
+		}
+
 	}
 }
