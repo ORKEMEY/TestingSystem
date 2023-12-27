@@ -17,9 +17,17 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       { path: 'list', component: TestListComponent },
-      { path: 'settings/:id', component: TestSettingsComponent }, // (settings/5//nav:testmenunav/5)
-      { path: 'questionsmanager/:id', component: QuestionsManagerComponent }, // (questionsmanager/5//nav:testmenunav/5)
-      { path: 'testmenunav/:id', component: TestMenuNavComponent, outlet: 'nav' },
+      { path: '**', component: NotFoundComponent, pathMatch: 'full' },
+    ],
+  },
+  {
+    path: 'test/:id',
+    component: TestMenuComponent,
+    children: [
+      { path: '', redirectTo: 'settings', pathMatch: 'full' },
+      { path: 'settings', component: TestSettingsComponent },
+      { path: 'questionsmanager', component: QuestionsManagerComponent },
+      { path: 'testmenunav', component: TestMenuNavComponent, outlet: 'nav' },
       { path: '**', component: NotFoundComponent, pathMatch: 'full' },
     ],
   },

@@ -107,9 +107,14 @@ export default class BasicSettingsFormService {
     if (!this.form.valid) {
       throw new Error('submit on invalid form');
     } else {
-      this.readFormValsAsync().then((question) => {
-        this.questionService.postQuestion(question, observer);
-      });
+      this.readFormValsAsync().then(
+        (question) => {
+          this.questionService.postQuestion(question, observer);
+        },
+        (rej) => {
+          observer.error(rej);
+        },
+      );
     }
   }
 
@@ -117,10 +122,15 @@ export default class BasicSettingsFormService {
     if (!this.form.valid) {
       throw new Error('submit on invalid form');
     } else {
-      this.readFormValsAsync().then((question) => {
-        question.id = id;
-        this.questionService.putQuestion(question, observer);
-      });
+      this.readFormValsAsync().then(
+        (question) => {
+          question.id = id;
+          this.questionService.putQuestion(question, observer);
+        },
+        (rej) => {
+          observer.error(rej);
+        },
+      );
     }
   }
 
@@ -133,14 +143,24 @@ export default class BasicSettingsFormService {
     const pseudoGuessing = this.form.controls.PseudoGuessing.value || 0;
 
     let questionType: QuestionType;
-    const qtProm = this.readQuestionTypeAsync().then((res) => {
-      questionType = res;
-    });
+    const qtProm = this.readQuestionTypeAsync().then(
+      (res) => {
+        questionType = res;
+      },
+      (rej) => {
+        return Promise.reject(rej);
+      },
+    );
 
     let model: Model;
-    const mProm = this.readModelAsync().then((res) => {
-      model = res;
-    });
+    const mProm = this.readModelAsync().then(
+      (res) => {
+        model = res;
+      },
+      (rej) => {
+        return Promise.reject(rej);
+      },
+    );
 
     return Promise.all([qtProm, mProm]).then(() => {
       const question = new Question(query);
@@ -157,10 +177,17 @@ export default class BasicSettingsFormService {
     let questionType: QuestionType;
     const questionTypeName = this.form.controls.QuestionType.value;
 
-    return new Promise<QuestionType>((res) => {
-      this.questionTypeService.dataQuestionTypes$.subscribe((data: QuestionType[] | null) => {
-        questionType = data?.[0];
-        res(questionType);
+    return new Promise<QuestionType>((res, rej) => {
+      this.questionTypeService.dataQuestionTypes$.subscribe({
+        next: (data: QuestionType[] | null) => {
+          if (!data) {
+            rej(new Error('Specified question type not found'));
+          } else {
+            questionType = data?.[0];
+            res(questionType);
+          }
+        },
+        error: (err) => rej(err),
       });
       this.questionTypeService.searchQuestionTypesByName(questionTypeName);
     });
@@ -178,10 +205,17 @@ export default class BasicSettingsFormService {
       modelName = '3PL';
     }
 
-    return new Promise<Model>((res) => {
-      this.modelService.dataModels$.subscribe((data: Model[] | null) => {
-        model = data?.[0];
-        res(model);
+    return new Promise<Model>((res, rej) => {
+      this.modelService.dataModels$.subscribe({
+        next: (data: Model[] | null) => {
+          if (!data) {
+            rej(new Error('Specified model not found'));
+          } else {
+            model = data?.[0];
+            res(model);
+          }
+        },
+        error: (err) => rej(err),
       });
       this.modelService.searchModelsByName(modelName);
     });

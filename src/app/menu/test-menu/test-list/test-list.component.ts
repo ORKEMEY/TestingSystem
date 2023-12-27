@@ -50,7 +50,11 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       new Test('name13', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
       new Test('name14', null, null, null, 1, 'description', 1),
       new Test('name15', null, null, null, 1, 'description', 1),
-    ]; */
+    ];
+
+    this.tests.forEach((el, ind) => {
+      el.id = ind + 1;
+    }); */
   }
 
   ngOnInit(): void {

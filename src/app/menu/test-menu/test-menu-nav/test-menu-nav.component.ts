@@ -17,7 +17,9 @@ export default class TestMenuNavComponent {
   testId: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute) {
-    this.testId = Number.parseInt(this.activatedRoute.snapshot.params.id, 10);
+    this.activatedRoute.parent.params.subscribe((params) => {
+      this.testId = Number.parseInt(params.id, 10);
+    });
   }
 
   activateBtn(name: string) {

@@ -48,9 +48,9 @@ export default class QuestionTypeService {
   public searchQuestionTypesByName(name: string) {
     this.http
       .get(`api/QuestionTypes/search?name=${name}`)
-      .pipe(map((data) => data as QuestionType[]))
+      .pipe(map((data) => data as QuestionType))
       .subscribe({
-        next: (data: QuestionType[]) => this.dataQuestionTypes.next(data),
+        next: (data: QuestionType) => this.dataQuestionTypes.next([data]),
         error: (err) => {
           console.error(err);
           this.dataQuestionTypes.next(null);
