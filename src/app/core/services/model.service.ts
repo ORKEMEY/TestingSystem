@@ -45,15 +45,15 @@ export default class ModelService {
       });
   }
 
-  public searchModelsByName(name: string) {
+  public searchModelsByName(name: string, observer?: Observer<Model>) {
     this.http
       .get(`api/Models/search?name=${name}`)
       .pipe(map((data) => data as Model))
       .subscribe({
-        next: (data: Model) => this.dataModels.next([data]),
+        next: (data: Model) => observer?.next?.(data),
         error: (err) => {
           console.error(err);
-          this.dataModels.next(null);
+          observer?.error?.(err);
         },
       });
   }

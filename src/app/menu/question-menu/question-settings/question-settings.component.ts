@@ -55,6 +55,7 @@ export default class QuestionSettingsComponent {
   public set Question(item: Question) {
     this.question = item;
     this.basicSettingsForm.Question = this.question;
+    this.validateForm();
   }
 
   private get basicSettingsForm() {
@@ -126,6 +127,13 @@ export default class QuestionSettingsComponent {
     } else {
       Alert.alertMessage(this.alertPseudoGuessingDiv, res);
     }
+  }
+
+  validateForm() {
+    this.onQueryChange();
+    this.onDifficultyChange();
+    this.onDiscriminationChange();
+    this.onPseudoGuessingChange();
   }
 
   submit() {
