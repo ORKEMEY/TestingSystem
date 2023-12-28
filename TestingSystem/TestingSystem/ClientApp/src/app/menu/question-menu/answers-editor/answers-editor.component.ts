@@ -166,14 +166,14 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
           this.loadAnswer(itemId, {
             next: (ans) => {
               this.questionId = ans.questionId as number;
+              this.router.navigate([
+                'menus/menu/questionmenu/question',
+                this.questionId,
+                'answerseditor',
+              ]);
+              this.Info('Answer succesfully created!');
             },
           } as Observer<VariantOfAnswer>);
-          this.router.navigate([
-            'menus/menu/questionmenu/question',
-            this.questionId,
-            'answerseditor',
-          ]);
-          this.Info('Answer succesfully created!');
         },
         error: (errMsg: string) => this.Warn(errMsg),
       } as Observer<number>);

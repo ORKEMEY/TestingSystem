@@ -178,18 +178,17 @@ export default class BasicSettingsFormService {
     const questionTypeName = this.form.controls.QuestionType.value;
 
     return new Promise<QuestionType>((res, rej) => {
-      this.questionTypeService.dataQuestionTypes$.subscribe({
-        next: (data: QuestionType[] | null) => {
+      this.questionTypeService.searchQuestionTypesByName(questionTypeName, {
+        next: (data: QuestionType) => {
           if (!data) {
             rej(new Error('Specified question type not found'));
           } else {
-            questionType = data?.[0];
+            questionType = data;
             res(questionType);
           }
         },
         error: (err) => rej(err),
-      });
-      this.questionTypeService.searchQuestionTypesByName(questionTypeName);
+      } as Observer<QuestionType>);
     });
   }
 
@@ -206,18 +205,17 @@ export default class BasicSettingsFormService {
     }
 
     return new Promise<Model>((res, rej) => {
-      this.modelService.dataModels$.subscribe({
-        next: (data: Model[] | null) => {
+      this.modelService.searchModelsByName(modelName, {
+        next: (data: Model) => {
           if (!data) {
             rej(new Error('Specified model not found'));
           } else {
-            model = data?.[0];
+            model = data;
             res(model);
           }
         },
         error: (err) => rej(err),
-      });
-      this.modelService.searchModelsByName(modelName);
+      } as Observer<Model>);
     });
   }
 

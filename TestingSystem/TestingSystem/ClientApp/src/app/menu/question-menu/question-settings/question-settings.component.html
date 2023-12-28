@@ -45,12 +45,20 @@
                     <label for="QuestionType" class="col-form-label">
                         <h6>*Question Type:</h6>
                     </label>
+
                     <div>
-                        <select formControlName="QuestionType" class="custom-select">
+                        <select *ngIf="this.Question === null; else disabledInput" formControlName="QuestionType" class="custom-select">
                             <option value="Single Choise" selected>Single Choise</option>
                             <option value="True / False">True / False</option>
                             <option value="Short Answer">Short Answer</option>
                           </select>
+                          <ng-template #disabledInput>
+                            <select *ngIf="this.Question=== null; else disabledInput" formControlName="QuestionType" class="custom-select" disabled>
+                                <option value="Single Choise" selected>Single Choise</option>
+                                <option value="True / False">True / False</option>
+                                <option value="Short Answer">Short Answer</option>
+                            </select>
+                        </ng-template>
                     </div>
                 </div>
 

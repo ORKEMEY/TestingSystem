@@ -51,6 +51,7 @@ export default class TestSettingsComponent {
   public set Test(item: Test) {
     this.test = item;
     this.basicSettingsForm.Test = this.test;
+    this.validateForm();
   }
 
   constructor(
@@ -107,6 +108,12 @@ export default class TestSettingsComponent {
     } else {
       Alert.alertMessage(this.alertTimeDiv, res);
     }
+  }
+
+  validateForm() {
+    this.onNameChange();
+    this.onNumberOfVariantsChange();
+    this.onTimeChange();
   }
 
   submit() {
