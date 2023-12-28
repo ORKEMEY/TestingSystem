@@ -102,6 +102,10 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     });
   }
 
+  private loadAnswer(id: number, observer: Observer<VariantOfAnswer>) {
+    this.variantOfAnswerService.getById(id, observer);
+  }
+
   ngOnInit(): void {
     this.answersSub = this.variantOfAnswerService.dataVariantsOfAnswer$.subscribe(
       (data: VariantOfAnswer[] | null) => {
@@ -135,6 +139,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       variantOfAnswer.id as number,
       {
         next: () => {
+          this.Info('Answer succesfully deleted!');
           this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
         },
         error: (errMsg: string) => console.log(errMsg),
@@ -158,8 +163,17 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     try {
       this.answerFormService.submitAnswerEditorForm({
         next: (itemId) => {
+          this.loadAnswer(itemId, {
+            next: (ans) => {
+              this.questionId = ans.questionId as number;
+            },
+          } as Observer<VariantOfAnswer>);
+          this.router.navigate([
+            'menus/menu/questionmenu/question',
+            this.questionId,
+            'answerseditor',
+          ]);
           this.Info('Answer succesfully created!');
-          this.router.navigate(['menus/menu/questionmenu/question', itemId, 'answerseditor']);
         },
         error: (errMsg: string) => this.Warn(errMsg),
       } as Observer<number>);
