@@ -13,6 +13,7 @@ namespace TestingSystem.PL.Models
 		public TimeSpan ExpiredTime { get; set; }
 		public DateTime DateTime { get; set; }
 		public double Mark { get; set; }
+		public int NumberOfCorrectAnswers;
 		public int VariantNumer { get; set; }
 	}
 }

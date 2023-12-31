@@ -19,6 +19,7 @@ namespace TestingSystem.DAL.Models
 		public TimeSpan ExpiredTime { get; set; }
 		public DateTime DateTime { get; set; }
 		public double Mark { get; set; }
+		public int NumberOfCorrectAnswers { get; set; }
 		public int VariantNumer { get; set; }
 	}
 }
