@@ -9,8 +9,8 @@ import Question from '../../../core/models/question.model';
 import Log from '../../../core/models/log.model';
 import Paginator from '../../../shared/paginator';
 
-import Answer from '../../../core/models/variant-of-answer.model';
-import QuestionType from '../../../core/models/question-type.model';
+// import Answer from '../../../core/models/variant-of-answer.model';
+// import QuestionType from '../../../core/models/question-type.model';
 
 @Component({
   selector: 'test-component',
