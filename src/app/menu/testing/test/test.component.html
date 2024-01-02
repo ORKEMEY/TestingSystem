@@ -1,0 +1,67 @@
+<div class="page">
+
+    <div  *ngIf="isTestRunning" class="header h-center">
+        <h3 class="timer" #timer></h3>
+    </div>
+
+    <div class="content">
+        <div *ngIf="isTestRunning; else preview">
+            <question *ngFor="let item of itemsPaginated; let i = index" [Question]="item" [Index]="i"></question>
+            <div class="submit-btn-container">
+                <input (click)="submit()" type="submit" class="btn btn-large btn-success" id="btnTestPostForm" value="Send">
+            </div>
+        </div>
+        <ng-template #preview>
+           
+                <div class="item-container">
+                    <div class="item grid">
+                
+                        <div class="test-name h-center">
+                            <p>
+                                {{Test.name}}
+                            </p>
+                        </div>
+
+                        <div class="duration h-start">
+                            <p>
+                                Duration: {{Test.duration}}
+                            </p>
+                        </div>
+
+                        <div class="opening h-start">
+                            <p>
+                                Opening: {{Test.openingTime}}
+                            </p>
+                        </div>
+
+                        <div class="closure h-start">
+                            <p>
+                                Closure: {{Test.closureTime}}
+                            </p>
+                        </div>
+                
+                        <div  class="button">
+                            <div class="button-container h-center">
+                                
+                                <button (click)="startTest()" type="button" class="btn btn-success">Start</button>
+                                
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+           
+        </ng-template>
+    </div>
+
+    <div *ngIf="isTestRunning" class="footer">
+        <div class="carousel-container">
+            <ul class=" pagination-carousel">
+                <li (click)="previous()"> Prev </li>
+                <li> {{CurrentPage}} </li>
+                <li (click)="next()"> Next </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

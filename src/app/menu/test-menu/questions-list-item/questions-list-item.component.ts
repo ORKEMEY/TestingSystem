@@ -20,7 +20,7 @@ export default class QuestionsListItemComponent {
 
   public get Query(): String {
     if (this.item === null) {
-      return 'Name is not set';
+      return 'Query is not set';
     }
     return this.item.query;
   }

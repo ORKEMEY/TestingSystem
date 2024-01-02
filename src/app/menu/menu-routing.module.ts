@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'questionmenu',
         loadChildren: () => import('./question-menu/question-menu.module').then((m) => m.default),
       },
+      {
+        path: 'testing',
+        loadChildren: () => import('./testing/testing.module').then((m) => m.default),
+      },
       { path: '**', component: NotFoundComponent },
     ],
   },

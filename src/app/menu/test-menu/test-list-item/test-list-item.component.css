@@ -53,6 +53,7 @@
 
 .content {
     grid-area: content;
+    white-space: normal;
 }
 
 .footer {
