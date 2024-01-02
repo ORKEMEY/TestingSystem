@@ -37,6 +37,8 @@ namespace TestingSystem.PL
 			services.AddTransient<IModelService, ModelService>();
 			services.AddTransient<IQuestionTypeService, QuestionTypeService>();
 			services.AddTransient<IVariantOfAnswerService, VariantOfAnswerService>();
+			services.AddTransient<ILogService, LogService>();
+			services.AddTransient<ICheckTestInterface, CheckTestService>();
 
 			services.AddDbContext<TestContext>(optionsBuilder =>
 			{

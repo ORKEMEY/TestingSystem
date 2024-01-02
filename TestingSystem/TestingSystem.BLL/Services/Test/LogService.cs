@@ -32,6 +32,8 @@ namespace TestingSystem.BLL.Services
 				throw new ValidationException("Wrong or empty properties", "DateTime");
 			if (logDTO.Mark < 0)
 				throw new ValidationException("Wrong or empty properties", "Mark");
+			if (logDTO.NumberOfCorrectAnswers < 0)
+				throw new ValidationException("Wrong or empty properties", "NumberOfCorrectAnswers");
 			if (logDTO.VariantNumer <= 0)
 				throw new ValidationException("Wrong or empty properties", "VariantNumer");
 

@@ -19,11 +19,13 @@ namespace TestingSystem.PL.Controllers
 
 		private ITestService service { get; set; }
 		private IUserService userService { get; set; }
+		private ICheckTestInterface checkTestService { get; set; }
 
-		public TestsController(ITestService service, IUserService userService)
+		public TestsController(ITestService service, IUserService userService, ICheckTestInterface checkTestService)
 		{
 			this.service = service;
 			this.userService = userService;
+			this.checkTestService = checkTestService;
 		}
 
 		#region Admin
@@ -269,6 +271,33 @@ namespace TestingSystem.PL.Controllers
 		}
 
 		#endregion
+
+
+		[HttpPost("checktest")]
+		public IActionResult CheckTest([FromBody] TestViewModel test, [FromBody] LogViewModel log)
+		{
+			try
+			{
+				var userDTO = userService.GetUserByAccessToken(new TokenDTO()
+				{
+					AccessToken = GetAccessToken()
+				});
+
+				var res = checkTestService.CheckTest(userDTO.Id,
+					MapperWEB.Mapper.Map<TestDTO>(test),
+					MapperWEB.Mapper.Map<LogDTO>(log));
+
+				return new OkObjectResult(res);
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
+
+		}
+
+
+
 		/*
 		[HttpPost("{id}")]
 		public IActionResult Post(int id, [FromQuery] string login, [FromBody] int[] answerid)

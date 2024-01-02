@@ -9,6 +9,8 @@ using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
 using TestingSystem.DAL.Patchers;
+using System.Text.RegularExpressions;
+using System.Diagnostics.Metrics;
 
 namespace TestingSystem.BLL.Services
 {
@@ -17,8 +19,7 @@ namespace TestingSystem.BLL.Services
 	public class TestService : ITestService
 	{
 		
-		protected IUnitOfWork uof { get; set; }
-		
+		protected IUnitOfWork uof { get; set; }		
 
 		public TestService(IUnitOfWork uof)
 		{
@@ -173,7 +174,7 @@ namespace TestingSystem.BLL.Services
 
 		#endregion
 
-
+		
 	}
 	
 }
