@@ -53,7 +53,7 @@
                             <option value="Short Answer">Short Answer</option>
                           </select>
                           <ng-template #disabledInput>
-                            <select *ngIf="this.Question=== null; else disabledInput" formControlName="QuestionType" class="custom-select" disabled>
+                            <select formControlName="QuestionType" class="custom-select" disabled>
                                 <option value="Single Choise" selected>Single Choise</option>
                                 <option value="True / False">True / False</option>
                                 <option value="Short Answer">Short Answer</option>

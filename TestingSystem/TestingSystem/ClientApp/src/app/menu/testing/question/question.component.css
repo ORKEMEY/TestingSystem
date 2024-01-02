@@ -38,11 +38,11 @@
 .grid {
     display:grid;
     grid-template-areas: 
-    "header"
+    "."
     "query"
     "answers"
-    "footer";
-    grid-template-rows: 1fr auto auto 1fr;
+    ".";
+    grid-template-rows: 1em auto auto 1em;
 }
 
 
@@ -83,69 +83,6 @@
     margin: 0  0.5em;
 }
 
-/*-----------------------------*/
-.settings-dots{
-    color: gray;
-    cursor: default;
-}
-
-.settings-dots:hover {
-    color: black;
-}
-
-.setings-container {
-    position:relative;
-}
-
-.setings {
-
-    position: absolute;
-    top: 1em;
-    background-color: white;
-    border-radius: 1rem;
-    border: 1px solid gray;
-    padding: 0;
-    font-size: large;
-    z-index: 10;
-    ;
-}
-
-.setings ul {
-    list-style: none;
-    border-radius: inherit;
-    padding: 0;
-    margin: 0;
-}
-
-.setings ul li:first-child{
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-}
-
-.setings ul li:last-child{
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: inherit;
-}
-
-.setings ul li{
-    display: block;
-    padding: 0.5em;
-    margin: 0;
-    text-decoration: none;
-}
-
-.setings ul li:hover:not(.delete-btn){
-    background-color: lightgray;
-    color: blue;
-    cursor: pointer;
-
-}
-
-.setings ul li.delete-btn:hover{
-    background-color: lightgray;
-    color: red;
-    cursor: pointer;
-}
 
 .invisible {
     opacity: 0;
@@ -156,3 +93,4 @@
     opacity: 1;
     visibility: visible;
 }
+
