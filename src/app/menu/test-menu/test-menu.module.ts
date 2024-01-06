@@ -15,6 +15,7 @@ import TestMenuNavComponent from './test-menu-nav/test-menu-nav.component';
 import QuestionsManagerComponent from './questions-manager/questions-manager.component';
 import QuestionsListComponent from './questions-list/questions-list.component';
 import QuestionsListItemComponent from './questions-list-item/questions-list-item.component';
+import TestAccessComponent from './test-access/test-access.component';
 
 import BasicSettingsFormService from './shared/basic-settings-form.service';
 
@@ -36,6 +37,7 @@ import BasicSettingsFormService from './shared/basic-settings-form.service';
     QuestionsManagerComponent,
     QuestionsListComponent,
     QuestionsListItemComponent,
+    TestAccessComponent,
   ],
   bootstrap: [],
   providers: [BasicSettingsFormService],
@@ -48,6 +50,7 @@ import BasicSettingsFormService from './shared/basic-settings-form.service';
     QuestionsManagerComponent,
     QuestionsListComponent,
     QuestionsListItemComponent,
+    TestAccessComponent,
   ],
 })
 export default class TestMenuModule {}

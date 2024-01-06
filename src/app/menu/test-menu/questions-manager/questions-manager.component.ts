@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observer, Subscription } from 'rxjs';
+import { Observer, Subscription, timer, takeWhile } from 'rxjs';
 import TestVariantService from '../../../core/services/test-variant.service';
 import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
@@ -78,5 +78,33 @@ export default class QuestionsManagerComponent
     } else {
       Alert.hideAlertMessage(this.alertDiv);
     }
+  }
+
+  public toPrevPage() {
+    if (this.previous()) {
+      this.scrollToTop(2);
+    }
+  }
+
+  public toNextPage() {
+    if (this.next()) {
+      this.scrollToTop(2);
+    }
+  }
+
+  scrollToTop(acceleration: number = 1) {
+    let scrollAvailable = true;
+
+    timer(0, 1)
+      .pipe(takeWhile(() => scrollAvailable))
+      .subscribe((e) => {
+        if (window.pageYOffset >= 0) {
+          window.scrollTo(0, window.pageYOffset - e * acceleration);
+        }
+
+        if (window.pageYOffset === 0) {
+          scrollAvailable = false;
+        }
+      });
   }
 }

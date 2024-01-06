@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'user-component',
   templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css'],
 })
 export default class UserComponent {
   public get isRegistrationRoute(): boolean {

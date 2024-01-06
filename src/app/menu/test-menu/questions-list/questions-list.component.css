@@ -46,16 +46,14 @@
 .add-item {
     width: 100%;
     aspect-ratio : 3.5 / 1;
-    background-color: inherit;
+    background-color: rgba(255,255,255,1);
     border-radius: inherit;
     border: 0px;
     padding: 0;
     font-size: xxx-large;
-    opacity: 0.7;
     color:gray;
 }
 .add-item:hover{
-    opacity: 1;
     color:black;
 }
 

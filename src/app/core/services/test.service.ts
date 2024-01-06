@@ -27,6 +27,7 @@ export default class TestService {
           if (err.status === 400) {
             observer?.error?.(err.error.errorText);
           } else {
+            observer?.error?.(err);
             console.error(err);
           }
         },
@@ -67,6 +68,7 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
+          observer?.error?.(err);
           console.error(err);
         }
       },
@@ -86,6 +88,7 @@ export default class TestService {
           if (err.status === 400) {
             observer?.error?.(err.error.errorText);
           } else {
+            observer?.error?.(err);
             console.error(err);
           }
         },
@@ -100,6 +103,7 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
+          observer?.error?.(err);
           console.error(err);
         }
       },
@@ -114,28 +118,11 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
+          observer?.error?.(err);
           console.error(err);
         }
       },
       complete: () => observer?.complete?.(),
     });
   }
-  /*
-  public CheckTest(testId: number, answerid: number[], observer?: Observer<CheckResponse>) {
-    console.log(answerid);
-    this.http
-      .post(`api/Tests/${testId}?login=${this.credentialsService.getLogin()}`, answerid)
-      .pipe(map((data) => data as CheckResponse))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
-  } */
 }

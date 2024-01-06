@@ -2,14 +2,14 @@
     min-height: 100%;
     height: 100%;
     display: grid;
-    grid-template-areas: ". . ."
-                        ". header ."
-                        ". . ."
-                        ". content ."
-                        ". . ."
-                        ". footer ."
-                        ". . .";
-    grid-template-columns: 2fr 5fr 2fr;
+    grid-template-areas: "scroll . . ."
+                        "scroll . header ."
+                        "scroll . . ."
+                        "scroll . content ."
+                        "scroll . . ."
+                        "scroll . footer ."
+                        "scroll . . .";
+    grid-template-columns: 1fr 1fr 5fr 2fr;
     grid-template-rows: 1.5em auto 1.5em 1fr 1.5em auto 1em;
     
 }
@@ -28,10 +28,65 @@
     padding: 0;
 }
 
+.scroll {
+    grid-area: scroll;
+}
+
 .footer {
     grid-area: footer;
     margin: 0 1em;
     padding: 0;
+}
+
+/*-------------------------------*/
+.scroll-container {
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: end;
+
+   padding: 0.1px;
+
+   border-top-left-radius: 1rem;
+
+   color: lightgray;
+}
+
+.scroll-container:hover {
+   background-image: linear-gradient(to bottom, rgba(211,211,211,0.4) 95%, rgba(211,211,211,0) 100%);
+   color: gray;
+}
+
+.scroll-container p{
+   font-size: xx-large;
+   margin: 1em auto;
+}
+
+.scroll-btn{
+    font-weight: 500;
+    font-style: normal;
+    font-size: 2em;
+
+    padding: 5px;
+}
+
+.sticky-bot{
+   position: sticky;
+   bottom: 3em;
+
+   align-self: center;
+}
+
+/*-------------------------------*/
+
+.invisible {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 /*-------------------------------*/
@@ -80,9 +135,10 @@ ul.pagination-carousel li:hover{
     "duration"
     "opening"
     "closure"
+    "status"
     "button"
     ".";
-    grid-template-rows: 1em auto auto auto auto auto 1em;
+    grid-template-rows: 1em auto auto auto auto auto auto 1em;
 }
 
 .test-name {
@@ -116,6 +172,14 @@ ul.pagination-carousel li:hover{
     font-size: medium;
 }
 
+.status {
+    grid-area: status;
+    margin: 0 1.5em;
+    white-space: normal;
+
+    font-size: medium;
+}
+
 
 .button {
     grid-area: button;
@@ -135,7 +199,7 @@ ul.pagination-carousel li:hover{
 .item {
     width: 100%;
     min-height: 8em;
-    background-color: inherit;
+    background-color: rgba(255,255,255,1);
     border-radius: inherit;
     border: 0px;
     padding: 0;

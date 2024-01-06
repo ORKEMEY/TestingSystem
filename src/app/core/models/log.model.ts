@@ -13,5 +13,7 @@ export default class Log {
 
   public mark: number;
 
+  public numberOfCorrectAnswers: number;
+
   public id?: Number;
 }

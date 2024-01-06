@@ -1,6 +1,6 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observer } from 'rxjs';
+import { Observer, timer, takeWhile } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import TestCheckService from '../shared/test-check.service';
 import Test from '../../../core/models/test.model';
@@ -20,6 +20,58 @@ import Paginator from '../../../shared/paginator';
 export default class TestComponent extends Paginator<Test> {
   #questions: Question[] | null;
 
+  public get Status(): string {
+    if (this.Test === null) return 'Not found!';
+    const nullDate = new Date(null).getTime();
+    const opening = new Date(this.Test.openingTime).getTime();
+    const closure = new Date(this.Test.closureTime).getTime();
+    const now = new Date().getTime();
+
+    if (now < opening) {
+      return 'Pending';
+    }
+
+    if (
+      (opening < now && (now < closure || closure === nullDate)) ||
+      (opening === nullDate && now < closure) ||
+      (opening === nullDate && closure === nullDate)
+    ) {
+      return 'Opened';
+    }
+
+    if (closure < now && closure !== nullDate) {
+      return 'Closed';
+    }
+    return 'No status';
+  }
+
+  public get isOpened(): boolean {
+    return this.Status === 'Opened';
+  }
+
+  public get LabelClasses(): Object {
+    const labelClasses = {};
+
+    switch (this.Status) {
+      case 'Pending':
+        labelClasses['badge-warning'] = true;
+        break;
+
+      case 'Opened':
+        labelClasses['badge-success'] = true;
+        break;
+
+      case 'Closed':
+        labelClasses['badge-danger'] = true;
+        break;
+
+      default:
+        labelClasses['badge-danger'] = true;
+        break;
+    }
+    return labelClasses;
+  }
+
   protected get items(): Test[] | null {
     return this.questions;
   }
@@ -36,6 +88,18 @@ export default class TestComponent extends Paginator<Test> {
 
   private Test: Test = null;
 
+  private get OpeningTimeStr(): string {
+    if (!this.Test?.openingTime) return null;
+    const odt = new Date(this.Test?.openingTime);
+    return `${odt.toDateString()} ${odt.getHours()}:${odt.getMinutes()}`;
+  }
+
+  private get ClosureTimeStr(): string {
+    if (!this.Test?.closureTime) return null;
+    const cdt = new Date(this.Test?.closureTime);
+    return `${cdt.toDateString()} ${cdt.getHours()}:${cdt.getMinutes()}`;
+  }
+
   private TestVariant: TestVariant = null;
 
   private timer: NodeJS.Timer;
@@ -44,21 +108,27 @@ export default class TestComponent extends Paginator<Test> {
 
   public isTestRunning: Boolean = false;
 
-  @ViewChild('timer', { static: false })
-  timerDiv: ElementRef | undefined;
+  public TimerStr: string = '--:--:--';
 
   constructor(
     private testService: TestService,
     private testCheckService: TestCheckService,
     private activatedRoute: ActivatedRoute,
   ) {
-    super(15);
-    this.activatedRoute.parent.params.subscribe((params) => {
+    super(5);
+    this.activatedRoute.params.subscribe((params) => {
       this.TestId = Number.parseInt(params.id, 10);
       this.loadTest();
     });
 
-    /* this.Test = new Test('name', '10:10:10', '11:10:10', '12:10:10', null, 'description');
+    /* this.Test = new Test(
+      'test name',
+      '10:10:10',
+      '2023-06-01T13:45:30',
+      '2024-07-01T13:45:30',
+      null,
+      'description',
+    );
 
     const qTypes = [
       new QuestionType('Single Choise'),
@@ -76,6 +146,7 @@ export default class TestComponent extends Paginator<Test> {
 
     answers.forEach((el, ind) => {
       el.isCorrect = !!(ind % 2);
+      el.id = ind;
     });
 
     this.questions = [
@@ -83,28 +154,44 @@ export default class TestComponent extends Paginator<Test> {
       new Question('query2', answers.slice(1, 3)),
       new Question('query3', answers.slice(2, 4)),
       new Question('query4', answers.slice(3)),
+      new Question('query1', answers.slice(0, 2)),
+      new Question('query2', answers.slice(1, 3)),
+      new Question('query3', answers.slice(2, 4)),
+      new Question('query1', answers.slice(0, 2)),
+      new Question('query2', answers.slice(1, 3)),
+      new Question('query3', answers.slice(2, 4)),
     ];
 
     this.questions.forEach((q, ind) => {
       q.questionType = qTypes[ind % 3];
       q.id = ind;
-    }); */
+    });
+
+    const tv = new TestVariant(1, 1);
+    tv.questions = this.questions;
+
+    this.Test.testVariants = [tv]; */
   }
 
   startTest() {
     if (!this.Test) return;
+
+    this.setTestVariant();
     const duration = this.Test?.duration?.split(':') || null;
-    if (duration === null) return;
-    const durationSec =
-      (Number.parseInt(duration?.[0], 10) || 0) * 60 * 60 + Number.parseInt(duration?.[1], 10) * 60;
+    if (duration !== null) {
+      const durationSec =
+        (Number.parseInt(duration?.[0], 10) || 0) * 60 * 60 +
+        Number.parseInt(duration?.[1], 10) * 60;
+
+      this.startTimer(durationSec);
+    }
     this.startTime = new Date();
-    this.startTimer(durationSec);
     this.isTestRunning = true;
   }
 
   submit() {
     this.stopTimer();
-    const expiredTimeSec = new Date().getSeconds() - this.startTime.getSeconds();
+    const expiredTimeSec = (new Date().getTime() - this.startTime.getTime()) / 1000;
     const expiredTimeSpan = this.getDurationStr(expiredTimeSec);
     const log = new Log(expiredTimeSpan, new Date().toDateString());
     this.isTestRunning = false;
@@ -125,9 +212,7 @@ export default class TestComponent extends Paginator<Test> {
         this.submit();
       }
       if (!Number.isNaN(timeSec)) {
-        this.timerDiv.nativeElement.textContent = `${Math.trunc(hour)}:${Math.trunc(
-          minutes,
-        )}:${seconds}`;
+        this.TimerStr = `${Math.trunc(hour)}:${Math.trunc(minutes)}:${seconds}`;
       }
 
       timeSec -= 1;
@@ -177,5 +262,33 @@ export default class TestComponent extends Paginator<Test> {
       strMin = '00';
     }
     return `${strHours}:${strMin}:${strSec}`;
+  }
+
+  public toPrevPage() {
+    if (this.previous()) {
+      this.scrollToTop(2);
+    }
+  }
+
+  public toNextPage() {
+    if (this.next()) {
+      this.scrollToTop(2);
+    }
+  }
+
+  scrollToTop(acceleration: number = 1) {
+    let scrollAvailable = true;
+
+    timer(0, 1)
+      .pipe(takeWhile(() => scrollAvailable))
+      .subscribe((e) => {
+        if (window.pageYOffset >= 0) {
+          window.scrollTo(0, window.pageYOffset - e * acceleration);
+        }
+
+        if (window.pageYOffset === 0) {
+          scrollAvailable = false;
+        }
+      });
   }
 }
