@@ -14,13 +14,13 @@ namespace TestingSystem.DAL.Patchers
 			if (patch?.Query is not null)
 				old.Query = patch?.Query;
 
-			if (patch.bParam > 0)
+			if (patch.bParam >= -10 && patch.bParam <= 10) 
 				old.bParam = patch.bParam;
 
-			if (patch.aParam > 0)
+			if (patch.aParam > 0 && patch.aParam <= 20)
 				old.aParam = patch.aParam;
 
-			if (patch.cParam > 0)
+			if (patch.cParam >= 0 && patch.cParam <= 1)
 				old.cParam = patch.cParam;
 
 			if (patch.ModelId > 0)

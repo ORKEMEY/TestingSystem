@@ -20,7 +20,16 @@ namespace TestingSystem.DAL.Repositories
 
 		public TestVariant GetItem(int id)
 		{
-			return db.TestVariants.Include(c => c.Questions)
+			return db.TestVariants
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.Answers)
+
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.Model)
+
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.QuestionType)
+
 				.FirstOrDefault(x => x.Id == id);
 		}
 
@@ -45,7 +54,15 @@ namespace TestingSystem.DAL.Repositories
 
 		public IEnumerable<TestVariant> GetItems(Expression<Func<TestVariant, bool>> predicate)
 		{
-			return db.TestVariants.Where(predicate).Include(c => c.Questions);
+			return db.TestVariants.Where(predicate)
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.Answers)
+
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.Model)
+
+				.Include(c => c.Questions)
+				.ThenInclude(q => q.QuestionType);
 		}
 
 	}

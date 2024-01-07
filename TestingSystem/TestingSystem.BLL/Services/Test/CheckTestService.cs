@@ -25,8 +25,10 @@ namespace TestingSystem.BLL.Services
 			this.log = logService;
 		}
 
-		public TestResult CheckTest(int userId, TestDTO testDTO, LogDTO logDTO)
+		public LogDTO CheckTest(int userId, TestDTO testDTO, LogDTO logDTO)
 		{
+			if(testDTO == null || logDTO == null) 
+				throw new ValidationException("Empty properties");
 
 			if (testDTO.Id <= 0)
 				throw new ValidationException("Wrong or empty properties", "Id");
@@ -43,11 +45,11 @@ namespace TestingSystem.BLL.Services
 
 			var qustionsDAL = uof.Questions.GetItems(q => testDTO.TestVariants.First().Questions.Any(c => c.Id == q.Id));
 
-			var testRes = new TestResult(-10);
-
-			testRes.MaxNumberOfCorrectAnswers = testVarDAL.Questions.Count();
+			
+			logDTO.Zero = -10;
+			logDTO.MaxNumberOfCorrectAnswers = testVarDAL.Questions.Count();
 			foreach (var q in testVarDAL.Questions)
-				testRes.MaxPoints += q.bParam;
+				logDTO.MaxPoints += q.bParam;
 
 
 			foreach (var questionAns in testDTO.TestVariants.First().Questions)
@@ -66,25 +68,22 @@ namespace TestingSystem.BLL.Services
 
 				if (res)
 				{
-					testRes.Points += questionModel.bParam;
-					testRes.NumberOfCorrectAnswers++;
+					logDTO.Mark += questionModel.bParam;
+					logDTO.NumberOfCorrectAnswers++;
 				}
 			}
 
-			Log(logDTO, userId, testDTO, testRes);
+			return Log(logDTO, userId, testDTO);
 
-			return testRes;
 		}
 
-		private void Log(LogDTO logDTO, int userId, TestDTO testDTO, TestResult testRes)
+		private LogDTO Log(LogDTO logDTO, int userId, TestDTO testDTO)
 		{
-			logDTO.Mark = testRes.Points;
-			logDTO.NumberOfCorrectAnswers = testRes.NumberOfCorrectAnswers;
 			logDTO.UserId = userId;
 			logDTO.TestId = testDTO.Id;
 			logDTO.VariantNumer = testDTO.TestVariants.First().Number;
 
-			log.AddItem(logDTO);
+			return log.AddItem(logDTO);
 		}
 
 		private bool CheckShAQuestion(QuestionDTO questionAns, QuestionDTO questionModel)

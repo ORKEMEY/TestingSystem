@@ -274,7 +274,7 @@ namespace TestingSystem.PL.Controllers
 
 
 		[HttpPost("checktest")]
-		public IActionResult CheckTest([FromBody] TestViewModel test, [FromBody] LogViewModel log)
+		public IActionResult CheckTest([FromBody] (TestViewModel test,  LogViewModel log) parameters)
 		{
 			try
 			{
@@ -283,11 +283,11 @@ namespace TestingSystem.PL.Controllers
 					AccessToken = GetAccessToken()
 				});
 
-				var res = checkTestService.CheckTest(userDTO.Id,
-					MapperWEB.Mapper.Map<TestDTO>(test),
-					MapperWEB.Mapper.Map<LogDTO>(log));
+				var log = checkTestService.CheckTest(userDTO.Id,
+					MapperWEB.Mapper.Map<TestDTO>(parameters.test),
+					MapperWEB.Mapper.Map<LogDTO>(parameters.log));
 
-				return new OkObjectResult(res);
+				return new OkObjectResult(log);
 			}
 			catch (ValidationException e)
 			{
@@ -296,84 +296,6 @@ namespace TestingSystem.PL.Controllers
 
 		}
 
-
-
-		/*
-		[HttpPost("{id}")]
-		public IActionResult Post(int id, [FromQuery] string login, [FromBody] int[] answerid)
-		{
-			try
-			{
-				var res = service.CheckTest(id, login, answerid);
-
-				return new OkObjectResult(new
-				{
-					points = res?.summuryPoints,
-					percentOfCorrectAnswers = res?.GetPercentOfCorrectAnswers(),
-					percentOfWrongAnswers = res?.GetPercentOfWrongAnswers(),
-					percentOfCorrAnswFromAllCorrAns = res?.GetPercentOfCorrAnswFromAllCorrAns(),
-				});
-			}
-			catch (ValidationException e)
-			{
-				return new BadRequestObjectResult(new { errorText = e.Message });
-			}
-
-			return Ok();
-
-		}*/
-
-
-		/*
-		[HttpPost("{id}/{questionId}")]
-		[Authorize(Roles = "Admin")]
-		public IActionResult AddQuestion(int id, int questionId)
-		{
-			try
-			{
-				service.AddQuestion(MapperWEB.Mapper.Map<TestDTO>(new TestViewModel()
-				{
-					Id = id,
-					Questions = new List<QuestionViewModel>()
-					{
-						new QuestionViewModel(){Id = questionId}
-					}
-				}
-				));
-			}
-			catch (ValidationException e)
-			{
-				return new BadRequestObjectResult(new { errorText = e.Message });
-			}
-
-			return Ok();
-		}*/
-
-
-		/*
-		[HttpDelete("{id}/{questionId}")]
-		[Authorize(Roles = "Admin")]
-		public IActionResult DeleteQuestion(int id, int questionId)
-		{
-			try
-			{
-				service.DeleteQuestion(MapperWEB.Mapper.Map<TestDTO>(new TestViewModel()
-				{
-					Id = id,
-					Questions = new List<QuestionViewModel>()
-					{
-						new QuestionViewModel(){Id = questionId}
-					}
-				}
-				));
-			}
-			catch (ValidationException e)
-			{
-				return new BadRequestObjectResult(new { errorText = e.Message });
-			}
-
-			return Ok();
-		}*/
 
 		/// <exception cref="ArgumentNullException"></exception>
 		private string GetAccessToken()

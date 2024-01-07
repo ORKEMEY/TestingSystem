@@ -10,6 +10,6 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface ICheckTestInterface
 	{
-		TestResult CheckTest(int userId, TestDTO testDTO, LogDTO logDTO);
+		LogDTO CheckTest(int userId, TestDTO testDTO, LogDTO logDTO);
 	}
 }

@@ -9,6 +9,7 @@ namespace TestingSystem.BLL.Interfaces
 {
 	public interface ILogService : ICRUDService<LogDTO>
 	{
-		IEnumerable<LogDTO> GetItems(DateTime date);
+		IEnumerable<LogDTO> GetLogsByDate(DateTime date);
+		public IEnumerable<LogDTO> GetLogsByTestId(int testId);
 	}
 }

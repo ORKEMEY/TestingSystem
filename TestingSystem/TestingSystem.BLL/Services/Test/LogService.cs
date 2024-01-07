@@ -8,6 +8,7 @@ using TestingSystem.BLL.Interfaces;
 using TestingSystem.BLL.Infrastructure;
 using TestingSystem.DAL.Models;
 using TestingSystem.DAL;
+using TestingSystem.DAL.Patchers;
 
 namespace TestingSystem.BLL.Services
 {
@@ -55,9 +56,7 @@ namespace TestingSystem.BLL.Services
 		public void UpdateItem(LogDTO logDTO)
 		{
 
-			throw new NotImplementedException();
-
-			/*if (logDTO.Id <= 0)
+			if (logDTO.Id <= 0)
 				throw new ValidationException("Wrong or empty properties");
 
 			var logDALold = uof.Logs.GetItem(logDTO.Id);
@@ -65,10 +64,10 @@ namespace TestingSystem.BLL.Services
 
 			var logDALnew = MapperBLL.Mapper.Map<Log>(logDTO);
 
-			logDALnew.Id = logDALold.Id;
+			LogPatcher.Patch(logDALold, logDALnew);
 
-			uof.Logs.Update(logDALnew);
-			uof.Save();*/
+			uof.Logs.Update(logDALold);
+			uof.Save();
 		}
 
 		public IEnumerable<LogDTO> GetItems()
@@ -77,9 +76,15 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<LogDTO>>(items);
 		}
 
-		public IEnumerable<LogDTO> GetItems(DateTime date)
+		public IEnumerable<LogDTO> GetLogsByDate(DateTime date)
 		{
 			IEnumerable<Log> items = uof.Logs.GetItems(c => c.DateTime.Date == date.Date);
+			return MapperBLL.Mapper.Map<IEnumerable<LogDTO>>(items);
+		}
+
+		public IEnumerable<LogDTO> GetLogsByTestId(int testId)
+		{
+			IEnumerable<Log> items = uof.Logs.GetItems(c => c.TestId == testId);
 			return MapperBLL.Mapper.Map<IEnumerable<LogDTO>>(items);
 		}
 

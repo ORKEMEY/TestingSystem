@@ -13,7 +13,7 @@ namespace TestingSystem.BLL.Infrastructure
 		public double Points = 0;
 		public double MaxPoints = 0;
 
-		public double AbsPoints => Points - Zero;
+		public double AbsPoints => Points - (Zero * NumberOfCorrectAnswers);
 		public double AbsMaxPoints => MaxPoints - (Zero * MaxNumberOfCorrectAnswers);
 
 		public int NumberOfCorrectAnswers = 0;
