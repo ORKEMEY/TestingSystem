@@ -7,7 +7,6 @@ import Answer from '../../../core/models/variant-of-answer.model';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
 import Log from '../../../core/models/log.model';
-import TestResult from '../../../core/models/test-result.model';
 
 type QuestionForm = { form: FormGroup; question: Question };
 
@@ -29,7 +28,7 @@ export default class TestCheckService {
     }
   }
 
-  submit(test: Test, testVariant: TestVariant, log: Log, observer?: Observer<TestResult>) {
+  submit(test: Test, testVariant: TestVariant, log: Log, observer?: Observer<Log>) {
     const testVar: TestVariant = new TestVariant(0, 0);
     Object.assign(testVar, testVariant);
     testVar.questions = [];

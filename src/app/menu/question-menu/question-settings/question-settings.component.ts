@@ -82,7 +82,6 @@ export default class QuestionSettingsComponent {
           this.Question = item;
         },
         error: (err) => this.Warn(err),
-        complete: () => console.log('comlete'),
       } as Observer<Question>);
     } else {
       this.Question = null;

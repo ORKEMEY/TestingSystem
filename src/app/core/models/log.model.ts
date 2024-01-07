@@ -11,9 +11,15 @@ export default class Log {
 
   public variantNumber: number;
 
+  public id?: Number;
+
+  public Zero: number;
+
   public mark: number;
+
+  public MaxPoints: number;
 
   public numberOfCorrectAnswers: number;
 
-  public id?: Number;
+  public MaxNumberOfCorrectAnswers: number;
 }

@@ -62,11 +62,11 @@ export default class BasicSettingsFormService {
     }
 
     if (this.form.controls.Difficulty.errors?.min) {
-      return "Difficulty parameter cann't less than -10!";
+      return "Difficulty parameter cann't be less than -10!";
     }
 
     if (this.form.controls.Difficulty.errors?.max) {
-      return "Difficulty parameter cann't greater than 10!";
+      return "Difficulty parameter cann't be greater than 10!";
     }
     return null;
   }
@@ -198,9 +198,9 @@ export default class BasicSettingsFormService {
 
     let model: Model;
     let modelName = '1PL';
-    if (discrimination !== '' && pseudoGuessing === '') {
+    if (!!discrimination && discrimination !== 1 && !pseudoGuessing) {
       modelName = '2PL';
-    } else if (discrimination !== '' && pseudoGuessing !== '') {
+    } else if (!!discrimination && !!pseudoGuessing) {
       modelName = '3PL';
     }
 
@@ -226,8 +226,8 @@ export default class BasicSettingsFormService {
   private setFormVals(question: Question | null): void {
     this.form.controls.Query.setValue(question?.query || '');
     this.form.controls.QuestionType.setValue(question?.questionType?.name || 'Single Choise');
-    this.form.controls.Difficulty.setValue(question?.bParam || '');
-    this.form.controls.Discrimination.setValue(question?.aParam || '');
-    this.form.controls.PseudoGuessing.setValue(question?.cParam || '');
+    this.form.controls.Difficulty.setValue(question?.bParam ?? '');
+    this.form.controls.Discrimination.setValue(question?.aParam ?? '');
+    this.form.controls.PseudoGuessing.setValue(question?.cParam ?? '');
   }
 }
