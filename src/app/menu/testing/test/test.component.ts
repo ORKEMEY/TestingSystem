@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observer, timer, takeWhile } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import TestCheckService from '../shared/test-check.service';
@@ -114,6 +114,7 @@ export default class TestComponent extends Paginator<Test> {
     private testService: TestService,
     private testCheckService: TestCheckService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
     super(5);
     this.activatedRoute.params.subscribe((params) => {
@@ -195,7 +196,12 @@ export default class TestComponent extends Paginator<Test> {
     const expiredTimeSpan = this.getDurationStr(expiredTimeSec);
     const log = new Log(expiredTimeSpan, new Date().toDateString());
     this.isTestRunning = false;
-    this.testCheckService.submit(this.Test, this.TestVariant, log);
+    this.testCheckService.submit(this.Test, this.TestVariant, log, {
+      next: (createdLog) => {
+        console.log(createdLog);
+        this.router.navigate(['/menus/menu/testing/test/result', createdLog.id]);
+      },
+    } as Observer<Log>);
   }
 
   stopTimer() {

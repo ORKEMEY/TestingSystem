@@ -21,7 +21,8 @@
       <label for="Password" class="col-sm-2 col-form-label">Password:</label>
       <div class="col-sm-12">
         <input type="password" name="Password" id="PasswordLogin" class="input-block-level form-control"
-          placeholder="Password" formControlName="Password" (ngModelChange)="passwordChange()" required />
+          placeholder="Password" formControlName="Password" (ngModelChange)="passwordChange()"
+          (keydown.enter)="form.invalid ? null : submit()" required />
       </div>
     </div>
     <div class="form-block col-sm-12">

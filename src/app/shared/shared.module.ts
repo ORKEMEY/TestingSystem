@@ -9,6 +9,8 @@ import WarningComponent from './warning/warning.component';
 import InfoComponent from './info/info.component';
 import GarlandComponent from './garland/garland.component';
 
+import TimeSpanPipe from './pipes/time-span.pipe';
+
 @NgModule({
   imports: [RouterModule, FormsModule, CommonModule],
   exports: [
@@ -17,6 +19,7 @@ import GarlandComponent from './garland/garland.component';
     WarningComponent,
     InfoComponent,
     GarlandComponent,
+    TimeSpanPipe,
   ],
   declarations: [
     NotFoundComponent,
@@ -24,6 +27,7 @@ import GarlandComponent from './garland/garland.component';
     WarningComponent,
     InfoComponent,
     GarlandComponent,
+    TimeSpanPipe,
   ],
 })
 export default class SharedModule {}

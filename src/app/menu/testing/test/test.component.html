@@ -36,19 +36,19 @@
 
                         <div class="duration h-start">
                             <p *ngIf="Test?.duration">
-                                <b>Duration:</b> {{Test?.duration}}
+                                <b>Duration:</b> {{Test?.duration | time}}
                             </p>
                         </div>
 
                         <div class="opening h-start">
                             <p *ngIf="OpeningTimeStr">
-                                <b>Opening:</b> {{OpeningTimeStr}}
+                                <b>Opening:</b> {{this.Test?.openingTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
                             </p>
                         </div>
 
                         <div class="closure h-start">
                             <p *ngIf="ClosureTimeStr">
-                                <b>Closure:</b> {{ClosureTimeStr}}
+                                <b>Closure:</b>  {{this.Test?.closureTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
                             </p>
                         </div>
 

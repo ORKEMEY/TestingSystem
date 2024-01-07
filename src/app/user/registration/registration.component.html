@@ -82,7 +82,7 @@
         <div class="col-sm-12">
           <input type="password" name="ConfirmPassword" (ngModelChange)="confirmPasswordChange()"
             id="ConfirmPasswordRegiser" class="input-block-level form-control" placeholder="Password"
-            formControlName="ConfirmPassword" required />
+            formControlName="ConfirmPassword" (keydown.enter)="form.invalid ? null : submit()" required />
         </div>
       </div>
       <div class="form-block col-sm-12">
