@@ -1,27 +1,32 @@
 <div class="item-container">
     <form [formGroup]="form" class="item grid">
 
-        <div class="query h-start">
-            <p>
-                {{Number}}. {{Question.query}}
-            </p>
+        <div class="query">
+            <div class="h-start">
+                <p>
+                    {{Number}}. {{Question.query}}
+                </p>
+            </div>
+
+            <hr [ngStyle]="{'margin': 0}" />
         </div>
 
         <div class="answers">
             <div class="answers-container">
-                <div *ngFor="let answer of Question?.answers; let i = index" class="answer h-start">
-                    <div *ngIf="Question?.questionType?.name === 'Single Choise' || 
+
+                <div *ngIf="Question?.questionType?.name === 'Single Choise' || 
                             Question?.questionType?.name === 'True / False'">
-                        
-                            <input formControlName="Answer"  value="{{answer?.id}}" type="radio">
-                            <label class="check-label">
-                                {{answer?.answer}}
-                            </label>
+                    <div *ngFor="let answer of Question?.answers; let i = index" class="answer h-start">
+
+                        <input formControlName="Answer" value="{{answer?.id}}" type="radio">
+                        <label class="check-label">
+                            {{answer?.answer}}
+                        </label>
                     </div>
                 </div>
-                <div class="answer" *ngIf="Question?.questionType.name === 'Short Answer'">
-                    <input formControlName="Answer" class="input-block-level form-control" type="text">
-                </div>
+            </div>
+            <div class="answer" *ngIf="Question?.questionType.name === 'Short Answer'">
+                <input formControlName="Answer" class="input-block-level form-control" type="text">
             </div>
         </div>
 

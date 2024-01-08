@@ -1,11 +1,11 @@
 export default class Customer {
-  public Id: number;
+  public id: number;
 
-  public Name: string;
+  public name: string;
 
-  public Surname: string;
+  public surname: string;
 
-  public EMail: string;
+  public eMail: string;
 
-  public Login: string;
+  public login: string;
 }

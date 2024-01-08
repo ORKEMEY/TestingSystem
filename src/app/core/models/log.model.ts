@@ -10,7 +10,7 @@ export default class Log {
   constructor(
     public expiredTime: string,
 
-    public DateTime: string,
+    public dateTime: string,
   ) {}
 
   public variantNumber: number;
@@ -27,7 +27,7 @@ export default class Log {
 
   public maxNumberOfCorrectAnswers: number;
 
-  public GetAbsPoints(): number {
+  /* public GetAbsPoints(): number {
     return this.mark - this.zero * this.numberOfCorrectAnswers;
   }
 
@@ -47,5 +47,5 @@ export default class Log {
         this.maxNumberOfCorrectAnswers) *
       100
     );
-  }
+  } */
 }

@@ -149,9 +149,9 @@ export default class UserRegistrationService {
         this.form.controls.Login.value,
         this.form.controls.Passwords.get('Password').value,
       );
-      user.Name = this.form.controls.Name.value;
-      user.Surname = this.form.controls.Surname.value;
-      user.EMail = this.form.controls.EMail.value;
+      user.name = this.form.controls.Name.value;
+      user.surname = this.form.controls.Surname.value;
+      user.eMail = this.form.controls.EMail.value;
 
       this.userService.post(user, {
         next: () => {

@@ -5,39 +5,44 @@
         <div class="item-container">
             <div class="item grid">
 
-                 <div class="header h-center">
-                    <p>
-                        Your results
-                    </p>
+                <div class="header ">
+                    <div class="h-center">
+                        <p>
+                            Your results
+                        </p>
+                    </div>
+
+                    <hr [ngStyle]="{'margin-top': 0}" />
                 </div>
 
                 <div class="points">
                     <p>
-                       <b>Points:</b> {{(Log?.GetAbsPoints() || 0) | number:"1.1-2"}} / {{(Log?.GetAbsMaxPoints() || 0) | number:"1.1-2"}}
+                        <b>Points:</b> {{(TestResCalc.GetAbsPoints(Log) || 0) | number:"1.1-2"}} /
+                        {{(TestResCalc.GetAbsMaxPoints(Log) || 0) | number:"1.1-2"}}
                     </p>
                 </div>
 
                 <div class="percent">
                     <p>
-                        <b>Percent of correct answers:</b> {{(Log?.GetPercentOfCorrectAnswers() || 0) | number:"1.1-2"}}%
+                        <b>Percent of correct answers:</b> {{(TestResCalc.GetPercentOfCorrectAnswers(Log) || 0) |
+                        number:"1.1-2"}}%
                     </p>
                 </div>
 
-                 <div class="expired-time">
+                <div class="expired-time">
                     <p>
                         <b>Time taken:</b> {{(Log?.expiredTime | time) || 'No time'}}
                     </p>
                 </div>
-            
-                 <div class="date-time">
+
+                <div class="date-time">
                     <p>
-                       <b>Date:</b> {{(Log?.DateTime | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}
+                        <b>Date:</b> {{(Log?.dateTime | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}
                     </p>
                 </div>
 
             </div>
         </div>
-
 
     </div>
 

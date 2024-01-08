@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observer } from 'rxjs';
 import LogService from '../../../core/services/log.service';
+import TestResultCalc from '../../../core/utils/test-result-calc';
 import Log from '../../../core/models/log.model';
 
 @Component({
@@ -13,6 +14,8 @@ export default class ResultComponent {
   private LogId: number = 0;
 
   public Log: Log = null;
+
+  public TestResCalc: TestResultCalc = new TestResultCalc();
 
   constructor(private logService: LogService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe((params) => {

@@ -16,6 +16,24 @@ export default class TestService {
     this.dataTests$ = this.dataTests.asObservable();
   }
 
+  public getById(id: number, observer?: Observer<Test>) {
+    this.http
+      .get(`api/Tests/${id}`)
+      .pipe(map((data) => data as Test))
+      .subscribe({
+        next: (data) => observer?.next?.(data),
+        error: (err) => {
+          if (err.status === 400) {
+            observer?.error?.(err.error.errorText);
+          } else {
+            // observer?.error?.(err);
+            console.error(err);
+          }
+        },
+        complete: () => observer?.complete?.(),
+      });
+  }
+
   public getOwnedById(id: number, observer?: Observer<Test>) {
     this.http
       .get(`api/Tests/owned/${id}`)

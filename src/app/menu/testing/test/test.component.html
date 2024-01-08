@@ -28,10 +28,14 @@
                 <div class="item-container">
                     <div class="item grid">
                 
-                        <div class="test-name h-center">
-                            <p>
-                                {{Test?.name || 'No name'}}
-                            </p>
+                        <div class="test-name ">
+                            <div class="h-center">
+                                <p>
+                                    {{Test?.name || 'No name'}}
+                                </p>
+                            </div>
+                            
+                            <hr [ngStyle]="{'margin-top': 0}"/>
                         </div>
 
                         <div class="duration h-start">
@@ -41,13 +45,13 @@
                         </div>
 
                         <div class="opening h-start">
-                            <p *ngIf="OpeningTimeStr">
+                            <p *ngIf="this.Test?.openingTime">
                                 <b>Opening:</b> {{this.Test?.openingTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
                             </p>
                         </div>
 
                         <div class="closure h-start">
-                            <p *ngIf="ClosureTimeStr">
+                            <p *ngIf="this.Test?.closureTime">
                                 <b>Closure:</b>  {{this.Test?.closureTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
                             </p>
                         </div>
