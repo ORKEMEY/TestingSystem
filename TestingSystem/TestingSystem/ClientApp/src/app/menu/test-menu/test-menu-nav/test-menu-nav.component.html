@@ -7,8 +7,10 @@
       [ngClass]="{active: this.isBtnActive['QuestionsManager']}"
       [routerLink]="['/menus/menu/testmenu/test', testId, 'questionsmanager']">Questions Manager</button>
     <button type="button" class="btn btn-light" (click)="activateBtn('TestAccess')"
-      [ngClass]="{active: this.isBtnActive['TestAccess']}">Test Access</button>
+      [ngClass]="{active: this.isBtnActive['TestAccess']}"
+      [routerLink]="['/menus/menu/testmenu/test', testId, 'testaccess']">Test Access</button>
     <button type="button" class="btn btn-light" (click)="activateBtn('Results')"
-      [ngClass]="{active: this.isBtnActive['Results']}">Results</button>
+      [ngClass]="{active: this.isBtnActive['Results']}"
+      [routerLink]="['/menus/menu/testmenu/test', testId, 'testresults']">Results</button>
   </div>
 </div>

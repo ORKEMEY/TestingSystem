@@ -7,20 +7,20 @@
             </p>
         </div>
 
-        <div formArrayName="Answers" class="answers ">
+        <div class="answers">
             <div class="answers-container">
                 <div *ngFor="let answer of Question?.answers; let i = index" class="answer h-start">
                     <div *ngIf="Question?.questionType?.name === 'Single Choise' || 
                             Question?.questionType?.name === 'True / False'">
                         
-                            <input formControlName="{{i}}" type="radio">
+                            <input formControlName="Answer"  value="{{answer?.id}}" type="radio">
                             <label class="check-label">
                                 {{answer?.answer}}
                             </label>
                     </div>
                 </div>
                 <div class="answer" *ngIf="Question?.questionType.name === 'Short Answer'">
-                    <input formControlName="{{i}}" class="input-block-level form-control" type="text">
+                    <input formControlName="Answer" class="input-block-level form-control" type="text">
                 </div>
             </div>
         </div>

@@ -32,34 +32,42 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   infoMessage: string = '';
 
+  isLoading: boolean = true;
+
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
-    /* this.tests = [
-      new Test('name1', null, null, null, 1, 'description', 1),
-      new Test('name2', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
-      new Test('name3', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
-      new Test('name4', null, '2023-06-01T13:45:30', '2023-07-01T13:45:30', 1, 'description', 1),
-      new Test('name5', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
-      new Test('name6', null, '2024-06-01T13:45:30', null, 1, 'description', 1),
-      new Test('name7', null, null, '2024-06-01T13:45:30', 1, 'description', 1),
-      new Test('name8', null, null, '2023-06-01T13:45:30', 1, 'description', 1),
-      new Test('name9', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
-      new Test('name10', null, null, null, 1, 'description', 1),
-      new Test('name11', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
-      new Test('name12', null, null, null, 1, 'description', 1),
-      new Test('name13', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
-      new Test('name14', null, null, null, 1, 'description', 1),
-      new Test('name15', null, null, null, 1, 'description', 1),
-    ];
 
-    this.tests.forEach((el, ind) => {
-      el.id = ind + 1;
-    }); */
+    /* setTimeout(() => {
+      this.tests = [
+        new Test('name1', null, null, null, 1, 'description', 1),
+        new Test('name2', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
+        new Test('name3', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
+        new Test('name4', null, '2023-06-01T13:45:30', '2023-07-01T13:45:30', 1, 'description', 1),
+        new Test('name5', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
+        new Test('name6', null, '2024-06-01T13:45:30', null, 1, 'description', 1),
+        new Test('name7', null, null, '2024-06-01T13:45:30', 1, 'description', 1),
+        new Test('name8', null, null, '2023-06-01T13:45:30', 1, 'description', 1),
+        new Test('name9', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),
+        new Test('name10', null, null, null, 1, 'description', 1),
+        new Test('name11', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
+        new Test('name12', null, null, null, 1, 'description', 1),
+        new Test('name13', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
+        new Test('name14', null, null, null, 1, 'description', 1),
+        new Test('name15', null, null, null, 1, 'description', 1),
+      ];
+
+      this.tests.forEach((el, ind) => {
+        el.id = ind + 1;
+      });
+
+      this.isLoading = false;
+    }, 3000); */
   }
 
   ngOnInit(): void {
     this.testsSub = this.testService.dataTests$.subscribe((data: Test[] | null) => {
       this.tests = data;
+      this.isLoading = false;
       this.toFirstPage();
       this.checkCollection();
     });
@@ -67,7 +75,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   }
 
   ngOnDestroy(): void {
-    this.testsSub.unsubscribe();
+    this.testsSub?.unsubscribe();
   }
 
   onSearchLineEmpty() {

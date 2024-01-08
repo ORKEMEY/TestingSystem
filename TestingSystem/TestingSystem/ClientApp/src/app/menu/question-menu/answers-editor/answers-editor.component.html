@@ -3,12 +3,12 @@
     <div class="form">
 
         <div>
-            <div class=" h-center">
+            <div class="col-12 h-center">
                 <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
                     (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
                 </warning-component>
             </div>
-            <div class=" h-center">
+            <div class="col-12 h-center">
                 <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
                     (closeButtonPushed)="hideInfo()" class="col-12 warning-component" [message]="infoMessage">
                 </info-component>
@@ -45,7 +45,7 @@
 
     <div class="list">
 
-        <div class="alert-grid h-center col-12">
+        <div class="alert-grid col-12">
             <div id="Alert" class="alert alert-danger" #alertListDiv hidden>
             </div>
         </div>
@@ -57,9 +57,14 @@
             </label>
 
             <div *ngFor="let answer of answers">
-
                 <answer-item-component [item]="answer" (deleteButtonPushed)="deleteItem($event)">
                 </answer-item-component>
+            </div>
+
+            <div *ngIf="!answers && isLoading" class="loading h-center">
+                <div class="spinner-border text-primary " role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
 
         </div>

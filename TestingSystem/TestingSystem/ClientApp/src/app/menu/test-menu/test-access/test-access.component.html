@@ -1,0 +1,25 @@
+<div class="page">
+    <div class="header">
+        <div class="col-12 h-center">
+            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
+                (closeButtonPushed)="hideWarning()" class="warning-component" [message]="warningMessage">
+            </warning-component>
+        </div>
+
+        <div>
+            <!-- Access Link -->
+            <label class="col-3">
+                <h6>Access Link:</h6>
+            </label>
+            <div class="access-link-container">
+                <div class="col-9">
+                    <input type="text" value="{{AccessLink}}" class="input-block-level form-control" disabled>
+                </div>
+                <div class="col-3">
+                    <button type="button" (click)="copy()" class="btn btn-secondary col-12">{{CopyBtnStr}}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

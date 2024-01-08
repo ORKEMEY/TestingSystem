@@ -20,8 +20,12 @@ export default abstract class Paginator<T> {
     }
   }
 
-  public get CurrentPage() {
+  public get CurrentPage(): number {
     return this.currentPage;
+  }
+
+  public get NumberOfElemsOnPage(): number {
+    return this.numberOfElemsOnPage;
   }
 
   public get itemsPaginated(): T[] | null {
@@ -31,12 +35,20 @@ export default abstract class Paginator<T> {
     return this.items?.slice(startInd, endInd);
   }
 
-  public previous() {
-    this.CurrentPage -= 1;
+  public previous(): boolean {
+    if (this.CurrentPage !== 1) {
+      this.CurrentPage -= 1;
+      return true;
+    }
+    return false;
   }
 
-  public next() {
-    this.CurrentPage += 1;
+  public next(): boolean {
+    if (this.CurrentPage !== Math.ceil(this.items.length / this.numberOfElemsOnPage)) {
+      this.CurrentPage += 1;
+      return true;
+    }
+    return false;
   }
 
   public toFirstPage() {

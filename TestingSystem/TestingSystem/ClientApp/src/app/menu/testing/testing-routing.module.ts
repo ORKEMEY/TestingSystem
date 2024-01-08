@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import TestingComponent from './testing.component';
 import TestComponent from './test/test.component';
+import ResultComponent from './result/result.component';
 
 import NotFoundComponent from '../../shared/not-found/not-found.component';
 
@@ -11,7 +12,10 @@ const routes: Routes = [
   {
     path: 'test',
     component: TestingComponent,
-    children: [{ path: ':id', component: TestComponent }],
+    children: [
+      { path: ':id', component: TestComponent },
+      { path: 'result/:id', component: ResultComponent },
+    ],
   },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];

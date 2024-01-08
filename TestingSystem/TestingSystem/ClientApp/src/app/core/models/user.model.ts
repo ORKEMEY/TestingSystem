@@ -14,8 +14,6 @@ export default class User {
 
   public Role: Role;
 
-  public RoleName: string;
-
   public RefreshToken: RefreshToken;
 
   constructor(public Login: string, public Password: string) {}

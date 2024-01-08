@@ -7,6 +7,15 @@
         </div>
     </div>
 
+    <div class="scroll">
+        <div (click)="scrollToTop(2)"class="scroll-container">
+            <div class="sticky-bot scroll-btn">
+                <i class="fa-solid fa-angle-up"></i> Up
+            </div>
+        </div>
+        
+    </div>
+
 
     <div class="content h-center"> 
         <questions-list-component class="list-container" [testVariant]="testVariants?.[CurrentPage - 1]"></questions-list-component>    
@@ -15,9 +24,9 @@
     <div class="footer">
         <div class="carousel-container">
             <ul class=" pagination-carousel">
-                <li (click)="previous()"> Prev </li>
+                <li (click)="toPrevPage()"> Prev </li>
                 <li> {{CurrentPage}} </li>
-                <li (click)="next()"> Next </li>
+                <li (click)="toNextPage()"> Next </li>
             </ul>
         </div>
     </div>
