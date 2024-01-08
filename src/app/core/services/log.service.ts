@@ -56,7 +56,7 @@ export default class LogService {
         },
         error: (err) => {
           console.error(err);
-          observer?.error?.(err);
+          this.dataLogs.next(null);
         },
       });
   }

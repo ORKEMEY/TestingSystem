@@ -1,7 +1,11 @@
+import Customer from './customer.model';
+
 export default class Log {
   public testId: number;
 
   public userId: number;
+
+  public user: Customer;
 
   constructor(
     public expiredTime: string,

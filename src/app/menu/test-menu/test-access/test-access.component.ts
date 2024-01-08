@@ -9,11 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export default class TestAccessComponent {
   isWarningVisible: Boolean = false;
 
-  isInfoVisible: Boolean = false;
-
   warningMessage: string = '';
-
-  infoMessage: string = '';
 
   get AccessLink(): string {
     if (this.id === 0) {

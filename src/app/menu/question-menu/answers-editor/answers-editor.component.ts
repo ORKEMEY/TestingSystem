@@ -37,12 +37,14 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     return this.answerEditorFormService.form;
   }
 
+  isLoading: boolean = true;
+
   private question: Question = null;
 
   public get Question(): Question {
-    if (this.questionId !== 0 && this.question === null) {
+    /* if (this.questionId !== 0 && this.question === null) {
       this.loadQuestion();
-    }
+    } */
     return this.question;
   }
 
@@ -70,21 +72,25 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       });
     });
 
-    /* this.answers = [
-      new VariantOfAnswer('answer 1', 1),
-      new VariantOfAnswer('answer 2', 2),
-      new VariantOfAnswer('answer 3', 3),
-      new VariantOfAnswer('answer 4', 4),
-      new VariantOfAnswer('answer 5', 5),
-    ];
-    this.answers.forEach((el, ind) => {
-      el.isCorrect = !!(ind % 2);
-    }); */
+    /* setTimeout(() => {
+      this.answers = [
+        new VariantOfAnswer('answer 1', 1),
+        new VariantOfAnswer('answer 2', 2),
+        new VariantOfAnswer('answer 3', 3),
+        new VariantOfAnswer('answer 4', 4),
+        new VariantOfAnswer('answer 5', 5),
+      ];
+      this.answers.forEach((el, ind) => {
+        el.isCorrect = !!(ind % 2);
+      });
+      this.isLoading = false;
+    }, 3000); */
   }
 
   private loadQuestion(): Promise<void> {
     return new Promise((res, rej) => {
       if (this.questionId !== 0) {
+        this.isLoading = true;
         this.questionService.getById(this.questionId, {
           next: (item) => {
             this.Question = item;
@@ -110,6 +116,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     this.answersSub = this.variantOfAnswerService.dataVariantsOfAnswer$.subscribe(
       (data: VariantOfAnswer[] | null) => {
         this.answers = data;
+        this.isLoading = false;
         this.checkCollection();
       },
     );

@@ -46,9 +46,9 @@ export default class QuestionSettingsComponent {
   private question: Question = null;
 
   public get Question(): Question {
-    if (this.id !== 0 && this.question === null) {
+    /* if (this.id !== 0 && this.question === null) {
       this.loadQuestion();
-    }
+    } */
     return this.question;
   }
 
@@ -165,7 +165,10 @@ export default class QuestionSettingsComponent {
 
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
-      next: () => this.Info('Changes saved!'),
+      next: () => {
+        this.Info('Changes saved!');
+        this.loadQuestion();
+      },
       error: (errMsg: string) => this.Warn(errMsg),
     } as Observer<void>);
   }

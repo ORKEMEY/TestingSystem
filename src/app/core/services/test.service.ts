@@ -26,7 +26,7 @@ export default class TestService {
           if (err.status === 400) {
             observer?.error?.(err.error.errorText);
           } else {
-            observer?.error?.(err);
+            // observer?.error?.(err);
             console.error(err);
           }
         },
@@ -67,7 +67,7 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
-          observer?.error?.(err);
+          // observer?.error?.(err);
           console.error(err);
         }
       },
@@ -87,7 +87,7 @@ export default class TestService {
           if (err.status === 400) {
             observer?.error?.(err.error.errorText);
           } else {
-            observer?.error?.(err);
+            // observer?.error?.(err);
             console.error(err);
           }
         },
@@ -102,7 +102,7 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
-          observer?.error?.(err);
+          // observer?.error?.(err);
           console.error(err);
         }
       },
@@ -117,7 +117,7 @@ export default class TestService {
         if (err.status === 400) {
           observer?.error?.(err.error.errorText);
         } else {
-          observer?.error?.(err);
+          // observer?.error?.(err);
           console.error(err);
         }
       },

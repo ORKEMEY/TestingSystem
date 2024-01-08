@@ -42,9 +42,9 @@ export default class TestSettingsComponent {
   private test: Test = null;
 
   public get Test(): Test {
-    if (this.id !== 0 && this.test === null) {
-      this.loadTest();
-    }
+    /* if (this.id !== 0 && this.test === null) {
+       this.loadTest();
+    } */
     return this.test;
   }
 
@@ -144,7 +144,10 @@ export default class TestSettingsComponent {
 
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
-      next: () => this.Info('Changes saved!'),
+      next: () => {
+        this.Info('Changes saved!');
+        this.loadTest();
+      },
       error: (errMsg: string) => this.Warn(errMsg),
     } as Observer<void>);
   }
