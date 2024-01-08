@@ -21,6 +21,7 @@ namespace TestingSystem.DAL.Repositories
 		public Log GetItem(int id)
 		{
 			return db.Logs
+				.Include(l => l.User)
 				.FirstOrDefault(x => x.Id == id);
 		}
 
@@ -45,7 +46,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public IEnumerable<Log> GetItems(Expression<Func<Log, bool>> predicate)
 		{
-			return db.Logs.Where(predicate);
+			return db.Logs.Where(predicate).Include(l => l.User);
 		}
 	}
 }

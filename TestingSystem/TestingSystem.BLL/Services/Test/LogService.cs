@@ -37,7 +37,8 @@ namespace TestingSystem.BLL.Services
 				throw new ValidationException("Wrong or empty properties", "NumberOfCorrectAnswers");
 			if (logDTO.VariantNumer <= 0)
 				throw new ValidationException("Wrong or empty properties", "VariantNumer");
-
+			
+			logDTO.User = null;
 			var logDAL = MapperBLL.Mapper.Map<Log>(logDTO);
 			uof.Logs.Create(logDAL);
 			uof.Save();
@@ -62,6 +63,7 @@ namespace TestingSystem.BLL.Services
 			var logDALold = uof.Logs.GetItem(logDTO.Id);
 			if (logDALold == null) throw new ValidationException("Item not found");
 
+			logDTO.User = null;
 			var logDALnew = MapperBLL.Mapper.Map<Log>(logDTO);
 
 			LogPatcher.Patch(logDALold, logDALnew);

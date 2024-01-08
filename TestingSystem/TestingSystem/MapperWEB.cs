@@ -15,6 +15,9 @@ namespace TestingSystem.PL
 			MapperConf = new MapperConfiguration(cfg =>
 			{
 
+				cfg.CreateMap<CustomerViewModel, UserDTO>();
+				cfg.CreateMap<UserDTO, CustomerViewModel>();
+
 				cfg.CreateMap<UserViewModel, UserDTO>();
 				cfg.CreateMap<UserDTO, UserViewModel>();
 

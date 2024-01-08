@@ -7,7 +7,8 @@ namespace TestingSystem.PL.Models
 		public int Id { get; set; }
 
 		public int? UserId { get; set; }
-		
+		public CustomerViewModel User { get; set; }
+
 		public int? TestId { get; set; }
 		
 		public TimeSpan ExpiredTime { get; set; }
