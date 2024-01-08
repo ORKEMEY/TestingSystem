@@ -1,5 +1,5 @@
 export default class Role {
-  public Id: number;
+  public id: number;
 
-  public Name: string = 'Customer';
+  public name: string = 'Customer';
 }

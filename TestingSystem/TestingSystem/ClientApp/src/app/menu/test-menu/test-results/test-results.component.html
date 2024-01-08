@@ -46,14 +46,14 @@
                 <tbody>
                     <tr *ngFor="let item of itemsPaginated; let i = index">
                         <th scope="row">{{((CurrentPage - 1) * NumberOfElemsOnPage + i) + 1}}</th>
-                        <td>{{item?.user?.Name || 'No name'}}</td>
-                        <td>{{item?.user?.Surname || 'No surname'}}</td>
-                        <td>{{item?.user?.EMail || 'No E-Mail'}}</td>
-                        <td>{{(item?.GetAbsPoints() || 0) | number:"1.1-2"}} / {{(item?.GetAbsMaxPoints() || 0) |
+                        <td>{{item?.user?.name || 'No name'}}</td>
+                        <td>{{item?.user?.surname || 'No surname'}}</td>
+                        <td>{{item?.user?.eMail || 'No E-Mail'}}</td>
+                        <td>{{(TestResCalc.GetAbsPoints(item) || 0) | number:"1.1-2"}} / {{(TestResCalc.GetAbsMaxPoints(item) || 0) |
                             number:"1.1-2"}}</td>
-                        <td>{{(item?.GetPercentOfCorrectAnswers() || 0) | number:"1.1-2"}}%</td>
+                        <td>{{(TestResCalc.GetPercentOfCorrectAnswers(item) || 0) | number:"1.1-2"}}%</td>
                         <td>{{(item?.expiredTime | time) || 'No time'}}</td>
-                        <td>{{(item?.DateTime | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}</td>
+                        <td>{{(item?.dateTime | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}</td>
                     </tr>
                 </tbody>
             </table>

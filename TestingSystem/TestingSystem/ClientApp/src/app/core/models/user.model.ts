@@ -2,19 +2,19 @@ import Role from './role.model';
 import RefreshToken from './refresh-token.model';
 
 export default class User {
-  public Id: number;
+  public id: number;
 
-  public Name: string;
+  public name: string;
 
-  public Surname: string;
+  public surname: string;
 
-  public EMail: string;
+  public eMail: string;
 
-  public RoleId: number;
+  public roleId: number;
 
-  public Role: Role;
+  public role: Role;
 
-  public RefreshToken: RefreshToken;
+  public refreshToken: RefreshToken;
 
-  constructor(public Login: string, public Password: string) {}
+  constructor(public login: string, public password: string) {}
 }

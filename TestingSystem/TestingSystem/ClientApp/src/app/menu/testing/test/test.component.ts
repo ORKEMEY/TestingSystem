@@ -18,8 +18,6 @@ import Paginator from '../../../shared/paginator';
   styleUrls: ['./test.component.css'],
 })
 export default class TestComponent extends Paginator<Test> {
-  #questions: Question[] | null;
-
   public get Status(): string {
     if (this.Test === null) return 'Not found!';
     const nullDate = new Date(null).getTime();
@@ -76,29 +74,13 @@ export default class TestComponent extends Paginator<Test> {
     return this.questions;
   }
 
-  public set questions(value: Question[] | null) {
-    this.#questions = value;
-  }
-
   public get questions(): Question[] | null {
-    return this.#questions;
+    return this.TestVariant?.questions;
   }
 
   private TestId: number = 0;
 
   private Test: Test = null;
-
-  private get OpeningTimeStr(): string {
-    if (!this.Test?.openingTime) return null;
-    const odt = new Date(this.Test?.openingTime);
-    return `${odt.toDateString()} ${odt.getHours()}:${odt.getMinutes()}`;
-  }
-
-  private get ClosureTimeStr(): string {
-    if (!this.Test?.closureTime) return null;
-    const cdt = new Date(this.Test?.closureTime);
-    return `${cdt.toDateString()} ${cdt.getHours()}:${cdt.getMinutes()}`;
-  }
 
   private TestVariant: TestVariant = null;
 
@@ -150,7 +132,9 @@ export default class TestComponent extends Paginator<Test> {
       el.id = ind;
     });
 
-    this.questions = [
+    this.TestVariant = new TestVariant(1, 1);
+
+    this.TestVariant.questions = [
       new Question('query1', answers.slice(0, 2)),
       new Question('query2', answers.slice(1, 3)),
       new Question('query3', answers.slice(2, 4)),
@@ -163,15 +147,12 @@ export default class TestComponent extends Paginator<Test> {
       new Question('query3', answers.slice(2, 4)),
     ];
 
-    this.questions.forEach((q, ind) => {
+    this.TestVariant.questions.forEach((q, ind) => {
       q.questionType = qTypes[ind % 3];
       q.id = ind;
     });
 
-    const tv = new TestVariant(1, 1);
-    tv.questions = this.questions;
-
-    this.Test.testVariants = [tv]; */
+    this.Test.testVariants = [this.TestVariant]; */
   }
 
   startTest() {
@@ -234,7 +215,7 @@ export default class TestComponent extends Paginator<Test> {
 
   private loadTest() {
     if (this.TestId !== 0) {
-      this.testService.getOwnedById(this.TestId, {
+      this.testService.getById(this.TestId, {
         next: (item) => {
           this.Test = item;
           this.setTestVariant();

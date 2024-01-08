@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import Log from '../../../core/models/log.model';
 import LogService from '../../../core/services/log.service';
+import TestResultCalc from '../../../core/utils/test-result-calc';
 import Paginator from '../../../shared/paginator';
 import Alert from '../../../core/alert';
 
@@ -38,6 +39,8 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
 
   private id: number = 0;
 
+  public TestResCalc: TestResultCalc = new TestResultCalc();
+
   public searchLine: string | null;
 
   constructor(private activatedRoute: ActivatedRoute, private logService: LogService) {
@@ -61,10 +64,10 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
       const log = new Log('00:01:10', new Date().toString());
 
       log.user = new Customer();
-      log.user.Login = 'testlogin';
-      log.user.Name = 'Name';
-      log.user.Surname = 'Surname';
-      log.user.EMail = 'test@email.com';
+      log.user.login = 'testlogin';
+      log.user.name = 'Name';
+      log.user.surname = 'Surname';
+      log.user.eMail = 'test@email.com';
 
       log.zero = -10;
       log.mark = 0;
@@ -84,17 +87,17 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
     switch (this.SearchCategory) {
       case 'Points':
         return this.logs.filter(
-          (el) => el.GetAbsPoints() === Number.parseInt(this.searchLine.trim(), 10),
+          (el) => this.TestResCalc.GetAbsPoints(el) === Number.parseInt(this.searchLine.trim(), 10),
         );
 
       case 'E-Mail':
-        return this.logs.filter((el) => el.user.EMail.includes(this.searchLine.trim()));
+        return this.logs.filter((el) => el.user.eMail.includes(this.searchLine.trim()));
 
       case 'Surname':
-        return this.logs.filter((el) => el.user.Surname.includes(this.searchLine.trim()));
+        return this.logs.filter((el) => el.user.surname.includes(this.searchLine.trim()));
 
       case 'Name':
-        return this.logs.filter((el) => el.user.Name.includes(this.searchLine.trim()));
+        return this.logs.filter((el) => el.user.name.includes(this.searchLine.trim()));
 
       default:
         return null;

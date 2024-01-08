@@ -11,10 +11,14 @@
             <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
 
         </div>
-        <div class="query h-start">
-            <p>
-                {{Query}}
-            </p>
+        <div class="query ">
+            <div class="h-start">
+                <p>
+                    {{Query}}
+                </p>
+            </div>
+            
+            <hr [ngStyle]="{'margin-top': 0}"/>
         </div>
 
         <div class="answers ">

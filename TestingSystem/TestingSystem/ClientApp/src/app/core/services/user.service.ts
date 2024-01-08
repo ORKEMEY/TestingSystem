@@ -97,14 +97,14 @@ export default class UserService {
   }
 
   private async HashPassword(user: User) {
-    const sol = MD5(user.Login).toString();
-    const pas = MD5(user.Password).toString();
+    const sol = MD5(user.login).toString();
+    const pas = MD5(user.password).toString();
 
     const concat = [...sol].map((el, ind): number => el.charCodeAt(0) ^ pas.charCodeAt(ind));
 
     const res = String.fromCharCode(...concat);
 
-    user.Password = SHA256(res).toString();
+    user.password = SHA256(res).toString();
     return user;
   }
 }

@@ -100,7 +100,7 @@ export default class QuestionsListComponent
   }
 
   ngOnDestroy(): void {
-    this.questionsSub.unsubscribe();
+    this.questionsSub?.unsubscribe();
   }
 
   deleteItem(question: Question) {
