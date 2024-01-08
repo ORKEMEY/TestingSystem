@@ -41,7 +41,6 @@ namespace TestingSystem.PL.Controllers
 
 		// GET api/<TestsController>/5
 		[HttpGet("{id}")]
-		[Authorize(Roles = "Admin")]
 		public IActionResult Get(int id)
 		{
 			try
