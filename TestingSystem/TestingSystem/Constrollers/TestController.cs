@@ -271,9 +271,15 @@ namespace TestingSystem.PL.Controllers
 
 		#endregion
 
+		public class CheckTestPost {
+
+			public TestViewModel test { get; set; }
+			public LogViewModel log { get; set; }
+		}
+
 
 		[HttpPost("checktest")]
-		public IActionResult CheckTest([FromBody] (TestViewModel test,  LogViewModel log) parameters)
+		public IActionResult CheckTest([FromBody] CheckTestPost parameters)
 		{
 			try
 			{

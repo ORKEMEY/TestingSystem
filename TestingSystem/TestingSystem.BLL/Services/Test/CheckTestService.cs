@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,7 +44,8 @@ namespace TestingSystem.BLL.Services
 			var testVarDAL = uof.TestVariants.GetItem(testDTO.TestVariants.First().Id);
 			if (testDAL == null) throw new ValidationException("Test Variant not found");
 
-			var qustionsDAL = uof.Questions.GetItems(q => testDTO.TestVariants.First().Questions.Any(c => c.Id == q.Id));
+			var questionIds = testDTO.TestVariants.First().Questions.Select(c => c.Id);
+			var qustionsDAL = uof.Questions.GetItems(q => questionIds.Contains(q.Id));
 
 			
 			logDTO.Zero = -10;
@@ -57,13 +59,13 @@ namespace TestingSystem.BLL.Services
 				var questionModel = MapperBLL.Mapper.Map<QuestionDTO>(qustionsDAL.Where(q => q.Id == questionAns.Id).First());
 				bool res = false;
 
-				if (questionAns.QuestionType.Name == "Short Answer")
+				if (questionModel.QuestionType.Name == "Short Answer")
 				{
-					res = CheckShAQuestion(questionAns, MapperBLL.Mapper.Map<QuestionDTO>(questionModel));
+					res = CheckShAQuestion(questionAns, questionModel);
 				}
 				else
 				{
-					res = CheckSChQuestion(questionAns, MapperBLL.Mapper.Map<QuestionDTO>(questionModel));
+					res = CheckSChQuestion(questionAns, questionModel);
 				}
 
 				if (res)
