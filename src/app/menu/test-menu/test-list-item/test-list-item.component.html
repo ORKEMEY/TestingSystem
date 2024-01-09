@@ -1,16 +1,18 @@
-<div class="item-container">
-    <div class="item grid"
-    (mouseleave)="isSettingsVisible = false">
+<div class="item-container"
+    [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
+    <div class="item grid" (mouseleave)="isSettingsVisible = false">
         <div class="header h-end setings-container">
             <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
-            (mouseleave)="isSettingsVisible = false">
+                (mouseleave)="isSettingsVisible = false">
                 <ul>
-                    
-                    <li [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]"> Settings </li>
+
+                    <li
+                        [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
+                        Settings </li>
                     <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>
             </div>
-            <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>      
+            <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
 
         </div>
         <div class="content center">

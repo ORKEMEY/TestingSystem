@@ -175,7 +175,7 @@ export default class TestComponent extends Paginator<Test> {
     this.stopTimer();
     const expiredTimeSec = (new Date().getTime() - this.startTime.getTime()) / 1000;
     const expiredTimeSpan = this.getDurationStr(expiredTimeSec);
-    const log = new Log(expiredTimeSpan, new Date().toDateString());
+    const log = new Log(expiredTimeSpan, new Date().toISOString());
     this.isTestRunning = false;
     this.testCheckService.submit(this.Test, this.TestVariant, log, {
       next: (createdLog) => {

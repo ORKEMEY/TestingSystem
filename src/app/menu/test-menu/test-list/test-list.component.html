@@ -24,16 +24,18 @@
                 (closeButtonPushed)="hideInfo()" class="col-10 warning-component" [message]="infoMessage">
             </info-component>
         </div>
-        
-        <div class="grid" >
+
+        <div class="grid">
             <div class="item">
-                <button [routerLink]="['../../', 'test',  0 ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]" class="add-item" tabindex="-1">
+                <button
+                    [routerLink]="['../../', 'test',  0 ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]"
+                    class="add-item" tabindex="-1">
                     +
                 </button>
             </div>
-                <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
+            <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
                 (deleteButtonPushed)="deleteItem($event)">
-                </test-list-item-component>
+            </test-list-item-component>
             <div *ngIf="!itemsPaginated && isLoading" class="loading">
                 <div class="spinner-border text-primary " role="status">
                     <span class="sr-only">Loading...</span>

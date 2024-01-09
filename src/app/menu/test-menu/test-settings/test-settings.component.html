@@ -30,7 +30,7 @@
                     </label>
                     <div>
                         <input formControlName="Name" type="text" name="Name" class="input-block-level form-control"
-                        (ngModelChange)="onNameChange()" placeholder="Name" required>
+                            (ngModelChange)="onNameChange()" placeholder="Name" required>
                     </div>
                 </div>
                 <div class="form-group col-12">
@@ -70,9 +70,12 @@
                 <div class="form-group col-12 switch-container">
                     <!-- Is Access Open -->
                     <div class="custom-control custom-switch">
-                        <input formControlName="IsAccessOpen" type="checkbox" class="custom-control-input" id="SwitchIsAccessOpen">
-                        <label class="custom-control-label" for="SwitchIsAccessOpen"> <h6>*Open Access</h6></label>
-                      </div>
+                        <input formControlName="IsAccessOpen" type="checkbox" class="custom-control-input"
+                            id="SwitchIsAccessOpen">
+                        <label class="custom-control-label" for="SwitchIsAccessOpen">
+                            <h6>*Open Access</h6>
+                        </label>
+                    </div>
                 </div>
 
 
@@ -80,14 +83,16 @@
                     <!-- Variants Number -->
                     <label class="col-form-label">
                         <h6>*Variants Number:</h6>
-                    </label> 
+                    </label>
                     <div>
-                        <input *ngIf="this.Test === null; else disabledInput" formControlName="NumberOfVariants" type="number" class="input-block-level form-control"
-                        (ngModelChange)="onNumberOfVariantsChange()" placeholder="1" min="1" max="100" required>
-                        
+                        <input *ngIf="this.Test === null; else disabledInput" formControlName="NumberOfVariants"
+                            type="number" class="input-block-level form-control"
+                            (ngModelChange)="onNumberOfVariantsChange()" placeholder="1" min="1" max="100" required>
+
                         <ng-template #disabledInput>
-                            <input formControlName="NumberOfVariants" type="number" class="input-block-level form-control"
-                        (ngModelChange)="onNumberOfVariantsChange()" placeholder="1" min="1" max="100" disabled required>
+                            <input formControlName="NumberOfVariants" type="number"
+                                class="input-block-level form-control" (ngModelChange)="onNumberOfVariantsChange()"
+                                placeholder="1" min="1" max="100" disabled required>
                         </ng-template>
                     </div>
                 </div>
@@ -157,15 +162,15 @@
                                 <div formGroupName="Time" class="form-row ">
                                     <label class="col-2 col-form-label">Opening Time:</label>
                                     <div class="col-sm-4">
-                                        <input  formControlName="OpeningTime" class="input-block-level form-control"
-                                        (ngModelChange)="onTimeChange()"  type="datetime-local" min="1970-01-01T00:00"
-                                            max="2030-01-01T00:00">
+                                        <input formControlName="OpeningTime" class="input-block-level form-control"
+                                            (ngModelChange)="onTimeChange()" type="datetime-local"
+                                            min="1970-01-01T00:00" max="2030-01-01T00:00">
                                     </div>
                                     <label class="col-2 col-form-label">Closure Time:</label>
                                     <div class="col-sm-4">
-                                        <input (ngModelChange)="onTimeChange()" formControlName="ClosureTime" class="input-block-level form-control"
-                                            type="datetime-local" min="1970-01-01T00:00"
-                                            max="2030-01-01T00:00">
+                                        <input (ngModelChange)="onTimeChange()" formControlName="ClosureTime"
+                                            class="input-block-level form-control" type="datetime-local"
+                                            min="1970-01-01T00:00" max="2030-01-01T00:00">
                                     </div>
                                 </div>
 
@@ -181,8 +186,8 @@
 
                 <br>
                 <div class="submit-btn-container col-12">
-                    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnTestPostForm"
-                        value="Save">
+                    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success"
+                        id="btnTestPostForm" value="Save">
                 </div>
 
             </form>

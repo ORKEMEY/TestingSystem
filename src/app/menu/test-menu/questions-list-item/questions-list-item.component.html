@@ -4,7 +4,8 @@
             <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
                 (mouseleave)="isSettingsVisible = false">
                 <ul>
-                    <li  [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings </li>
+                    <li [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings
+                    </li>
                     <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>
             </div>
@@ -17,8 +18,8 @@
                     {{Query}}
                 </p>
             </div>
-            
-            <hr [ngStyle]="{'margin-top': 0}"/>
+
+            <hr [ngStyle]="{'margin-top': 0}" />
         </div>
 
         <div class="answers ">
@@ -26,16 +27,16 @@
                 <div *ngFor="let answer of item?.answers" class="answer h-start">
                     <div *ngIf="item?.questionType?.name === 'Single Choise' || 
                             item?.questionType?.name === 'True / False'">
-                        
-                            <input *ngIf="answer?.isCorrect; else unchecked" type="radio" checked disabled>
-                            <ng-template #unchecked>
-                                <input  type="radio" disabled>
-                            </ng-template>
-                           
-                        
-                            <label class="check-label">
-                                {{answer?.answer}}
-                            </label>
+
+                        <input *ngIf="answer?.isCorrect; else unchecked" type="radio" checked disabled>
+                        <ng-template #unchecked>
+                            <input type="radio" disabled>
+                        </ng-template>
+
+
+                        <label class="check-label">
+                            {{answer?.answer}}
+                        </label>
                     </div>
                     <div *ngIf="item?.questionType.name === 'Short Answer'">
                         <input class="input-block-level form-control" type="text" value="{{answer?.answer}}" disabled>

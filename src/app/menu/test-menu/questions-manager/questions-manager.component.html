@@ -8,17 +8,18 @@
     </div>
 
     <div class="scroll">
-        <div (click)="scrollToTop(2)"class="scroll-container">
+        <div (click)="scrollToTop(2)" class="scroll-container">
             <div class="sticky-bot scroll-btn">
                 <i class="fa-solid fa-angle-up"></i> Up
             </div>
         </div>
-        
+
     </div>
 
 
-    <div class="content h-center"> 
-        <questions-list-component class="list-container" [testVariant]="testVariants?.[CurrentPage - 1]"></questions-list-component>    
+    <div class="content h-center">
+        <questions-list-component class="list-container"
+            [testVariant]="testVariants?.[CurrentPage - 1]"></questions-list-component>
     </div>
 
     <div class="footer">
