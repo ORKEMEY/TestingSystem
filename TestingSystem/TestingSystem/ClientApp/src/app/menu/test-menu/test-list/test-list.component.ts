@@ -71,6 +71,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       this.toFirstPage();
       this.checkCollection();
     });
+    this.isLoading = true;
     this.testService.refreshOwnedTests();
   }
 
