@@ -46,9 +46,6 @@ export default class QuestionSettingsComponent {
   private question: Question = null;
 
   public get Question(): Question {
-    /* if (this.id !== 0 && this.question === null) {
-      this.loadQuestion();
-    } */
     return this.question;
   }
 
@@ -81,7 +78,10 @@ export default class QuestionSettingsComponent {
         next: (item) => {
           this.Question = item;
         },
-        error: (err) => this.Warn(err),
+        error: (err) => {
+          if (typeof err !== 'string') this.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.Warn(err);
+        },
       } as Observer<Question>);
     } else {
       this.Question = null;
@@ -156,11 +156,12 @@ export default class QuestionSettingsComponent {
         this.Info("Question's successfully created!");
       },
       error: (errMsg: string) => {
-        this.Warn(errMsg);
+        if (typeof errMsg !== 'string')
+          this.Warn("Ooops, something went wrong! Couldn't create question");
+        else this.Warn(errMsg);
       },
     } as Observer<number>);
     this.Info("Question's saved and will be created after adding answers!");
-    // this.router.navigate(['/menus/menu/questionmenu/question', 0, 'answerseditor']);
   }
 
   private submitPut() {
@@ -169,7 +170,11 @@ export default class QuestionSettingsComponent {
         this.Info('Changes saved!');
         this.loadQuestion();
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.Warn(errMsg);
+      },
     } as Observer<void>);
   }
 

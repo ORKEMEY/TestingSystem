@@ -1,14 +1,17 @@
 .warning {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-.close{
-    text-decoration: none;
-    transform: rotate(45deg);
+.close {
+  text-decoration: none;
+  transform: rotate(45deg);
+
+  height: fit-content;
+  width: fit-content;
 }
 
-.close:hover{
-    color: red;
-    cursor: pointer;
+.close:hover {
+  color: red;
+  cursor: pointer;
 }

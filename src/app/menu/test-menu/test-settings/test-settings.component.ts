@@ -72,7 +72,10 @@ export default class TestSettingsComponent {
         next: (item) => {
           this.Test = item;
         },
-        error: (err) => this.Warn(err),
+        error: (err) => {
+          if (typeof err !== 'string') this.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.Warn(err);
+        },
         complete: () => console.log('comlete'),
       } as Observer<Test>);
     } else {
@@ -138,7 +141,11 @@ export default class TestSettingsComponent {
         ]);
         this.Info('Test succesfully created!');
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.Warn("Ooops, something went wrong! Couldn't create test");
+        else this.Warn(errMsg);
+      },
     } as Observer<number>);
   }
 
@@ -148,7 +155,11 @@ export default class TestSettingsComponent {
         this.Info('Changes saved!');
         this.loadTest();
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.Warn(errMsg);
+      },
     } as Observer<void>);
   }
 

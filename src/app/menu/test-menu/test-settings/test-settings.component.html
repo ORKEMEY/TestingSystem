@@ -1,14 +1,14 @@
 <div class="page">
 
     <div class="header">
-        <div class=" h-center">
+        <div class="col-12 h-center">
             <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+                (closeButtonPushed)="hideWarning()" class="warning-component" [message]="warningMessage">
             </warning-component>
         </div>
-        <div class=" h-center">
+        <div class="col-12 h-center">
             <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
-                (closeButtonPushed)="hideInfo()" class="col-12 warning-component" [message]="infoMessage">
+                (closeButtonPushed)="hideInfo()" class="warning-component" [message]="infoMessage">
             </info-component>
         </div>
 
