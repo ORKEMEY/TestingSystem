@@ -54,7 +54,7 @@
                             number:"1.1-2"}}</td>
                         <td>{{(TestResCalc.GetPercentOfCorrectAnswers(item) || 0) | number:"1.1-2"}}%</td>
                         <td>{{(item?.expiredTime | time) || 'No time'}}</td>
-                        <td>{{(item?.dateTime | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}</td>
+                        <td>{{(getLocalDateTime(item?.dateTime) | date: "MMM dd, yyyy 'at' HH:mm") || 'No date'}}</td>
                     </tr>
                 </tbody>
             </table>

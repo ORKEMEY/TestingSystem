@@ -120,6 +120,13 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
     }
   }
 
+  getLocalDateTime(utc: string): Date | null {
+    const date = new Date(utc);
+    if (!date) return null;
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return date;
+  }
+
   Warn(msg: string) {
     this.warningMessage = msg;
     this.isWarningVisible = true;
