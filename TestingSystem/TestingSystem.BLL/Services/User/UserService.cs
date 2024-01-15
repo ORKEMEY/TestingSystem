@@ -13,13 +13,13 @@ namespace TestingSystem.BLL.Services
 	public class UserService : IUserService
 	{
 		protected IUnitOfWork uof { get; set; }
-		protected IRefreshTokenService rts { get; set; }
+		protected ITokenService ts { get; set; }
 		protected IPasswordService ps { get; set; }
 
-		public UserService(IUnitOfWork uof, IRefreshTokenService rts, IPasswordService ps)
+		public UserService(IUnitOfWork uof, ITokenService ts, IPasswordService ps)
 		{
 			this.uof = uof;
-			this.rts = rts;
+			this.ts = ts;
 			this.ps = ps;
 		}
 
@@ -37,7 +37,7 @@ namespace TestingSystem.BLL.Services
 				throw new Infrastructure.ValidationException("This Login is already taken", "Login");
 
 			ps.HashPassword(userDTO);
-			rts.AssignRefreshToken(userDTO);
+			ts.AssignRefreshToken(userDTO);
 			AssignCustomerRole(userDTO);
 			
 
@@ -66,8 +66,23 @@ namespace TestingSystem.BLL.Services
 			var userDALold = uof.Users.GetItem(userDTO.Id);
 			if (userDALold == null) throw new Infrastructure.ValidationException("Item not found");
 
-			if (userDTO.Password != null)
-				ps.HashPassword(userDTO);
+			if(userDTO.Login != null)
+			{
+				if (userDTO.Password == null)
+					throw new Infrastructure.ValidationException("You must confirm password to change login", "Login");
+				else ps.HashPassword(userDTO);
+
+				var loginCheck = uof.Users.GetItems(u => u.Login == userDTO.Login).FirstOrDefault();
+				if (loginCheck != null)
+					throw new Infrastructure.ValidationException("This Login is already taken", "Login");
+
+			}
+			else
+			{
+				if (userDTO.Password != null)
+					throw new Infrastructure.ValidationException("You cann't change password", "Login");
+			}
+
 
 			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
 
@@ -91,7 +106,8 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<IEnumerable<UserDTO>>(items);
 		}
 
-		public UserDTO Authentificate(string login, string password)
+
+		public UserDTO Authentificate(string login, string password, bool hashPassword = true)
 		{
 
 			if (String.IsNullOrEmpty(login))
@@ -108,12 +124,13 @@ namespace TestingSystem.BLL.Services
 
 			try
 			{
-				ps.HashPassword(searchedUser);
+				if(hashPassword)
+					ps.HashPassword(searchedUser);
 
 				User item = uof.Users.GetItems(u => u.Login == searchedUser.Login & u.Password == searchedUser.Password).FirstOrDefault();
 
 				userDTO = MapperBLL.Mapper.Map<UserDTO>(item);
-				rts.AssignRefreshToken(userDTO);
+				ts.AssignRefreshToken(userDTO);
 
 				item.RefreshToken = MapperBLL.Mapper.Map<RefreshToken>(userDTO.RefreshToken) ;
 

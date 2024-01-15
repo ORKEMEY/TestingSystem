@@ -14,6 +14,7 @@ namespace TestingSystem.PL.Controllers
 {
 	[Route("api/Logs")]
 	[ApiController]
+	[Authorize]
 	public class LogController : Controller
 	{
 		private ILogService service { get; set; }

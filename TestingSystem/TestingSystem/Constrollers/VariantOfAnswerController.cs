@@ -14,6 +14,7 @@ namespace TestingSystem.PL.Controllers
 {
 	[Route("api/Answers")]
 	[ApiController]
+	[Authorize]
 	public class VariantOfAnswerController : Controller
 {
 		private IVariantOfAnswerService service { get; set; }

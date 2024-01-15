@@ -14,13 +14,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestingSystem.BLL.Services
 {
-	public  class RefreshTokenService : IRefreshTokenService
+	public class TokenService : ITokenService
 	{
 
 		protected IUnitOfWork uof { get; set; }
 
 
-		public RefreshTokenService(IUnitOfWork uof)
+		public TokenService(IUnitOfWork uof)
 		{
 			this.uof = uof;
 		}
@@ -83,6 +83,26 @@ namespace TestingSystem.BLL.Services
 				user.RefreshToken.ExpiryTime = DateTime.Now.AddDays(10);
 			}
 
+		}
+
+		public TokenDTO GetToken(UserDTO userDTO)
+		{
+			var identity = AuthOptions.GetIdentity(userDTO);
+
+			if (identity == null)
+			{
+				throw new Infrastructure.ValidationException("Invalid login or password.");
+			}
+
+			var encodedJwt = AuthOptions.GenerateAccessToken(identity.Claims);
+
+			return new TokenDTO
+			{
+				AccessToken = encodedJwt,
+				Login = identity.Name,
+				Role = userDTO.Role.Name,
+				RefreshToken = userDTO.RefreshToken.Token
+			};
 		}
 	}
 }

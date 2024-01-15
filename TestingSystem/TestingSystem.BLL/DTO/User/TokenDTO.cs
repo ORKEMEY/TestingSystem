@@ -18,5 +18,7 @@ namespace TestingSystem.BLL.DTO
 
 		public string Login { get; set; }
 
+		public string Role { get; set; }
+
 	}
 }

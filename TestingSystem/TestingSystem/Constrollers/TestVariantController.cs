@@ -14,6 +14,7 @@ namespace TestingSystem.PL.Controllers
 {
 	[Route("api/TestVariants")]
 	[ApiController]
+	[Authorize]
 	public class TestVariantController : Controller
 	{
 		private ITestVariantService service { get; set; }

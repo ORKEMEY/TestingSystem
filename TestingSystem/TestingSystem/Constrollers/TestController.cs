@@ -131,6 +131,7 @@ namespace TestingSystem.PL.Controllers
 
 		//[Route("owned/{id}")]
 		[HttpGet("owned/{id}")]
+		[Authorize]
 		public IActionResult GetOwned(int Id)
 		{
 
@@ -157,6 +158,7 @@ namespace TestingSystem.PL.Controllers
 
 		[Route("owned")]
 		[HttpGet]
+		[Authorize]
 		public IActionResult GetOwned()
 		{
 		
@@ -182,6 +184,7 @@ namespace TestingSystem.PL.Controllers
 
 		[Route("owned/search")]
 		[HttpGet]
+		[Authorize]
 		public IActionResult SearchOwned([FromQuery] string name)
 		{
 			try
@@ -207,6 +210,7 @@ namespace TestingSystem.PL.Controllers
 		// POST api/<TestsController>/owned
 		[Route("owned")]
 		[HttpPost]
+		[Authorize]
 		public IActionResult PostOwned([FromBody] TestViewModel test)
 		{
 			try
@@ -229,6 +233,7 @@ namespace TestingSystem.PL.Controllers
 
 		// PUT api/<TestsController>/owned
 		[HttpPut("owned")]
+		[Authorize]
 		public IActionResult UpdateOwned([FromBody] TestViewModel test)
 		{
 			try
@@ -250,6 +255,7 @@ namespace TestingSystem.PL.Controllers
 			
 		// DELETE api/<TestsController>/owned/5
 		[HttpDelete("owned/{id}")]
+		[Authorize]
 		public IActionResult DeleteOwned(int id)
 		{
 			try
@@ -279,6 +285,7 @@ namespace TestingSystem.PL.Controllers
 
 
 		[HttpPost("checktest")]
+		[Authorize]
 		public IActionResult CheckTest([FromBody] CheckTestPost parameters)
 		{
 			try

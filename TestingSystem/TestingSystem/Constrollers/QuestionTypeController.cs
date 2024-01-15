@@ -14,6 +14,7 @@ namespace TestingSystem.PL.Controllers
 {
 	[Route("api/QuestionTypes")]
 	[ApiController]
+	[Authorize]
 	public class QuestionTypeController : Controller
 {
 		private IQuestionTypeService service { get; set; }

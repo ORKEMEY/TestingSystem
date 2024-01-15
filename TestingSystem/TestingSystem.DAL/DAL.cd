@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TestingSystem.DAL.Models.Tag">
+    <Position X="7.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Tag.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.RefreshToken">
+    <Position X="5.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\User\RefreshToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.Role">
+    <Position X="1.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\User\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.User">
+    <Position X="3.5" Y="5" Width="1.5" />
+    <AssociationLine Name="RefreshToken" Type="TestingSystem.DAL.Models.RefreshToken" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="6.938" />
+        <Point X="5.5" Y="6.938" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.702" Y="-0.552" Height="0.182" Width="1.065" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAIQRAAAAAAAEAAAAAQABCAAgAACAAAQACAAAAA=</HashCode>
+      <FileName>Models\User\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Role" />
+      <Property Name="RefreshToken" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.Log">
+    <Position X="1.25" Y="1.5" Width="1.5" />
+    <AssociationLine Name="User" Type="TestingSystem.DAL.Models.User" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="3.637" />
+        <Point X="3.25" Y="3.637" />
+        <Point X="3.25" Y="4.682" />
+        <Point X="3.812" Y="4.682" />
+        <Point X="3.812" Y="5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.026" Y="0.355" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAIAAAAAUAAiAAQAAAEQAAACACAAAQAA=</HashCode>
+      <FileName>Models\Test\Log.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.Test">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Owner" Type="TestingSystem.DAL.Models.User" FixedFromPoint="true">
+      <Path>
+        <Point X="4.812" Y="3.786" />
+        <Point X="4.812" Y="5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.006" Y="0.418" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="AllowedUsers" Type="TestingSystem.DAL.Models.User" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.812" Y="3.786" />
+        <Point X="3.812" Y="4.187" />
+        <Point X="4.062" Y="4.187" />
+        <Point X="4.062" Y="5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.755" Y="0.84" Height="0.182" Width="1.091" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAACYAEAiAAIAgAAAAAQAAQAhAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Test\Test.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Owner" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Logs" />
+      <Property Name="Tags" />
+      <Property Name="AllowedUsers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.TestVariant">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <AssociationLine Name="Test" Type="TestingSystem.DAL.Models.Test">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.038" Y="0.123" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAEAAAAAAAAAAAEAAAACAAAAAA=</HashCode>
+      <FileName>Models\Test\TestVariant.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Test" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.Model">
+    <Position X="11.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Question\Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.Question">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <AssociationLine Name="QuestionType" Type="TestingSystem.DAL.Models.QuestionType" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="3.938" />
+        <Point X="11.75" Y="3.938" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.301" Y="0.577" Height="0.182" Width="1.115" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="QuestionsAssembly" Type="TestingSystem.DAL.Models.QuestionsAssembly">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.765" Y="0.387" Height="0.182" Width="1.41" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAAAEAAAMAACQAgAEgAQAkAAIAAAAA=</HashCode>
+      <FileName>Models\Question\Question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Model" />
+      <Property Name="QuestionType" />
+      <Property Name="QuestionsAssembly" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Answers" />
+      <Property Name="TestVariants" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.QuestionsAssembly">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACIAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Question\QuestionsAssembly.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Owner" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.QuestionType">
+    <Position X="11.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Question\QuestionType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestingSystem.DAL.Models.VariantOfAnswer">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAIAAgQAAAA=</HashCode>
+      <FileName>Models\Question\VariantOfAnswer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

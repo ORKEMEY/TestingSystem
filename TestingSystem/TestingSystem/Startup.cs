@@ -29,7 +29,7 @@ namespace TestingSystem.PL
 			services.AddControllers();
 			
 			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<IRefreshTokenService, RefreshTokenService>();
+			services.AddTransient<ITokenService, TokenService>();
 			services.AddTransient<IPasswordService, PasswordService>();
 			services.AddTransient<ITestService, TestService>();
 			services.AddTransient<ITestVariantService, TestVariantService>();
@@ -39,6 +39,7 @@ namespace TestingSystem.PL
 			services.AddTransient<IVariantOfAnswerService, VariantOfAnswerService>();
 			services.AddTransient<ILogService, LogService>();
 			services.AddTransient<ICheckTestInterface, CheckTestService>();
+
 
 			services.AddDbContext<TestContext>(optionsBuilder =>
 			{

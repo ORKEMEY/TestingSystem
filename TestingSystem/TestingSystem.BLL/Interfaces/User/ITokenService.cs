@@ -8,9 +8,10 @@ using TestingSystem.BLL.DTO;
 
 namespace TestingSystem.BLL.Interfaces
 {
-	public interface IRefreshTokenService
+	public interface ITokenService
 	{
 		TokenDTO RefreshToken(TokenDTO token);
 		void AssignRefreshToken(UserDTO user);
+		public TokenDTO GetToken(UserDTO userDTO);
 	}
 }

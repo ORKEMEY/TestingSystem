@@ -10,6 +10,9 @@ using TestingSystem.BLL.Infrastructure;
 using TestingSystem.BLL.Interfaces;
 using TestingSystem.PL.Models;
 using TestingSystem.PL;
+using Microsoft.Extensions.Primitives;
+using TestingSystem.BLL.Services;
+using TestingSystem.DAL.Models;
 
 namespace TestSystem.PL.Controllers
 {
@@ -19,12 +22,12 @@ namespace TestSystem.PL.Controllers
 	{
 
 		private IUserService service { get; set; }
-		private IRefreshTokenService rts { get; set; }
+		private ITokenService ts { get; set; }
 
-		public UserController(IUserService service, IRefreshTokenService rts)
+		public UserController(IUserService service, ITokenService ts)
 		{
 			this.service = service;
-			this.rts = rts;
+			this.ts = ts;
 		}
 
 		[HttpPost("refresh")]
@@ -32,7 +35,7 @@ namespace TestSystem.PL.Controllers
 		{
 			try
 			{
-				var newToken = rts.RefreshToken(MapperWEB.Mapper.Map<TokenDTO>(token));
+				var newToken = ts.RefreshToken(MapperWEB.Mapper.Map<TokenDTO>(token));
 
 				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(newToken));
 			}
@@ -52,23 +55,11 @@ namespace TestSystem.PL.Controllers
 			try
 			{
 				var userDTO = service.Authentificate(user.Login, user.Password);
-				var identity = AuthOptions.GetIdentity(userDTO);
 
-				if (userDTO == null || identity == null)
-				{
-					return new BadRequestObjectResult(new { errorText = "Invalid login or password." });
-				}
+				var token = ts.GetToken(userDTO);
 
-				var encodedJwt = AuthOptions.GenerateAccessToken(identity.Claims);
+				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(token));
 
-
-				return new JsonResult(new TokenViewModel
-				{
-					AccessToken = encodedJwt,
-					Login = identity.Name,
-					Role = userDTO.Role.Name,
-					RefreshToken = userDTO.RefreshToken.Token
-				});
 			}
 			catch (ValidationException e)
 			{
@@ -88,6 +79,19 @@ namespace TestSystem.PL.Controllers
 			var userDTO = service.GetItems();
 
 			return new JsonResult(MapperWEB.Mapper.Map<IEnumerable<UserViewModel>>(userDTO));
+		}
+
+		// GET: api/<UserController>
+		[HttpGet("current")]
+		[Authorize]
+		public IActionResult GetCurrentCustomer()
+		{
+			var userDTO = service.GetUserByAccessToken(new TokenDTO()
+			{
+				AccessToken = GetAccessToken()
+			});
+
+			return new JsonResult(MapperWEB.Mapper.Map<CustomerViewModel>(userDTO));
 		}
 
 		// GET api/<UserController>/5
@@ -143,6 +147,36 @@ namespace TestSystem.PL.Controllers
 			return Ok();
 		}
 
+		// PUT api/<UserController>
+		[HttpPut("current")]
+		[Authorize]
+		public IActionResult ChangeAccountData([FromBody] UserViewModel value)
+		{
+			try
+			{
+				var userDTO = service.GetUserByAccessToken(new TokenDTO()
+				{
+					AccessToken = GetAccessToken()
+				});
+
+				value.Id = userDTO.Id;
+
+				service.UpdateItem(MapperWEB.Mapper.Map<UserDTO>(value));
+
+				userDTO = service.GetItem(userDTO.Id);
+
+				var token = ts.GetToken(userDTO);
+
+				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(token));
+
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
+
+		}
+
 		// DELETE api/<UserController>/5
 		[HttpDelete("{id}")]
 		[Authorize(Roles = "Admin")]
@@ -159,6 +193,15 @@ namespace TestSystem.PL.Controllers
 			}
 
 			return Ok();
+		}
+
+		/// <exception cref="ArgumentNullException"></exception>
+		private string GetAccessToken()
+		{
+			HttpContext.Request.Headers.TryGetValue("Authorization", out StringValues token);
+			var tokenStr = token.First();
+			var removeStr = "Bearer ";
+			return tokenStr.Remove(tokenStr.IndexOf(removeStr), removeStr.Length);
 		}
 	}
 }
