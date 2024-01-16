@@ -1,3 +1,5 @@
+<password-confirmation [isVisible]="isPassConfirmVisible" (confirmed)="onPasswordConfirmed($event)"
+    (closed)="onPasswordNotConfirmed()"></password-confirmation>
 <div class="page">
 
     <div class="header">
@@ -20,7 +22,7 @@
 
     <div class="content h-center">
         <div class="form-container">
-            <form [formGroup]="form" (ngSubmit)="submit(); formDisabled = true" id="form" novalidate>
+            <form [formGroup]="form" (ngSubmit)="submit()" id="form" novalidate>
 
                 <div class="form-group col-12">
                     <!-- Login -->
@@ -92,11 +94,11 @@
                 <div *ngIf="formDisabled" class="change-btn-container col-12">
 
                     <input *ngIf="formDisabled" type="button" class="btn btn-large btn-success" value="Change"
-                        (click)="formDisabled = false">
+                        (click)="change()">
                 </div>
                 <div *ngIf="!formDisabled" class="submit-btn-container col-12">
 
-                    <input type="button" class="btn btn-large btn-warning" value="Cancel" (click)="formDisabled = true">
+                    <input type="button" class="btn btn-large btn-warning" value="Cancel" (click)="cancel()">
 
                     <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Save">
                 </div>

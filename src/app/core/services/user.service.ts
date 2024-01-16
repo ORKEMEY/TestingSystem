@@ -124,7 +124,7 @@ export default class UserService {
 
   public getCurrentCustomer(observer: Observer<Customer>) {
     this.http
-      .get(`api/Users/current`)
+      .get('api/Users/current')
       .pipe(map((data) => data as Customer))
       .subscribe({
         next: (data) => observer?.next?.(data),

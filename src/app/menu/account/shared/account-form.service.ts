@@ -77,11 +77,12 @@ export default class AccountFormService {
     return res;
   }
 
-  submit(observer?: Observer<void>) {
+  submit(password?: string, observer?: Observer<void>) {
     if (!this.form.valid) {
       throw new Error('submit on invalid form');
     } else {
       const user = this.readFormVals();
+      user.password = password || null;
       this.userService.putCurrentUser(user, observer);
     }
   }
@@ -103,5 +104,12 @@ export default class AccountFormService {
     this.form.controls.Login.setValue(customer?.login || '');
     this.form.controls.Surname.setValue(customer?.surname || '');
     this.form.controls.EMail.setValue(customer?.eMail || '');
+  }
+
+  public reset() {
+    this.form.reset();
+    if (this.Customer) {
+      this.setFormVals(this.Customer);
+    }
   }
 }

@@ -10,6 +10,7 @@ import SharedModule from '../../shared/shared.module';
 import AccountFormService from './shared/account-form.service';
 
 import AccountComponent from './account.component';
+import PasswordConfirmationComponent from './password-confirmation/password-confirmation.component';
 
 @NgModule({
   imports: [
@@ -20,9 +21,9 @@ import AccountComponent from './account.component';
     AccountRoutingModule,
     SharedModule,
   ],
-  declarations: [AccountComponent],
+  declarations: [AccountComponent, PasswordConfirmationComponent],
   bootstrap: [],
   providers: [AccountFormService],
-  exports: [AccountComponent],
+  exports: [AccountComponent, PasswordConfirmationComponent],
 })
 export default class AccountModule {}

@@ -27,6 +27,8 @@ export default class AccountComponent {
 
   formDisabled: Boolean = true;
 
+  isPassConfirmVisible: Boolean = false;
+
   isWarningVisible: Boolean = false;
 
   isInfoVisible: Boolean = false;
@@ -68,6 +70,7 @@ export default class AccountComponent {
     } as Observer<Customer>);
   }
 
+  // #region validation
   onLoginChange() {
     const res = this.accountFormService.ValidateLogin();
 
@@ -115,13 +118,47 @@ export default class AccountComponent {
     this.onEMailChange();
   }
 
+  // #endregion
+
+  change() {
+    if (this.Customer) {
+      this.formDisabled = false;
+    } else this.Warn("Could't load data");
+  }
+
+  cancel() {
+    this.formDisabled = true;
+    this.form.reset();
+  }
+
+  // #region submition
+  confirmPassword() {
+    this.isPassConfirmVisible = true;
+  }
+
+  onPasswordNotConfirmed() {
+    this.isPassConfirmVisible = false;
+    this.formDisabled = false;
+  }
+
+  onPasswordConfirmed(pas: string) {
+    this.isPassConfirmVisible = false;
+    this.formDisabled = true;
+    this.sendForm(pas);
+  }
+
   submit() {
-    this.accountFormService.submit({
+    this.confirmPassword();
+  }
+
+  private sendForm(password: string) {
+    this.accountFormService.submit(password, {
       next: () => {
         this.Info('Changes saved!');
         this.loadCustomer();
       },
       error: (errMsg: string) => {
+        this.loadCustomer();
         if (typeof errMsg !== 'string')
           this.Warn("Ooops, something went wrong! Couldn't save changes");
         else this.Warn(errMsg);
@@ -129,6 +166,7 @@ export default class AccountComponent {
     } as Observer<void>);
   }
 
+  // #endregion
   Warn(msg: string) {
     this.warningMessage = msg;
     this.isWarningVisible = true;
