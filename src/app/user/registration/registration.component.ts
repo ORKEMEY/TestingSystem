@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observer } from 'rxjs';
 import UserRegistrationService from '../shared/user-registration.service';
-import Alert from '../../core/alert';
+import Alert from '../../core/utils/alert';
 
 @Component({
   selector: 'registration-component',

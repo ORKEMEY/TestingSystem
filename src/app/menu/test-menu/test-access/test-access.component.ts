@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { fadeInOnEnterAnimation } from 'angular-animations';
+import MessageBox from '../../../core/utils/msg-box';
 
 @Component({
   selector: 'test-access-component',
   templateUrl: './test-access.component.html',
   styleUrls: ['./test-access.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class TestAccessComponent {
-  isWarningVisible: Boolean = false;
-
-  warningMessage: string = '';
-
+export default class TestAccessComponent extends MessageBox {
   get AccessLink(): string {
     if (this.id === 0) {
       return 'Oops, no link found!';
@@ -21,6 +20,7 @@ export default class TestAccessComponent {
   private id: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute) {
+    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.id = Number.parseInt(params.id, 10);
     });
@@ -38,15 +38,5 @@ export default class TestAccessComponent {
     setTimeout(() => {
       this.CopyBtnStr = 'Copy';
     }, 5000);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
   }
 }

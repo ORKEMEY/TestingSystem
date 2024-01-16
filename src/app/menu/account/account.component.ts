@@ -2,17 +2,17 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observer } from 'rxjs';
 import AccountFormService from './shared/account-form.service';
-
 import UserService from '../../core/services/user.service';
 import Customer from '../../core/models/customer.model';
-import Alert from '../../core/alert';
+import MessageBox from '../../core/utils/msg-box';
+import Alert from '../../core/utils/alert';
 
 @Component({
   selector: 'account-component',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })
-export default class AccountComponent {
+export default class AccountComponent extends MessageBox {
   @ViewChild('alertLoginDiv', { static: false })
   alertLoginDiv: ElementRef | undefined;
 
@@ -28,14 +28,6 @@ export default class AccountComponent {
   formDisabled: Boolean = true;
 
   isPassConfirmVisible: Boolean = false;
-
-  isWarningVisible: Boolean = false;
-
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
 
   public get form(): FormGroup {
     return this.accountFormService.form;
@@ -54,6 +46,7 @@ export default class AccountComponent {
   }
 
   constructor(private accountFormService: AccountFormService, private userService: UserService) {
+    super();
     this.loadCustomer();
   }
 
@@ -123,7 +116,7 @@ export default class AccountComponent {
   change() {
     if (this.Customer) {
       this.formDisabled = false;
-    } else this.Warn("Could't load data");
+    } else this.Warn("Couldn't load data");
   }
 
   cancel() {
@@ -167,23 +160,4 @@ export default class AccountComponent {
   }
 
   // #endregion
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
-  }
 }

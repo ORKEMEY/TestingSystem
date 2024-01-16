@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" [@fadeInOnEnter]>
     <div class="header">
         <div class="h-center search-line-container input-group col-12">
             <div class="input-group-prepend">
@@ -22,8 +22,8 @@
         </div>
 
         <div class="col-12 h-center">
-            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                (closeButtonPushed)="hideWarning()" class="warning-component" [message]="warningMessage">
+            <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
+                class="warning-component" [message]="warningMessage">
             </warning-component>
         </div>
     </div>

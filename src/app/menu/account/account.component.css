@@ -32,19 +32,6 @@
 
 /*-----------------------------------*/
 
-.invisible {
-  opacity: 0;
-  display: none !important;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*-----------------------------------*/
-
 input.ng-touched.ng-invalid.ng-dirty {
   border: solid red 1px;
 }
@@ -62,6 +49,25 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
 .warning-component {
   width: 100%;
   padding: 0;
+
+  /*background-color: black;
+  transition: background-color;
+  transition-duration: 10s;*/
+
+  /*transform: rotateX(90deg) scale(0.9);*/
+}
+
+/*-----------------------------------*/
+
+.invisible {
+  opacity: 0;
+  display: none !important;
+  visibility: hidden;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 /*-----------------------------------*/

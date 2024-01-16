@@ -1,11 +1,16 @@
 import { Component, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import Alert from '../../../core/alert';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'password-confirmation',
   templateUrl: 'password-confirmation.component.html',
   styleUrls: ['password-confirmation.component.css'],
+  animations: [
+    fadeInOnEnterAnimation({ duration: 600 }),
+    fadeOutOnLeaveAnimation({ duration: 200 }),
+  ],
 })
 export default class PasswordConfirmationComponent {
   @ViewChild('alertPasswordDiv', { static: false })

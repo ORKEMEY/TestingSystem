@@ -3,7 +3,7 @@ import { Subscription, Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import Paginator from '../../../shared/paginator';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'test-list-component',

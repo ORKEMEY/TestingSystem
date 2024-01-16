@@ -23,8 +23,8 @@
         </div>
 
         <div class=" h-center">
-            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+            <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
+                class="col-12 warning-component" [message]="warningMessage">
             </warning-component>
         </div>
     </div>

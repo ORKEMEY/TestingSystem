@@ -1,29 +1,24 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer, Subscription } from 'rxjs';
 import AnswerFormService from '../shared/answer-form.service';
 import VariantOfAnswerService from '../../../core/services/variant-of-answer.service';
 import VariantOfAnswer from '../../../core/models/variant-of-answer.model';
 import QuestionService from '../../../core/services/question.service';
 import Question from '../../../core/models/question.model';
-import Alert from '../../../core/alert';
+import MessageBox from '../../../core/utils/msg-box';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'answers-editor-component',
   templateUrl: './answers-editor.component.html',
   styleUrls: ['./answers-editor.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class AnswersEditorComponent implements OnInit, OnDestroy {
+export default class AnswersEditorComponent extends MessageBox implements OnInit, OnDestroy {
   private answersSub: Subscription;
-
-  isWarningVisible: Boolean = false;
-
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
 
   @ViewChild('alertListDiv', { static: false })
   alertListDiv: ElementRef | undefined;
@@ -42,9 +37,6 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private question: Question = null;
 
   public get Question(): Question {
-    /* if (this.questionId !== 0 && this.question === null) {
-      this.loadQuestion();
-    } */
     return this.question;
   }
 
@@ -65,6 +57,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
+    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.questionId = Number.parseInt(params.id, 10);
       this.loadQuestion().then(() => {
@@ -137,8 +130,11 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  public shakeDelBtn: boolean = false;
+
   deleteItem(variantOfAnswer: VariantOfAnswer) {
     if (this.answers.length === 1) {
+      this.shakeDelBtn = !this.shakeDelBtn;
       this.Warn("Last answer cann't be deleted");
       return;
     }
@@ -210,25 +206,5 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     } else {
       Alert.hideAlertMessage(this.alertListDiv);
     }
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

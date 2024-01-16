@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import Log from '../../../core/models/log.model';
 import LogService from '../../../core/services/log.service';
 import TestResultCalc from '../../../core/utils/test-result-calc';
 import Paginator from '../../../shared/paginator';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
 
 // import Customer from '../../../core/models/customer.model';
 
@@ -13,6 +14,7 @@ import Alert from '../../../core/alert';
   selector: 'test-results-component',
   templateUrl: './test-results.component.html',
   styleUrls: ['./test-results.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestResultsComponent extends Paginator<Log> implements OnInit, OnDestroy {
   private logsSub: Subscription;

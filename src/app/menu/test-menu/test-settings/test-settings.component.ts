@@ -1,18 +1,21 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer } from 'rxjs';
 import BasicSettingsFormService from '../shared/basic-settings-form.service';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/alert';
+import MessageBox from '../../../core/utils/msg-box';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'test-settings-component',
   templateUrl: './test-settings.component.html',
   styleUrls: ['./test-settings.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class TestSettingsComponent {
+export default class TestSettingsComponent extends MessageBox {
   @ViewChild('alertNameDiv', { static: false })
   alertNameDiv: ElementRef | undefined;
 
@@ -24,14 +27,6 @@ export default class TestSettingsComponent {
 
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
-
-  isWarningVisible: Boolean = false;
-
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
 
   public get form(): FormGroup {
     return this.basicSettingsForm.form;
@@ -60,6 +55,7 @@ export default class TestSettingsComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
+    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.id = Number.parseInt(params.id, 10);
       this.loadTest();
@@ -161,25 +157,5 @@ export default class TestSettingsComponent {
         else this.Warn(errMsg);
       },
     } as Observer<void>);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

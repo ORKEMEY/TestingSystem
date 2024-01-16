@@ -1,19 +1,22 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer } from 'rxjs';
 import TestVariantQuestionAddingService from '../../shared/test-var-question-adding.service';
 import QuestionService from '../../../core/services/question.service';
 import AnswerFormService from '../shared/answer-form.service';
 import Question from '../../../core/models/question.model';
-import Alert from '../../../core/alert';
+import MessageBox from '../../../core/utils/msg-box';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'question-settings-component',
   templateUrl: './question-settings.component.html',
   styleUrls: ['./question-settings.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class QuestionSettingsComponent {
+export default class QuestionSettingsComponent extends MessageBox {
   @ViewChild('alertQueryDiv', { static: false })
   alertQueryDiv: ElementRef | undefined;
 
@@ -28,14 +31,6 @@ export default class QuestionSettingsComponent {
 
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
-
-  isWarningVisible: Boolean = false;
-
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
 
   private id: number = 0;
 
@@ -66,6 +61,7 @@ export default class QuestionSettingsComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
+    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.id = Number.parseInt(params.id, 10);
       this.loadQuestion();
@@ -176,25 +172,5 @@ export default class QuestionSettingsComponent {
         else this.Warn(errMsg);
       },
     } as Observer<void>);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

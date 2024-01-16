@@ -1,16 +1,16 @@
-<div class="page">
+<div class="page" [@fadeInOnEnter]>
 
     <div class="form">
 
         <div>
             <div class="col-12 h-center">
-                <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                    (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+                <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
+                    class="col-12 warning-component" [message]="warningMessage">
                 </warning-component>
             </div>
             <div class="col-12 h-center">
-                <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
-                    (closeButtonPushed)="hideInfo()" class="col-12 warning-component" [message]="infoMessage">
+                <info-component [isVisible]="isInfoVisible" (closeButtonPushed)="hideInfo()"
+                    class="col-12 warning-component" [message]="infoMessage">
                 </info-component>
             </div>
 
@@ -57,7 +57,8 @@
             </label>
 
             <div *ngFor="let answer of answers">
-                <answer-item-component [item]="answer" (deleteButtonPushed)="deleteItem($event)">
+                <answer-item-component [item]="answer" (deleteButtonPushed)="deleteItem($event)"
+                    [shakeBtn]="shakeDelBtn">
                 </answer-item-component>
             </div>
 

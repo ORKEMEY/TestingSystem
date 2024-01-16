@@ -15,13 +15,13 @@
             </div>
         </div>
         <div class="h-center">
-            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                (closeButtonPushed)="hideWarning()" class="col-10 warning-component" [message]="warningMessage">
+            <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
+                class="col-10 warning-component" [message]="warningMessage">
             </warning-component>
         </div>
         <div class="h-center">
-            <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
-                (closeButtonPushed)="hideInfo()" class="col-10 warning-component" [message]="infoMessage">
+            <info-component [isVisible]="isInfoVisible" (closeButtonPushed)="hideInfo()"
+                class="col-10 warning-component" [message]="infoMessage">
             </info-component>
         </div>
 

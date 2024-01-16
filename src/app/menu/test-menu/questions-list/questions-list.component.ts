@@ -8,7 +8,7 @@ import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
 // import Answer from '../../../core/models/variant-of-answer.model';
 // import QuestionType from '../../../core/models/question-type.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'questions-list-component',
