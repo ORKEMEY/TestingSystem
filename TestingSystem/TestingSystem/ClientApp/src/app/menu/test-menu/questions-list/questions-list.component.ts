@@ -6,9 +6,10 @@ import TestVariantQuestionAddingService from '../../shared/test-var-question-add
 import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 // import Answer from '../../../core/models/variant-of-answer.model';
 // import QuestionType from '../../../core/models/question-type.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'questions-list-component',
@@ -24,9 +25,7 @@ export default class QuestionsListComponent
   @ViewChild('alertDiv', { static: false })
   alertDiv: ElementRef | undefined;
 
-  isWarningVisible: Boolean = false;
-
-  warningMessage: string = '';
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   public searchLine: string | null;
 
@@ -120,7 +119,7 @@ export default class QuestionsListComponent
 
   addQuestion() {
     if (this.testVariantId === 0) {
-      this.Warn('Firstly create question!');
+      this.WarningBox.Warn('Firstly create question!');
       return;
     }
     this.questionAddingService.clear();
@@ -148,15 +147,5 @@ export default class QuestionsListComponent
     } else {
       Alert.hideAlertMessage(this.alertDiv);
     }
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
   }
 }

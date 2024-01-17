@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer, Subscription } from 'rxjs';
 import AnswerFormService from '../shared/answer-form.service';
 import VariantOfAnswerService from '../../../core/services/variant-of-answer.service';
 import VariantOfAnswer from '../../../core/models/variant-of-answer.model';
 import QuestionService from '../../../core/services/question.service';
 import Question from '../../../core/models/question.model';
-import Alert from '../../../core/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'answers-editor-component',
   templateUrl: './answers-editor.component.html',
   styleUrls: ['./answers-editor.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private answersSub: Subscription;
-
-  isWarningVisible: Boolean = false;
-
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
 
   @ViewChild('alertListDiv', { static: false })
   alertListDiv: ElementRef | undefined;
 
   @ViewChild('alertAnswerDiv', { static: false })
   alertAnswerDiv: ElementRef | undefined;
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
+
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   private questionId: number = 0;
 
@@ -42,9 +42,6 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private question: Question = null;
 
   public get Question(): Question {
-    /* if (this.questionId !== 0 && this.question === null) {
-      this.loadQuestion();
-    } */
     return this.question;
   }
 
@@ -97,7 +94,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
             res();
           },
           error: (err) => {
-            this.Warn(err);
+            this.WarningBox.Warn(err);
             rej();
           },
         } as Observer<Question>);
@@ -137,16 +134,19 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  public shakeDelBtn: boolean = false;
+
   deleteItem(variantOfAnswer: VariantOfAnswer) {
     if (this.answers.length === 1) {
-      this.Warn("Last answer cann't be deleted");
+      this.shakeDelBtn = !this.shakeDelBtn;
+      this.WarningBox.Warn("Last answer cann't be deleted");
       return;
     }
     this.variantOfAnswerService.DeleteVariantOfAnswerAsync(
       variantOfAnswer.id as number,
       {
         next: () => {
-          this.Info('Answer succesfully deleted!');
+          this.InfoBox.Info('Answer succesfully deleted!');
           this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
         },
         error: (errMsg: string) => console.log(errMsg),
@@ -158,7 +158,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.questionId === 0 && !this.answerFormService.isNewQuestionSaved()) {
-      this.Warn('You have to create question firstly!');
+      this.WarningBox.Warn('You have to create question firstly!');
     } else if (this.questionId === 0 && this.answerFormService.isNewQuestionSaved()) {
       this.submitAnswerForNewQuestion();
     } else {
@@ -178,11 +178,11 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
                 this.questionId,
                 'answerseditor',
               ]);
-              this.Info('Answer succesfully created!');
+              this.InfoBox.Info('Answer succesfully created!');
             },
           } as Observer<VariantOfAnswer>);
         },
-        error: (errMsg: string) => this.Warn(errMsg),
+        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
       } as Observer<number>);
     } catch (error) {
       console.error(error);
@@ -193,11 +193,11 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     try {
       this.answerEditorFormService.submit(this.questionId, {
         next: (itemId) => {
-          this.Info('Answer succesfully created!');
+          this.InfoBox.Info('Answer succesfully created!');
           this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
           console.log(itemId);
         },
-        error: (errMsg: string) => this.Warn(errMsg),
+        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
       } as Observer<number>);
     } catch (error) {
       console.error(error);
@@ -210,25 +210,5 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     } else {
       Alert.hideAlertMessage(this.alertListDiv);
     }
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

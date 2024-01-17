@@ -7,5 +7,5 @@
 
     <input type="text" name="Answer" class="input-block-level form-control" value="{{item?.answer}}"
         placeholder="Answer" />
-    <button (click)="this.delete()" type="button" class="btn btn-danger">Del</button>
+    <button (click)="this.delete()" type="button" class="btn btn-danger" [@headShake]='shakeBtn'>Del</button>
 </div>

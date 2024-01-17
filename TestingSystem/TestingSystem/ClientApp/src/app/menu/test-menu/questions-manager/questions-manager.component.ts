@@ -1,15 +1,17 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer, Subscription, timer, takeWhile } from 'rxjs';
 import TestVariantService from '../../../core/services/test-variant.service';
 import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'questions-manager-component',
   templateUrl: './questions-manager.component.html',
   styleUrls: ['./questions-manager.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class QuestionsManagerComponent
   extends Paginator<TestVariant>

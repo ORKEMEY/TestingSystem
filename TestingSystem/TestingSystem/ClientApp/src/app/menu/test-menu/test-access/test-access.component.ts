@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { fadeInOnEnterAnimation } from 'angular-animations';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 
 @Component({
   selector: 'test-access-component',
   templateUrl: './test-access.component.html',
   styleUrls: ['./test-access.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestAccessComponent {
-  isWarningVisible: Boolean = false;
-
-  warningMessage: string = '';
-
   get AccessLink(): string {
     if (this.id === 0) {
       return 'Oops, no link found!';
     }
     return `${window.location.origin}/menus/menu/testing/test/${this.id}`;
   }
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   private id: number = 0;
 
@@ -26,7 +27,7 @@ export default class TestAccessComponent {
     });
 
     if (this.id === 0) {
-      this.Warn('Firstly create test!');
+      this.WarningBox.Warn('Firstly create test!');
     }
   }
 
@@ -38,15 +39,5 @@ export default class TestAccessComponent {
     setTimeout(() => {
       this.CopyBtnStr = 'Copy';
     }, 5000);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
   }
 }

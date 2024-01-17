@@ -1,17 +1,21 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer } from 'rxjs';
 import TestVariantQuestionAddingService from '../../shared/test-var-question-adding.service';
 import QuestionService from '../../../core/services/question.service';
 import AnswerFormService from '../shared/answer-form.service';
 import Question from '../../../core/models/question.model';
-import Alert from '../../../core/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
+import Alert from '../../../core/utils/alert';
 
 @Component({
   selector: 'question-settings-component',
   templateUrl: './question-settings.component.html',
   styleUrls: ['./question-settings.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class QuestionSettingsComponent {
   @ViewChild('alertQueryDiv', { static: false })
@@ -29,13 +33,9 @@ export default class QuestionSettingsComponent {
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
 
-  isWarningVisible: Boolean = false;
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   private id: number = 0;
 
@@ -46,9 +46,6 @@ export default class QuestionSettingsComponent {
   private question: Question = null;
 
   public get Question(): Question {
-    /* if (this.id !== 0 && this.question === null) {
-      this.loadQuestion();
-    } */
     return this.question;
   }
 
@@ -81,7 +78,11 @@ export default class QuestionSettingsComponent {
         next: (item) => {
           this.Question = item;
         },
-        error: (err) => this.Warn(err),
+        error: (err) => {
+          if (typeof err !== 'string')
+            this.WarningBox.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.WarningBox.Warn(err);
+        },
       } as Observer<Question>);
     } else {
       this.Question = null;
@@ -153,43 +154,28 @@ export default class QuestionSettingsComponent {
         if (this.questionAddingService.isActivated) {
           this.questionAddingService.pushQuestionId(itemId);
         }
-        this.Info("Question's successfully created!");
+        this.InfoBox.Info("Question's successfully created!");
       },
       error: (errMsg: string) => {
-        this.Warn(errMsg);
+        if (typeof errMsg !== 'string')
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't create question");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<number>);
-    this.Info("Question's saved and will be created after adding answers!");
-    // this.router.navigate(['/menus/menu/questionmenu/question', 0, 'answerseditor']);
+    this.InfoBox.Info("Question's saved and will be created after adding answers!");
   }
 
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
       next: () => {
-        this.Info('Changes saved!');
+        this.InfoBox.Info('Changes saved!');
         this.loadQuestion();
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.WarningBox.Warn(errMsg);
+      },
     } as Observer<void>);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

@@ -3,7 +3,9 @@ import { Subscription, Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import Paginator from '../../../shared/paginator';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 
 @Component({
   selector: 'test-list-component',
@@ -24,13 +26,9 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   @ViewChild('alertDiv', { static: false })
   alertDiv: ElementRef | undefined;
 
-  isWarningVisible: Boolean = false;
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   isLoading: boolean = true;
 
@@ -98,10 +96,10 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       test.id as number,
       {
         next: () => {
-          this.Info('Test succesfully deleted!');
+          this.InfoBox.Info('Test succesfully deleted!');
           this.testService.refreshOwnedTests();
         },
-        error: (errMsg: string) => this.Warn(errMsg),
+        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
       } as Observer<void>,
     );
     /* const index = this.tests.indexOf(test);
@@ -114,25 +112,5 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
     } else {
       Alert.hideAlertMessage(this.alertDiv);
     }
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }

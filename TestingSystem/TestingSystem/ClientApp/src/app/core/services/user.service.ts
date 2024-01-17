@@ -2,9 +2,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observer } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { MD5, SHA256 } from 'crypto-js';
 import User from '../models/user.model';
+import Customer from '../models/customer.model';
 import CredentialsService, { Credentials } from './credentials.service';
 
 @Injectable({ providedIn: 'root' })
@@ -85,6 +86,53 @@ export default class UserService {
           if (err.status === 400) {
             observer?.error?.(err.error.errorText);
           } else {
+            console.error(err);
+          }
+        },
+        complete: () => observer?.complete?.(),
+      });
+  }
+
+  public putCurrentUser(user: User, observer: Observer<void>) {
+    this.HashPassword(user);
+    return this.http
+      .put('api/Users/current', user)
+      .pipe(
+        tap({
+          next: (res: any) => {
+            this.credentialsService.saveCredentials({
+              accessToken: res.accessToken,
+              login: res.login,
+              role: res.role,
+              refreshToken: res.refreshToken,
+            } as Credentials);
+          },
+        }),
+      )
+      .subscribe({
+        next: () => observer?.next?.(),
+        error: (err) => {
+          if (err.status === 400) {
+            observer?.error?.(err.error.errorText);
+          } else {
+            console.error(err);
+          }
+        },
+        complete: () => observer?.complete?.(),
+      });
+  }
+
+  public getCurrentCustomer(observer: Observer<Customer>) {
+    this.http
+      .get('api/Users/current')
+      .pipe(map((data) => data as Customer))
+      .subscribe({
+        next: (data) => observer?.next?.(data),
+        error: (err) => {
+          if (err.status === 400) {
+            observer?.error?.(err.error.errorText);
+          } else {
+            observer?.error?.(err);
             console.error(err);
           }
         },

@@ -1,0 +1,110 @@
+<password-confirmation [isVisible]="isPassConfirmVisible" (confirmed)="onPasswordConfirmed($event)"
+    (closed)="onPasswordNotConfirmed()"></password-confirmation>
+<div class="page">
+
+    <div class="header">
+        <div class="h-center">
+            <h4>Your Account</h4>
+        </div>
+        <hr />
+        <div class="col-12 h-center">
+            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
+                class=" warning-component" [message]="WarningBox.warningMessage">
+            </warning-component>
+        </div>
+        <div class="col-12 h-center">
+            <info-component [isVisible]="InfoBox.isInfoVisible" (closeButtonPushed)="InfoBox.hideInfo()"
+                class="warning-component" [message]="InfoBox.infoMessage">
+            </info-component>
+        </div>
+
+    </div>
+
+    <div class="content h-center">
+        <div class="form-container">
+            <form [formGroup]="form" (ngSubmit)="submit()" id="form" novalidate>
+
+                <div class="form-group col-12">
+                    <!-- Login -->
+                    <label for="Login" class="col-form-label">
+                        <h6>Login:</h6>
+                    </label>
+                    <div>
+                        <input formControlName="Login" type="text" name="Login" class="input-block-level form-control"
+                            (ngModelChange)="onLoginChange()" [readonly]="formDisabled" placeholder="Login" required>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <!-- Login Alert-->
+                    <div class="alert alert-danger" role="alert" #alertLoginDiv hidden>
+                    </div>
+                </div>
+
+                <div class="form-group col-12">
+                    <!-- Name -->
+                    <label for="Name" class="col-form-label">
+                        <h6>Name:</h6>
+                    </label>
+                    <div>
+                        <input formControlName="Name" type="text" name="Name" class="input-block-level form-control"
+                            (ngModelChange)="onNameChange()" [readonly]="formDisabled" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <!-- Name Alert-->
+                    <div class="alert alert-danger" role="alert" #alertNameDiv hidden>
+                    </div>
+                </div>
+
+                <div class="form-group col-12">
+                    <!-- Surname -->
+                    <label for="Surname" class="col-form-label">
+                        <h6>Surname:</h6>
+                    </label>
+                    <div>
+                        <input formControlName="Surname" type="text" name="Surname" (ngModelChange)="onSurnameChange()"
+                            class="input-block-level form-control" [readonly]="formDisabled" placeholder="Surname"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <!-- Surname Alert-->
+                    <div class="alert alert-danger" role="alert" #alertSurnameDiv hidden>
+                    </div>
+                </div>
+
+                <div class="form-group col-12">
+                    <!-- EMail -->
+                    <label for="EMail" class="col-form-label">
+                        <h6>E-Mail:</h6>
+                    </label>
+                    <div>
+                        <input formControlName="EMail" type="text" name="EMail" class="input-block-level form-control"
+                            (ngModelChange)="onEMailChange()" [readonly]="formDisabled" placeholder="E-Mail" required>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <!-- EMail Alert-->
+                    <div class="alert alert-danger" role="alert" #alertEMailDiv hidden>
+                    </div>
+                </div>
+
+                <br>
+                <div *ngIf="formDisabled" class="change-btn-container col-12">
+
+                    <input *ngIf="formDisabled" type="button" class="btn btn-large btn-success" value="Change"
+                        (click)="change()">
+                </div>
+                <div *ngIf="!formDisabled" class="submit-btn-container col-12">
+
+                    <input type="button" class="btn btn-large btn-warning" value="Cancel" (click)="cancel()">
+
+                    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Save">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>

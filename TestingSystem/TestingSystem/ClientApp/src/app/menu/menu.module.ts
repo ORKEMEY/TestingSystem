@@ -9,6 +9,7 @@ import SharedModule from '../shared/shared.module';
 import TestMenuModule from './test-menu/test-menu.module';
 import QuestionMenuModule from './question-menu/question-menu.module';
 import TestingModule from './testing/testing.module';
+import AccountModule from './account/account.module';
 
 import MenuComponent from './menu.component';
 import UserMenuNavComponent from './user-menu-nav/user-menu-nav.component';
@@ -26,6 +27,7 @@ import TestVariantQuestionAddingService from './shared/test-var-question-adding.
     TestMenuModule,
     QuestionMenuModule,
     TestingModule,
+    AccountModule,
   ],
   declarations: [MenuComponent, UserMenuNavComponent],
   bootstrap: [],

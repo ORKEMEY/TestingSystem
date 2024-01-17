@@ -23,6 +23,10 @@ const routes: Routes = [
         path: 'testing',
         loadChildren: () => import('./testing/testing.module').then((m) => m.default),
       },
+      {
+        path: 'account',
+        loadChildren: () => import('./account/account.module').then((m) => m.default),
+      },
       { path: '**', component: NotFoundComponent },
     ],
   },

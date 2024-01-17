@@ -1,14 +1,14 @@
-<div class="page">
+<div class="page" [@fadeInOnEnter]>
 
     <div class="header">
-        <div class=" h-center">
-            <warning-component [ngClass]="{visible: isWarningVisible, invisible: !isWarningVisible}"
-                (closeButtonPushed)="hideWarning()" class="col-12 warning-component" [message]="warningMessage">
+        <div class="col-12 h-center">
+            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
+                class="warning-component" [message]="WarningBox.warningMessage">
             </warning-component>
         </div>
-        <div class=" h-center">
-            <info-component [ngClass]="{visible: isInfoVisible, invisible: !isInfoVisible}"
-                (closeButtonPushed)="hideInfo()" class="col-12 warning-component" [message]="infoMessage">
+        <div class="col-12 h-center">
+            <info-component [isVisible]="InfoBox.isInfoVisible" (closeButtonPushed)="InfoBox.hideInfo()"
+                class="warning-component" [message]="InfoBox.infoMessage">
             </info-component>
         </div>
 

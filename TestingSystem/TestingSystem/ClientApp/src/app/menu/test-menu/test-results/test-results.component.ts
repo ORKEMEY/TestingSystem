@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import Log from '../../../core/models/log.model';
 import LogService from '../../../core/services/log.service';
 import TestResultCalc from '../../../core/utils/test-result-calc';
 import Paginator from '../../../shared/paginator';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 
 // import Customer from '../../../core/models/customer.model';
 
@@ -13,6 +15,7 @@ import Alert from '../../../core/alert';
   selector: 'test-results-component',
   templateUrl: './test-results.component.html',
   styleUrls: ['./test-results.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestResultsComponent extends Paginator<Log> implements OnInit, OnDestroy {
   private logsSub: Subscription;
@@ -31,9 +34,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
   @ViewChild('alertDiv', { static: false })
   alertDiv: ElementRef | undefined;
 
-  isWarningVisible: Boolean = false;
-
-  warningMessage: string = '';
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   isLoading: boolean = true;
 
@@ -106,9 +107,9 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
 
   onSearchLineChange() {
     if (!this.items || this.items.length === 0) {
-      this.Warn('No results found!');
+      this.WarningBox.Warn('No results found!');
     } else {
-      this.hideWarning();
+      this.WarningBox.hideWarning();
     }
   }
 
@@ -120,13 +121,10 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
     }
   }
 
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
+  getLocalDateTime(utc: string): Date | null {
+    const date = new Date(utc);
+    if (!date) return null;
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return date;
   }
 }

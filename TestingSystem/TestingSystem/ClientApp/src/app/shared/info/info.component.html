@@ -1,4 +1,4 @@
-<div id="Info" class="alert alert-info col-12 info">
+<div id="Info" class="alert alert-info col-12 info" *ngIf="isVisible" [@bounceInOnEnter] [@zoomOutOnLeave]>
   <div>
     {{message}}
   </div>

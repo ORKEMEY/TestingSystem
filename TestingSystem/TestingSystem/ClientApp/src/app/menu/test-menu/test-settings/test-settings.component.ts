@@ -1,16 +1,20 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer } from 'rxjs';
 import BasicSettingsFormService from '../shared/basic-settings-form.service';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/alert';
+import Alert from '../../../core/utils/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 
 @Component({
   selector: 'test-settings-component',
   templateUrl: './test-settings.component.html',
   styleUrls: ['./test-settings.component.css'],
+  animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestSettingsComponent {
   @ViewChild('alertNameDiv', { static: false })
@@ -25,13 +29,9 @@ export default class TestSettingsComponent {
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
 
-  isWarningVisible: Boolean = false;
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
-  isInfoVisible: Boolean = false;
-
-  warningMessage: string = '';
-
-  infoMessage: string = '';
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   public get form(): FormGroup {
     return this.basicSettingsForm.form;
@@ -72,7 +72,11 @@ export default class TestSettingsComponent {
         next: (item) => {
           this.Test = item;
         },
-        error: (err) => this.Warn(err),
+        error: (err) => {
+          if (typeof err !== 'string')
+            this.WarningBox.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.WarningBox.Warn(err);
+        },
         complete: () => console.log('comlete'),
       } as Observer<Test>);
     } else {
@@ -136,39 +140,27 @@ export default class TestSettingsComponent {
           itemId,
           { outlets: { primary: ['settings'], nav: ['testmenunav'] } },
         ]);
-        this.Info('Test succesfully created!');
+        this.InfoBox.Info('Test succesfully created!');
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't create test");
+        else this.WarningBox.Warn(errMsg);
+      },
     } as Observer<number>);
   }
 
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
       next: () => {
-        this.Info('Changes saved!');
+        this.InfoBox.Info('Changes saved!');
         this.loadTest();
       },
-      error: (errMsg: string) => this.Warn(errMsg),
+      error: (errMsg: string) => {
+        if (typeof errMsg !== 'string')
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.WarningBox.Warn(errMsg);
+      },
     } as Observer<void>);
-  }
-
-  Warn(msg: string) {
-    this.warningMessage = msg;
-    this.isWarningVisible = true;
-  }
-
-  hideWarning() {
-    this.warningMessage = '';
-    this.isWarningVisible = false;
-  }
-
-  Info(msg: string) {
-    this.infoMessage = msg;
-    this.isInfoVisible = true;
-  }
-
-  hideInfo() {
-    this.infoMessage = '';
-    this.isInfoVisible = false;
   }
 }
