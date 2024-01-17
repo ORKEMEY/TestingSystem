@@ -29,7 +29,11 @@ export default class BasicSettingsFormService {
     this.form = new FormGroup({
       Name: new FormControl('', [Validators.required]),
       Description: new FormControl(''),
-      NumberOfVariants: new FormControl('', [Validators.required, Validators.max(100)]),
+      NumberOfVariants: new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(100),
+      ]),
       IsAccessOpen: new FormControl(true),
       Duration: new FormGroup({
         Hours: new FormControl('', [Validators.min(0), Validators.max(24)]),
@@ -61,7 +65,10 @@ export default class BasicSettingsFormService {
       return null;
     }
     if (this.form.controls.NumberOfVariants.errors?.required) {
-      return "Variants number cann't be 0!";
+      return "Variants number cann't be empty!";
+    }
+    if (this.form.controls.NumberOfVariants.errors?.min) {
+      return "Variants number cann't less than 1!";
     }
     if (this.form.controls.NumberOfVariants.errors?.max) {
       return "Variants number cann't greater than 100!";

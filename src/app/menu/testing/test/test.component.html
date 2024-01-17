@@ -1,79 +1,83 @@
 <div class="page">
 
-    <div  *ngIf="isTestRunning" class="header ">
+    <div *ngIf="isTestRunning" class="header ">
         <div class="h-center">
             <h4 class="timer">{{TimerStr}}</h4>
         </div>
-        <hr/>
+        <hr />
     </div>
 
     <div class="scroll">
-        <div (click)="scrollToTop(2)" class="scroll-container" [ngClass]="{visible: isTestRunning, invisible: !isTestRunning}">
+        <div (click)="scrollToTop(2)" class="scroll-container" *ngIf="isTestRunning">
             <div class="sticky-bot scroll-btn">
                 <i class="fa-solid fa-angle-up"></i> Up
             </div>
         </div>
-        
+
     </div>
 
     <div class="content">
         <div *ngIf="isTestRunning; else preview">
-            <question *ngFor="let item of itemsPaginated; let i = index" [Question]="item" [Index]="(CurrentPage - 1) * NumberOfElemsOnPage + i"></question>
+            <question *ngFor="let item of itemsPaginated; let i = index" [Question]="item"
+                [Index]="(CurrentPage - 1) * NumberOfElemsOnPage + i"></question>
             <div class="submit-btn-container">
-                <input (click)="submit()" type="submit" class="btn btn-large btn-success" id="btnTestPostForm" value="Send">
+                <input (click)="submit()" type="submit" class="btn btn-large btn-success" id="btnTestPostForm"
+                    value="Send">
             </div>
         </div>
         <ng-template #preview>
-           
-                <div class="item-container">
-                    <div class="item grid">
-                
-                        <div class="test-name ">
-                            <div class="h-center">
-                                <p>
-                                    {{Test?.name || 'No name'}}
-                                </p>
-                            </div>
-                            
-                            <hr [ngStyle]="{'margin-top': 0}"/>
-                        </div>
 
-                        <div class="duration h-start">
-                            <p *ngIf="Test?.duration">
-                                <b>Duration:</b> {{Test?.duration | time}}
-                            </p>
-                        </div>
+            <div class="item-container">
+                <div class="item grid">
 
-                        <div class="opening h-start">
-                            <p *ngIf="this.Test?.openingTime">
-                                <b>Opening:</b> {{this.Test?.openingTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
-                            </p>
-                        </div>
-
-                        <div class="closure h-start">
-                            <p *ngIf="this.Test?.closureTime">
-                                <b>Closure:</b>  {{this.Test?.closureTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
-                            </p>
-                        </div>
-
-                         <div class="status h-start">
+                    <div class="test-name ">
+                        <div class="h-center">
                             <p>
-                                <b>Status: </b> 
-                                <span [ngStyle]="{'line-height': 'unset'}" class="badge" [ngClass]="LabelClasses">{{Status}}</span>
+                                {{Test?.name || 'No name'}}
                             </p>
                         </div>
-                
-                        <div  class="button">
-                            <div class="button-container h-center">
-                                
-                                <button (click)="startTest()" [disabled]="!isOpened" type="button" class="btn btn-success">Start</button>
-                                
-                            </div>
-                        </div>
-                
+
+                        <hr [ngStyle]="{'margin-top': 0}" />
                     </div>
+
+                    <div class="duration h-start">
+                        <p *ngIf="Test?.duration">
+                            <b>Duration:</b> {{Test?.duration | time}}
+                        </p>
+                    </div>
+
+                    <div class="opening h-start">
+                        <p *ngIf="this.Test?.openingTime">
+                            <b>Opening:</b> {{this.Test?.openingTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
+                        </p>
+                    </div>
+
+                    <div class="closure h-start">
+                        <p *ngIf="this.Test?.closureTime">
+                            <b>Closure:</b> {{this.Test?.closureTime | date: "ccc MMM dd, yyyy 'at' HH:mm"}}
+                        </p>
+                    </div>
+
+                    <div class="status h-start">
+                        <p>
+                            <b>Status: </b>
+                            <span [ngStyle]="{'line-height': 'unset'}" class="badge"
+                                [ngClass]="LabelClasses">{{Status}}</span>
+                        </p>
+                    </div>
+
+                    <div class="button">
+                        <div class="button-container h-center">
+
+                            <button (click)="startTest()" [disabled]="!isOpened" type="button"
+                                class="btn btn-success">Start</button>
+
+                        </div>
+                    </div>
+
                 </div>
-           
+            </div>
+
         </ng-template>
     </div>
 

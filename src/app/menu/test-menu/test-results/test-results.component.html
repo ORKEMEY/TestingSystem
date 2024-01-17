@@ -17,8 +17,9 @@
         </div>
 
         <div class="col-12">
-            <div id="Alert" class="alert alert-danger" #alertDiv hidden>
-            </div>
+            <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
+                class="warning-component" [message]="AlertBox.Message">
+            </alert-component>
         </div>
 
         <div class="col-12 h-center">

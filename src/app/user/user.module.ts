@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import UserRoutingModule from './user-routing.module';
+
+import SharedModule from '../shared/shared.module';
 // components
 import UserComponent from './user.component';
 import LoginComponent from './login/login.component';
@@ -14,7 +16,14 @@ import UserLoginService from './shared/user-login.service';
 import CredentialsService from '../core/services/credentials.service';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, HttpClientModule, ReactiveFormsModule, UserRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    UserRoutingModule,
+    SharedModule,
+  ],
   declarations: [UserComponent, LoginComponent, RegistrationComponent],
   bootstrap: [],
   providers: [UserRegistrationService, UserLoginService, CredentialsService], // service registration

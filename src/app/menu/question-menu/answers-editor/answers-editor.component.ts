@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { fadeInOnEnterAnimation } from 'angular-animations';
@@ -10,7 +10,7 @@ import QuestionService from '../../../core/services/question.service';
 import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
-import Alert from '../../../core/utils/alert';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'answers-editor-component',
@@ -21,11 +21,9 @@ import Alert from '../../../core/utils/alert';
 export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private answersSub: Subscription;
 
-  @ViewChild('alertListDiv', { static: false })
-  alertListDiv: ElementRef | undefined;
+  ListAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertAnswerDiv', { static: false })
-  alertAnswerDiv: ElementRef | undefined;
+  AnswerAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
@@ -127,10 +125,10 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   onAnswerChange() {
     const res = this.answerEditorFormService.validateAnswer();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertAnswerDiv);
+    if (!res) {
+      this.AnswerAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertAnswerDiv, res);
+      this.AnswerAlertBox.Alert(res);
     }
   }
 
@@ -206,9 +204,9 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
 
   private checkCollection() {
     if (this.answers === null || this.answers.length === 0) {
-      Alert.alertMessage(this.alertListDiv, 'No answer was found!');
+      this.ListAlertBox.Alert('No answer was found!');
     } else {
-      Alert.hideAlertMessage(this.alertListDiv);
+      this.ListAlertBox.hideAlert();
     }
   }
 }

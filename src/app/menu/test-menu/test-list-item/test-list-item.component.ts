@@ -1,10 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { flipInXOnEnterAnimation, flipOutXOnLeaveAnimation } from 'angular-animations';
 import Test from '../../../core/models/test.model';
 
 @Component({
   selector: 'test-list-item-component',
   templateUrl: './test-list-item.component.html',
   styleUrls: ['./test-list-item.component.css'],
+  animations: [
+    flipInXOnEnterAnimation({ duration: 500 }),
+    flipOutXOnLeaveAnimation({ duration: 300 }),
+  ],
 })
 export default class TestListItemComponent {
   public isSettingsVisible: boolean = false;

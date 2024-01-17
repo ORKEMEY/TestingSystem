@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import Paginator from '../../../shared/paginator';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/utils/alert';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'test-list-component',
@@ -23,8 +23,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
     return this.tests;
   }
 
-  @ViewChild('alertDiv', { static: false })
-  alertDiv: ElementRef | undefined;
+  AlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
@@ -108,9 +107,9 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   private checkCollection() {
     if (this.tests === null || this.tests.length === 0) {
-      Alert.alertMessage(this.alertDiv, 'No tests found');
+      this.AlertBox.Alert('No tests found!');
     } else {
-      Alert.hideAlertMessage(this.alertDiv);
+      this.AlertBox.hideAlert();
     }
   }
 }

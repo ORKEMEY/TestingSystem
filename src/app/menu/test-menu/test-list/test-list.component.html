@@ -11,8 +11,9 @@
 
     <div class="outer content">
         <div class="h-center">
-            <div id="Alert" class="alert alert-danger col-10" #alertDiv hidden>
-            </div>
+            <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
+                class="col-10 warning-component" [message]="AlertBox.Message">
+            </alert-component>
         </div>
         <div class="h-center">
             <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"

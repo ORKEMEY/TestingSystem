@@ -1,7 +1,7 @@
 <div class="item-container">
     <div class="item grid" (mouseleave)="isSettingsVisible = false">
         <div class="header h-end setings-container">
-            <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
+            <div class="setings" *ngIf="isSettingsVisible" [@flipInXOnEnter] [@flipOutXOnLeave]
                 (mouseleave)="isSettingsVisible = false">
                 <ul>
                     <li [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings
@@ -15,7 +15,7 @@
         <div class="query ">
             <div class="h-start">
                 <p>
-                    {{Query}}
+                    {{Number}}. {{Query}}
                 </p>
             </div>
 

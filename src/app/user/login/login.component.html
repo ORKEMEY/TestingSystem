@@ -1,37 +1,45 @@
-<div id="LoginDiv" class="container-narrow">
-  <form [formGroup]="form" id="LoginForm" class="form-signin col-10" (ngSubmit)="submit()" novalidate>
-    <h2 id="SendLoginFormLabel" class="form-signin-heading col-12">Sign in</h2>
+<div>
+  <form [formGroup]="form" class="form-signin col-10" (ngSubmit)="submit()" novalidate>
+    <h2 class="form-signin-heading col-12">Sign in</h2>
     <br />
 
     <div class="form-block col-12">
-      <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden></div>
+      <alert-component [isVisible]="CommonAlertBox.isVisible" (closeButtonPushed)="CommonAlertBox.hideAlert()"
+        [message]="CommonAlertBox.Message">
+      </alert-component>
     </div>
+
     <div class="form-block">
       <label for="Login" class="col-2 col-form-label">Login:</label>
       <div class="col-12">
-        <input type="text" name="Login" id="LoginLogin" class="input-block-level form-control" placeholder="Login"
+        <input type="text" name="Login" class="input-block-level form-control" placeholder="Login"
           formControlName="Login" (ngModelChange)="loginChange()" required />
       </div>
     </div>
     <div class="form-block col-12">
-      <div id="AlertLogin" class="alert alert-danger form-block" role="alert" #alertLoginDiv hidden></div>
+      <alert-component [isVisible]="LoginAlertBox.isVisible" (closeButtonPushed)="LoginAlertBox.hideAlert()"
+        [message]="LoginAlertBox.Message">
+      </alert-component>
     </div>
 
     <div class="form-block">
       <label for="Password" class="col-2 col-form-label">Password:</label>
       <div class="col-12">
-        <input type="password" name="Password" id="PasswordLogin" class="input-block-level form-control"
-          placeholder="Password" formControlName="Password" (ngModelChange)="passwordChange()"
-          (keydown.enter)="form.invalid ? null : submit()" required />
+        <input type="password" name="Password" class="input-block-level form-control" placeholder="Password"
+          formControlName="Password" (ngModelChange)="passwordChange()" (keydown.enter)="form.invalid ? null : submit()"
+          required />
       </div>
     </div>
     <div class="form-block col-12">
-      <div class="alert alert-danger form-block" role="alert" #alertPasswordDiv hidden></div>
+      <alert-component [isVisible]="PasswordAlertBox.isVisible" (closeButtonPushed)="PasswordAlertBox.hideAlert()"
+        [message]="PasswordAlertBox.Message">
+      </alert-component>
     </div>
+
     <br />
     <div class="submit-btn-container col-12">
-      <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnLoginForm"
-        value="Sign in" />
+      <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Sign in" />
     </div>
+
   </form>
 </div>

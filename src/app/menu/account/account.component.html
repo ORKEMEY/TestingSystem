@@ -36,8 +36,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Login Alert-->
-                    <div class="alert alert-danger" role="alert" #alertLoginDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="LoginAlertBox.isVisible"
+                        (closeButtonPushed)="LoginAlertBox.hideAlert()" class="warning-component"
+                        [message]="LoginAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -52,8 +54,9 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Name Alert-->
-                    <div class="alert alert-danger" role="alert" #alertNameDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="NameAlertBox.isVisible" (closeButtonPushed)="NameAlertBox.hideAlert()"
+                        class="warning-component" [message]="NameAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -69,8 +72,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Surname Alert-->
-                    <div class="alert alert-danger" role="alert" #alertSurnameDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="SurnameAlertBox.isVisible"
+                        (closeButtonPushed)="SurnameAlertBox.hideAlert()" class="warning-component"
+                        [message]="SurnameAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -85,8 +90,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- EMail Alert-->
-                    <div class="alert alert-danger" role="alert" #alertEMailDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="EMailAlertBox.isVisible"
+                        (closeButtonPushed)="EMailAlertBox.hideAlert()" class="warning-component"
+                        [message]="EMailAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <br>
@@ -99,7 +106,8 @@
 
                     <input type="button" class="btn btn-large btn-warning" value="Cancel" (click)="cancel()">
 
-                    <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Save">
+                    <input type="submit" [disabled]="form.invalid || !form.dirty" class="btn btn-large btn-success"
+                        value="Save">
                 </div>
 
             </form>

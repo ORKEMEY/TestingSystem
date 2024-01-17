@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { fadeInOnEnterAnimation } from 'angular-animations';
@@ -9,7 +9,7 @@ import AnswerFormService from '../shared/answer-form.service';
 import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
-import Alert from '../../../core/utils/alert';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'question-settings-component',
@@ -18,24 +18,20 @@ import Alert from '../../../core/utils/alert';
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class QuestionSettingsComponent {
-  @ViewChild('alertQueryDiv', { static: false })
-  alertQueryDiv: ElementRef | undefined;
+  // #region msgBoxes
+  QueryAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertDifficultyDiv', { static: false })
-  alertDifficultyDiv: ElementRef | undefined;
+  DifficultyAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertDiscriminationDiv', { static: false })
-  alertDiscriminationDiv: ElementRef | undefined;
+  DiscriminationAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertPseudoGuessingDiv', { static: false })
-  alertPseudoGuessingDiv: ElementRef | undefined;
-
-  @ViewChild('alertCommonDiv', { static: false })
-  alertCommonDiv: ElementRef | undefined;
+  PseudoGuessingAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   InfoBox: InfoBoxHandler = new InfoBoxHandler();
+
+  // #endregion
 
   private id: number = 0;
 
@@ -89,43 +85,45 @@ export default class QuestionSettingsComponent {
     }
   }
 
+  // #region validation
+
   onQueryChange() {
     const res = this.basicSettingsForm.validateQuery();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertQueryDiv);
+    if (!res) {
+      this.QueryAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertQueryDiv, res);
+      this.QueryAlertBox.Alert(res);
     }
   }
 
   onDifficultyChange() {
     const res = this.basicSettingsForm.validateDifficulty();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertDifficultyDiv);
+    if (!res) {
+      this.DifficultyAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertDifficultyDiv, res);
+      this.DifficultyAlertBox.Alert(res);
     }
   }
 
   onDiscriminationChange() {
     const res = this.basicSettingsForm.validateDiscrimination();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertDiscriminationDiv);
+    if (!res) {
+      this.DiscriminationAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertDiscriminationDiv, res);
+      this.DiscriminationAlertBox.Alert(res);
     }
   }
 
   onPseudoGuessingChange() {
     const res = this.basicSettingsForm.validatePseudoGuessing();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertPseudoGuessingDiv);
+    if (!res) {
+      this.PseudoGuessingAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertPseudoGuessingDiv, res);
+      this.PseudoGuessingAlertBox.Alert(res);
     }
   }
 
@@ -135,7 +133,9 @@ export default class QuestionSettingsComponent {
     this.onDiscriminationChange();
     this.onPseudoGuessingChange();
   }
+  // #endregion
 
+  // #region submition
   submit() {
     try {
       if (this.id === 0) {
@@ -178,4 +178,5 @@ export default class QuestionSettingsComponent {
       },
     } as Observer<void>);
   }
+  // #endregion
 }

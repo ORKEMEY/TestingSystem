@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { fadeInOnEnterAnimation } from 'angular-animations';
@@ -6,9 +6,9 @@ import { Observer } from 'rxjs';
 import BasicSettingsFormService from '../shared/basic-settings-form.service';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
-import Alert from '../../../core/utils/alert';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'test-settings-component',
@@ -17,21 +17,17 @@ import InfoBoxHandler from '../../../shared/utils/info-box-handler';
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestSettingsComponent {
-  @ViewChild('alertNameDiv', { static: false })
-  alertNameDiv: ElementRef | undefined;
+  // #region msgBoxes
+  NameAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertNumberOfVariantsDiv', { static: false })
-  alertNumberOfVariantsDiv: ElementRef | undefined;
+  NumberOfVariantsAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertTimeDiv', { static: false })
-  alertTimeDiv: ElementRef | undefined;
-
-  @ViewChild('alertCommonDiv', { static: false })
-  alertCommonDiv: ElementRef | undefined;
+  TimeAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   InfoBox: InfoBoxHandler = new InfoBoxHandler();
+  // #endregion
 
   public get form(): FormGroup {
     return this.basicSettingsForm.form;
@@ -42,9 +38,6 @@ export default class TestSettingsComponent {
   private test: Test = null;
 
   public get Test(): Test {
-    /* if (this.id !== 0 && this.test === null) {
-       this.loadTest();
-    } */
     return this.test;
   }
 
@@ -84,33 +77,34 @@ export default class TestSettingsComponent {
     }
   }
 
+  // #region validation
   onNameChange() {
     const res = this.basicSettingsForm.validateName();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertNameDiv);
+    if (!res) {
+      this.NameAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertNameDiv, res);
+      this.NameAlertBox.Alert(res);
     }
   }
 
   onNumberOfVariantsChange() {
     const res = this.basicSettingsForm.validateNumberOfVariants();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertNumberOfVariantsDiv);
+    if (!res) {
+      this.NumberOfVariantsAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertNumberOfVariantsDiv, res);
+      this.NumberOfVariantsAlertBox.Alert(res);
     }
   }
 
   onTimeChange() {
     const res = this.basicSettingsForm.validateTime();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertTimeDiv);
+    if (!res) {
+      this.TimeAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertTimeDiv, res);
+      this.TimeAlertBox.Alert(res);
     }
   }
 
@@ -119,6 +113,9 @@ export default class TestSettingsComponent {
     this.onNumberOfVariantsChange();
     this.onTimeChange();
   }
+  // #endregion
+
+  // #region submition
 
   submit() {
     try {
@@ -163,4 +160,5 @@ export default class TestSettingsComponent {
       },
     } as Observer<void>);
   }
+  // #endregion
 }

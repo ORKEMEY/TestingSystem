@@ -33,8 +33,9 @@
             </div>
             <div class="form-group col-12">
                 <!-- Answer Alert-->
-                <div class="alert alert-danger" role="alert" #alertAnswerDiv hidden>
-                </div>
+                <alert-component [isVisible]="AnswerAlertBox.isVisible" (closeButtonPushed)="AnswerAlertBox.hideAlert()"
+                    class="warning-component" [message]="AnswerAlertBox.Message">
+                </alert-component>
             </div>
 
             <div class="submit-btn-container col-12">
@@ -46,17 +47,18 @@
 
     <div class="list">
 
+        <label class="col-form-label col-12">
+            <h6>Answers:</h6>
+        </label>
+
         <div class="alert-grid col-12">
-            <div id="Alert" class="alert alert-danger" #alertListDiv hidden>
-            </div>
+            <alert-component [isVisible]="ListAlertBox.isVisible" (closeButtonPushed)="ListAlertBox.hideAlert()"
+                class="warning-component" [message]="ListAlertBox.Message">
+            </alert-component>
         </div>
 
         <div class="col-12">
             <!-- Answers -->
-            <label class="col-form-label">
-                <h6>Answers:</h6>
-            </label>
-
             <div *ngFor="let answer of answers">
                 <answer-item-component [item]="answer" (deleteButtonPushed)="deleteItem($event)"
                     [shakeBtn]="shakeDelBtn">
