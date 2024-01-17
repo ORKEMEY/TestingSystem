@@ -15,13 +15,13 @@
             </div>
         </div>
         <div class="h-center">
-            <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
-                class="col-10 warning-component" [message]="warningMessage">
+            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
+                class="col-10 warning-component" [message]="WarningBox.warningMessage">
             </warning-component>
         </div>
         <div class="h-center">
-            <info-component [isVisible]="isInfoVisible" (closeButtonPushed)="hideInfo()"
-                class="col-10 warning-component" [message]="infoMessage">
+            <info-component [isVisible]="InfoBox.isInfoVisible" (closeButtonPushed)="InfoBox.hideInfo()"
+                class="col-10 warning-component" [message]="InfoBox.infoMessage">
             </info-component>
         </div>
 

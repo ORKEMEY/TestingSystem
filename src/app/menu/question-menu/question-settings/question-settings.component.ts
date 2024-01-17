@@ -7,7 +7,8 @@ import TestVariantQuestionAddingService from '../../shared/test-var-question-add
 import QuestionService from '../../../core/services/question.service';
 import AnswerFormService from '../shared/answer-form.service';
 import Question from '../../../core/models/question.model';
-import MessageBox from '../../../core/utils/msg-box';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 import Alert from '../../../core/utils/alert';
 
 @Component({
@@ -16,7 +17,7 @@ import Alert from '../../../core/utils/alert';
   styleUrls: ['./question-settings.component.css'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class QuestionSettingsComponent extends MessageBox {
+export default class QuestionSettingsComponent {
   @ViewChild('alertQueryDiv', { static: false })
   alertQueryDiv: ElementRef | undefined;
 
@@ -31,6 +32,10 @@ export default class QuestionSettingsComponent extends MessageBox {
 
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
+
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   private id: number = 0;
 
@@ -61,7 +66,6 @@ export default class QuestionSettingsComponent extends MessageBox {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.id = Number.parseInt(params.id, 10);
       this.loadQuestion();
@@ -75,8 +79,9 @@ export default class QuestionSettingsComponent extends MessageBox {
           this.Question = item;
         },
         error: (err) => {
-          if (typeof err !== 'string') this.Warn("Ooops, something went wrong! Couldn't load data");
-          else this.Warn(err);
+          if (typeof err !== 'string')
+            this.WarningBox.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.WarningBox.Warn(err);
         },
       } as Observer<Question>);
     } else {
@@ -149,27 +154,27 @@ export default class QuestionSettingsComponent extends MessageBox {
         if (this.questionAddingService.isActivated) {
           this.questionAddingService.pushQuestionId(itemId);
         }
-        this.Info("Question's successfully created!");
+        this.InfoBox.Info("Question's successfully created!");
       },
       error: (errMsg: string) => {
         if (typeof errMsg !== 'string')
-          this.Warn("Ooops, something went wrong! Couldn't create question");
-        else this.Warn(errMsg);
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't create question");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<number>);
-    this.Info("Question's saved and will be created after adding answers!");
+    this.InfoBox.Info("Question's saved and will be created after adding answers!");
   }
 
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
       next: () => {
-        this.Info('Changes saved!');
+        this.InfoBox.Info('Changes saved!');
         this.loadQuestion();
       },
       error: (errMsg: string) => {
         if (typeof errMsg !== 'string')
-          this.Warn("Ooops, something went wrong! Couldn't save changes");
-        else this.Warn(errMsg);
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<void>);
   }

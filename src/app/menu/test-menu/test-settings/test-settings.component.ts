@@ -6,8 +6,9 @@ import { Observer } from 'rxjs';
 import BasicSettingsFormService from '../shared/basic-settings-form.service';
 import TestService from '../../../core/services/test.service';
 import Test from '../../../core/models/test.model';
-import MessageBox from '../../../core/utils/msg-box';
 import Alert from '../../../core/utils/alert';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 
 @Component({
   selector: 'test-settings-component',
@@ -15,7 +16,7 @@ import Alert from '../../../core/utils/alert';
   styleUrls: ['./test-settings.component.css'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class TestSettingsComponent extends MessageBox {
+export default class TestSettingsComponent {
   @ViewChild('alertNameDiv', { static: false })
   alertNameDiv: ElementRef | undefined;
 
@@ -27,6 +28,10 @@ export default class TestSettingsComponent extends MessageBox {
 
   @ViewChild('alertCommonDiv', { static: false })
   alertCommonDiv: ElementRef | undefined;
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
+
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   public get form(): FormGroup {
     return this.basicSettingsForm.form;
@@ -55,7 +60,6 @@ export default class TestSettingsComponent extends MessageBox {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.id = Number.parseInt(params.id, 10);
       this.loadTest();
@@ -69,8 +73,9 @@ export default class TestSettingsComponent extends MessageBox {
           this.Test = item;
         },
         error: (err) => {
-          if (typeof err !== 'string') this.Warn("Ooops, something went wrong! Couldn't load data");
-          else this.Warn(err);
+          if (typeof err !== 'string')
+            this.WarningBox.Warn("Ooops, something went wrong! Couldn't load data");
+          else this.WarningBox.Warn(err);
         },
         complete: () => console.log('comlete'),
       } as Observer<Test>);
@@ -135,12 +140,12 @@ export default class TestSettingsComponent extends MessageBox {
           itemId,
           { outlets: { primary: ['settings'], nav: ['testmenunav'] } },
         ]);
-        this.Info('Test succesfully created!');
+        this.InfoBox.Info('Test succesfully created!');
       },
       error: (errMsg: string) => {
         if (typeof errMsg !== 'string')
-          this.Warn("Ooops, something went wrong! Couldn't create test");
-        else this.Warn(errMsg);
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't create test");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<number>);
   }
@@ -148,13 +153,13 @@ export default class TestSettingsComponent extends MessageBox {
   private submitPut() {
     this.basicSettingsForm.submitPut(this.id, {
       next: () => {
-        this.Info('Changes saved!');
+        this.InfoBox.Info('Changes saved!');
         this.loadTest();
       },
       error: (errMsg: string) => {
         if (typeof errMsg !== 'string')
-          this.Warn("Ooops, something went wrong! Couldn't save changes");
-        else this.Warn(errMsg);
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<void>);
   }

@@ -8,7 +8,8 @@ import VariantOfAnswerService from '../../../core/services/variant-of-answer.ser
 import VariantOfAnswer from '../../../core/models/variant-of-answer.model';
 import QuestionService from '../../../core/services/question.service';
 import Question from '../../../core/models/question.model';
-import MessageBox from '../../../core/utils/msg-box';
+import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 import Alert from '../../../core/utils/alert';
 
 @Component({
@@ -17,7 +18,7 @@ import Alert from '../../../core/utils/alert';
   styleUrls: ['./answers-editor.component.css'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
-export default class AnswersEditorComponent extends MessageBox implements OnInit, OnDestroy {
+export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private answersSub: Subscription;
 
   @ViewChild('alertListDiv', { static: false })
@@ -25,6 +26,10 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
 
   @ViewChild('alertAnswerDiv', { static: false })
   alertAnswerDiv: ElementRef | undefined;
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
+
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   private questionId: number = 0;
 
@@ -57,7 +62,6 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    super();
     this.activatedRoute.parent.params.subscribe((params) => {
       this.questionId = Number.parseInt(params.id, 10);
       this.loadQuestion().then(() => {
@@ -90,7 +94,7 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
             res();
           },
           error: (err) => {
-            this.Warn(err);
+            this.WarningBox.Warn(err);
             rej();
           },
         } as Observer<Question>);
@@ -135,14 +139,14 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
   deleteItem(variantOfAnswer: VariantOfAnswer) {
     if (this.answers.length === 1) {
       this.shakeDelBtn = !this.shakeDelBtn;
-      this.Warn("Last answer cann't be deleted");
+      this.WarningBox.Warn("Last answer cann't be deleted");
       return;
     }
     this.variantOfAnswerService.DeleteVariantOfAnswerAsync(
       variantOfAnswer.id as number,
       {
         next: () => {
-          this.Info('Answer succesfully deleted!');
+          this.InfoBox.Info('Answer succesfully deleted!');
           this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
         },
         error: (errMsg: string) => console.log(errMsg),
@@ -154,7 +158,7 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
 
   submit() {
     if (this.questionId === 0 && !this.answerFormService.isNewQuestionSaved()) {
-      this.Warn('You have to create question firstly!');
+      this.WarningBox.Warn('You have to create question firstly!');
     } else if (this.questionId === 0 && this.answerFormService.isNewQuestionSaved()) {
       this.submitAnswerForNewQuestion();
     } else {
@@ -174,11 +178,11 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
                 this.questionId,
                 'answerseditor',
               ]);
-              this.Info('Answer succesfully created!');
+              this.InfoBox.Info('Answer succesfully created!');
             },
           } as Observer<VariantOfAnswer>);
         },
-        error: (errMsg: string) => this.Warn(errMsg),
+        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
       } as Observer<number>);
     } catch (error) {
       console.error(error);
@@ -189,11 +193,11 @@ export default class AnswersEditorComponent extends MessageBox implements OnInit
     try {
       this.answerEditorFormService.submit(this.questionId, {
         next: (itemId) => {
-          this.Info('Answer succesfully created!');
+          this.InfoBox.Info('Answer succesfully created!');
           this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
           console.log(itemId);
         },
-        error: (errMsg: string) => this.Warn(errMsg),
+        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
       } as Observer<number>);
     } catch (error) {
       console.error(error);

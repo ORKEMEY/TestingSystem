@@ -4,7 +4,8 @@ import { Observer } from 'rxjs';
 import AccountFormService from './shared/account-form.service';
 import UserService from '../../core/services/user.service';
 import Customer from '../../core/models/customer.model';
-import MessageBox from '../../core/utils/msg-box';
+import WarningBoxHandler from '../../shared/utils/warning-box-handler';
+import InfoBoxHandler from '../../shared/utils/info-box-handler';
 import Alert from '../../core/utils/alert';
 
 @Component({
@@ -12,7 +13,7 @@ import Alert from '../../core/utils/alert';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })
-export default class AccountComponent extends MessageBox {
+export default class AccountComponent {
   @ViewChild('alertLoginDiv', { static: false })
   alertLoginDiv: ElementRef | undefined;
 
@@ -24,6 +25,10 @@ export default class AccountComponent extends MessageBox {
 
   @ViewChild('alertEMailDiv', { static: false })
   alertEMailDiv: ElementRef | undefined;
+
+  WarningBox: WarningBoxHandler = new WarningBoxHandler();
+
+  InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
   formDisabled: Boolean = true;
 
@@ -46,7 +51,6 @@ export default class AccountComponent extends MessageBox {
   }
 
   constructor(private accountFormService: AccountFormService, private userService: UserService) {
-    super();
     this.loadCustomer();
   }
 
@@ -56,8 +60,9 @@ export default class AccountComponent extends MessageBox {
         this.Customer = item;
       },
       error: (err) => {
-        if (typeof err !== 'string') this.Warn("Ooops, something went wrong! Couldn't load data");
-        else this.Warn(err);
+        if (typeof err !== 'string')
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't load data");
+        else this.WarningBox.Warn(err);
       },
       complete: () => console.log('comlete'),
     } as Observer<Customer>);
@@ -116,7 +121,7 @@ export default class AccountComponent extends MessageBox {
   change() {
     if (this.Customer) {
       this.formDisabled = false;
-    } else this.Warn("Couldn't load data");
+    } else this.WarningBox.Warn("Couldn't load data");
   }
 
   cancel() {
@@ -147,14 +152,14 @@ export default class AccountComponent extends MessageBox {
   private sendForm(password: string) {
     this.accountFormService.submit(password, {
       next: () => {
-        this.Info('Changes saved!');
+        this.InfoBox.Info('Changes saved!');
         this.loadCustomer();
       },
       error: (errMsg: string) => {
         this.loadCustomer();
         if (typeof errMsg !== 'string')
-          this.Warn("Ooops, something went wrong! Couldn't save changes");
-        else this.Warn(errMsg);
+          this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
+        else this.WarningBox.Warn(errMsg);
       },
     } as Observer<void>);
   }

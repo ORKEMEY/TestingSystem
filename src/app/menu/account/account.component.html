@@ -8,13 +8,13 @@
         </div>
         <hr />
         <div class="col-12 h-center">
-            <warning-component [isVisible]="isWarningVisible" (closeButtonPushed)="hideWarning()"
-                class=" warning-component" [message]="warningMessage">
+            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
+                class=" warning-component" [message]="WarningBox.warningMessage">
             </warning-component>
         </div>
         <div class="col-12 h-center">
-            <info-component [isVisible]="isInfoVisible" (closeButtonPushed)="hideInfo()" class="warning-component"
-                [message]="infoMessage">
+            <info-component [isVisible]="InfoBox.isInfoVisible" (closeButtonPushed)="InfoBox.hideInfo()"
+                class="warning-component" [message]="InfoBox.infoMessage">
             </info-component>
         </div>
 
