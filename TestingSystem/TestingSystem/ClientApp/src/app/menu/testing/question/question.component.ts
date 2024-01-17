@@ -14,15 +14,11 @@ export default class QuestionComponent implements OnInit {
   @Input()
   public Question: Question = null;
 
-  private index: number = 0;
-
   @Input()
-  public set Index(val: number) {
-    this.index = val;
-  }
+  public Index: number = 0;
 
   public get Number(): number {
-    return this.index + 1;
+    return this.Index + 1;
   }
 
   constructor(private testCheckService: TestCheckService) {}

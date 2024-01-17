@@ -19,11 +19,6 @@
             <form [formGroup]="form" (ngSubmit)="submit()" id="form" novalidate>
 
                 <div class="form-group col-12">
-                    <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden>
-                    </div>
-                </div>
-
-                <div class="form-group col-12">
                     <!-- Name -->
                     <label for="Name" class="col-form-label">
                         <h6>*Name:</h6>
@@ -35,8 +30,9 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Name Alert-->
-                    <div class="alert alert-danger" role="alert" #alertNameDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="NameAlertBox.isVisible" (closeButtonPushed)="NameAlertBox.hideAlert()"
+                        class="warning-component" [message]="NameAlertBox.Message">
+                    </alert-component>
                 </div>
 
 
@@ -61,11 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-12">
-                    <!-- Description Alert-->
-                    <div class="alert alert-danger" role="alert" #alertDescriptionDiv hidden>
-                    </div>
-                </div>
+
 
                 <div class="form-group col-12 switch-container">
                     <!-- Is Access Open -->
@@ -98,8 +90,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Variants Number Alert-->
-                    <div class="alert alert-danger" role="alert" #alertNumberOfVariantsDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="NumberOfVariantsAlertBox.isVisible"
+                        (closeButtonPushed)="NumberOfVariantsAlertBox.hideAlert()" class="warning-component"
+                        [message]="NumberOfVariantsAlertBox.Message">
+                    </alert-component>
                 </div>
 
 
@@ -136,11 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-12">
-                    <!-- Duration Alert-->
-                    <div class="alert alert-danger form-block " role="alert" #alertDurationDiv hidden>
-                    </div>
-                </div>
+
 
 
                 <div class="form-group col-12">
@@ -180,8 +170,9 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Time Alert-->
-                    <div class="alert alert-danger form-block " role="alert" #alertTimeDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="TimeAlertBox.isVisible" (closeButtonPushed)="TimeAlertBox.hideAlert()"
+                        class="warning-component" [message]="TimeAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <br>

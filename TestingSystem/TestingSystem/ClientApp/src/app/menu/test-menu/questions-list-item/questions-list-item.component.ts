@@ -1,16 +1,28 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { flipInXOnEnterAnimation, flipOutXOnLeaveAnimation } from 'angular-animations';
 import Question from '../../../core/models/question.model';
 
 @Component({
   selector: 'questions-list-item-component',
   templateUrl: './questions-list-item.component.html',
   styleUrls: ['./questions-list-item.component.css'],
+  animations: [
+    flipInXOnEnterAnimation({ duration: 500 }),
+    flipOutXOnLeaveAnimation({ duration: 300 }),
+  ],
 })
 export default class QuestionsListItemComponent {
   public isSettingsVisible: boolean = false;
 
   @Input()
   item: Question = null;
+
+  @Input()
+  public Index: number = 0;
+
+  public get Number(): number {
+    return this.Index + 1;
+  }
 
   @Output() deleteButtonPushed = new EventEmitter<Question>();
 

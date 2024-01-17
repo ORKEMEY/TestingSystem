@@ -18,8 +18,9 @@
 
     <div class="alert-grid">
         <div class=" h-center">
-            <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
-            </div>
+            <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
+                class="warning-component" [message]="AlertBox.Message">
+            </alert-component>
         </div>
 
         <div class=" h-center">
@@ -40,8 +41,8 @@
 
 
     <div class="content-grid">
-        <questions-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
-            (deleteButtonPushed)="deleteItem($event)">
+        <questions-list-item-component *ngFor="let item of itemsPaginated; let i = index" [item]="item"
+            [Index]="(CurrentPage - 1) * NumberOfElemsOnPage + i" (deleteButtonPushed)="deleteItem($event)">
         </questions-list-item-component>
     </div>
 

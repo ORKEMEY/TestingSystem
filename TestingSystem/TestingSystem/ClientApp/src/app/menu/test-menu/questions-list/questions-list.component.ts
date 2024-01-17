@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observer, Subscription } from 'rxjs';
 import QuestionService from '../../../core/services/question.service';
@@ -9,7 +9,7 @@ import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 // import Answer from '../../../core/models/variant-of-answer.model';
 // import QuestionType from '../../../core/models/question-type.model';
-import Alert from '../../../core/utils/alert';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'questions-list-component',
@@ -22,8 +22,7 @@ export default class QuestionsListComponent
 {
   private questionsSub: Subscription;
 
-  @ViewChild('alertDiv', { static: false })
-  alertDiv: ElementRef | undefined;
+  AlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
@@ -57,8 +56,8 @@ export default class QuestionsListComponent
     private questionAddingService: TestVariantQuestionAddingService,
   ) {
     super(1000);
-    /*
-    const qTypes = [
+
+    /* const qTypes = [
       new QuestionType('Single Choise'),
       new QuestionType('True / False'),
       new QuestionType('Short Answer'),
@@ -143,9 +142,9 @@ export default class QuestionsListComponent
 
   private checkCollection() {
     if (this.questions === null || this.questions.length === 0) {
-      Alert.alertMessage(this.alertDiv, 'No question was found!');
+      this.AlertBox.Alert('No question was found!');
     } else {
-      Alert.hideAlertMessage(this.alertDiv);
+      this.AlertBox.hideAlert();
     }
   }
 }

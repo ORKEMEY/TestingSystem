@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
-import Alert from '../../../core/utils/alert';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'password-confirmation',
@@ -13,8 +13,7 @@ import Alert from '../../../core/utils/alert';
   ],
 })
 export default class PasswordConfirmationComponent {
-  @ViewChild('alertPasswordDiv', { static: false })
-  alertPasswordDiv: ElementRef | undefined;
+  PasswordAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   @Input()
   public isVisible: boolean = false;
@@ -36,10 +35,10 @@ export default class PasswordConfirmationComponent {
   onPasswordChange() {
     const res = this.validatePassword();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertPasswordDiv);
+    if (!res) {
+      this.PasswordAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertPasswordDiv, res);
+      this.PasswordAlertBox.Alert(res);
     }
   }
 
@@ -56,10 +55,12 @@ export default class PasswordConfirmationComponent {
 
   close() {
     this.isVisible = false;
+    this.form.reset();
     this.closed.emit();
   }
 
   submit() {
     this.confirmed.emit(this.form.controls.Password.value);
+    this.form.reset();
   }
 }

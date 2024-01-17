@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { fadeInOnEnterAnimation } from 'angular-animations';
@@ -6,8 +6,8 @@ import Log from '../../../core/models/log.model';
 import LogService from '../../../core/services/log.service';
 import TestResultCalc from '../../../core/utils/test-result-calc';
 import Paginator from '../../../shared/paginator';
-import Alert from '../../../core/utils/alert';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 // import Customer from '../../../core/models/customer.model';
 
@@ -31,8 +31,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
 
   public SearchCategory: string = 'Name';
 
-  @ViewChild('alertDiv', { static: false })
-  alertDiv: ElementRef | undefined;
+  AlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
@@ -115,9 +114,9 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
 
   private checkCollection() {
     if (this.logs === null || this.logs.length === 0) {
-      Alert.alertMessage(this.alertDiv, 'No test result was found!');
+      this.AlertBox.Alert('No test result was found!');
     } else {
-      Alert.hideAlertMessage(this.alertDiv);
+      this.AlertBox.hideAlert();
     }
   }
 

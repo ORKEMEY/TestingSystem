@@ -1,6 +1,6 @@
-<div id="RegisterDiv" class="container-narrow">
-  <form [formGroup]="form" (ngSubmit)="submit()" id="RegisterForm" class="form-signin col-10">
-    <h2 id="SendRegiserFormLabel" class="form-signin-heading col-12">Sign up</h2>
+<div>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-signin col-10">
+    <h2 class="form-signin-heading col-12">Sign up</h2>
     <br />
 
     <div class="form-block col-12">
@@ -16,7 +16,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertLoginDiv hidden></div>
+        <alert-component [isVisible]="LoginAlertBox.isVisible" (closeButtonPushed)="LoginAlertBox.hideAlert()"
+          [message]="LoginAlertBox.Message">
+        </alert-component>
       </div>
     </div>
 
@@ -30,7 +32,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertNameDiv hidden></div>
+        <alert-component [isVisible]="NameAlertBox.isVisible" (closeButtonPushed)="NameAlertBox.hideAlert()"
+          [message]="NameAlertBox.Message">
+        </alert-component>
       </div>
     </div>
 
@@ -44,7 +48,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertSurnameDiv hidden></div>
+        <alert-component [isVisible]="SurnameAlertBox.isVisible" (closeButtonPushed)="SurnameAlertBox.hideAlert()"
+          [message]="SurnameAlertBox.Message">
+        </alert-component>
       </div>
     </div>
 
@@ -58,7 +64,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertEMailDiv hidden></div>
+        <alert-component [isVisible]="EMailAlertBox.isVisible" (closeButtonPushed)="EMailAlertBox.hideAlert()"
+          [message]="EMailAlertBox.Message">
+        </alert-component>
       </div>
     </div>
 
@@ -73,7 +81,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertPasswordDiv hidden></div>
+        <alert-component [isVisible]="PasswordAlertBox.isVisible" (closeButtonPushed)="PasswordAlertBox.hideAlert()"
+          [message]="PasswordAlertBox.Message">
+        </alert-component>
       </div>
 
       <div class="form-block">
@@ -86,7 +96,9 @@
         </div>
       </div>
       <div class="form-block col-12">
-        <div class="alert alert-danger form-block" role="alert" #alertConfirmPasswordDiv hidden></div>
+        <alert-component [isVisible]="ConfirmPasswordAlertBox.isVisible"
+          (closeButtonPushed)="ConfirmPasswordAlertBox.hideAlert()" [message]="ConfirmPasswordAlertBox.Message">
+        </alert-component>
       </div>
     </div>
     <br />

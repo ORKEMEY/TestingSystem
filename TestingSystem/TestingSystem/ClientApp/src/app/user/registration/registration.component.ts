@@ -1,8 +1,8 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observer } from 'rxjs';
 import UserRegistrationService from '../shared/user-registration.service';
-import Alert from '../../core/utils/alert';
+import AlertBoxHandler from '../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'registration-component',
@@ -10,26 +10,22 @@ import Alert from '../../core/utils/alert';
   styleUrls: ['./registration.component.css'],
 })
 export default class RegistrationComponent implements AfterViewInit {
-  @ViewChild('alertLoginDiv', { static: false })
-  alertLoginDiv: ElementRef | undefined;
+  // #region msgBoxes
+  LoginAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertNameDiv', { static: false })
-  alertNameDiv: ElementRef | undefined;
+  NameAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertSurnameDiv', { static: false })
-  alertSurnameDiv: ElementRef | undefined;
+  SurnameAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertEMailDiv', { static: false })
-  alertEMailDiv: ElementRef | undefined;
+  EMailAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertPasswordDiv', { static: false })
-  alertPasswordDiv: ElementRef | undefined;
+  PasswordAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertConfirmPasswordDiv', { static: false })
-  alertConfirmPasswordDiv: ElementRef | undefined;
+  ConfirmPasswordAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertCommonDiv', { static: false })
-  alertCommonDiv: ElementRef | undefined;
+  CommonAlertBox: AlertBoxHandler = new AlertBoxHandler();
+
+  // #endregion
 
   public get form(): FormGroup {
     return this.regServise.form;
@@ -38,58 +34,60 @@ export default class RegistrationComponent implements AfterViewInit {
   constructor(private regServise: UserRegistrationService) {}
 
   ngAfterViewInit() {
-    this.form.valueChanges.subscribe(() => Alert.hideAlertMessage(this.alertCommonDiv));
+    this.form.valueChanges.subscribe(() => this.CommonAlertBox.hideAlert());
     this.loginChange();
     this.passwordChange();
   }
 
+  // #region validation
+
   loginChange() {
     const res = this.regServise.ValidateLogin();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertLoginDiv);
+    if (!res) {
+      this.LoginAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertLoginDiv, res);
+      this.LoginAlertBox.Alert(res);
     }
   }
 
   nameChange() {
     const res = this.regServise.ValidateName();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertNameDiv);
+    if (!res) {
+      this.NameAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertNameDiv, res);
+      this.NameAlertBox.Alert(res);
     }
   }
 
   surnameChange() {
     const res = this.regServise.ValidateSurname();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertSurnameDiv);
+    if (!res) {
+      this.SurnameAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertSurnameDiv, res);
+      this.SurnameAlertBox.Alert(res);
     }
   }
 
   emailChange() {
     const res = this.regServise.ValidateEMail();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertEMailDiv);
+    if (!res) {
+      this.EMailAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertEMailDiv, res);
+      this.EMailAlertBox.Alert(res);
     }
   }
 
   passwordChange() {
     const res = this.regServise.ValidatePassword();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertPasswordDiv);
+    if (!res) {
+      this.PasswordAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertPasswordDiv, res);
+      this.PasswordAlertBox.Alert(res);
     }
 
     this.confirmPasswordChange();
@@ -98,17 +96,19 @@ export default class RegistrationComponent implements AfterViewInit {
   confirmPasswordChange() {
     const res = this.regServise.ValidatePasswordConfirmation();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertConfirmPasswordDiv);
+    if (!res) {
+      this.ConfirmPasswordAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertConfirmPasswordDiv, res);
+      this.ConfirmPasswordAlertBox.Alert(res);
     }
   }
+
+  // #endregion
 
   submit() {
     try {
       this.regServise.submit({
-        error: (errMsg: string) => Alert.alertMessage(this.alertCommonDiv, errMsg),
+        error: (errMsg: string) => this.CommonAlertBox.Alert(errMsg),
       } as Observer<void>);
     } catch (error) {
       console.error(error);

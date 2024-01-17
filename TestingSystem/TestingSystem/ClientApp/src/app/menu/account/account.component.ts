@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observer } from 'rxjs';
 import AccountFormService from './shared/account-form.service';
@@ -6,7 +6,7 @@ import UserService from '../../core/services/user.service';
 import Customer from '../../core/models/customer.model';
 import WarningBoxHandler from '../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../shared/utils/info-box-handler';
-import Alert from '../../core/utils/alert';
+import AlertBoxHandler from '../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'account-component',
@@ -14,21 +14,19 @@ import Alert from '../../core/utils/alert';
   styleUrls: ['./account.component.css'],
 })
 export default class AccountComponent {
-  @ViewChild('alertLoginDiv', { static: false })
-  alertLoginDiv: ElementRef | undefined;
+  // #region msgBoxes
+  LoginAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertNameDiv', { static: false })
-  alertNameDiv: ElementRef | undefined;
+  NameAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertSurnameDiv', { static: false })
-  alertSurnameDiv: ElementRef | undefined;
+  SurnameAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
-  @ViewChild('alertEMailDiv', { static: false })
-  alertEMailDiv: ElementRef | undefined;
+  EMailAlertBox: AlertBoxHandler = new AlertBoxHandler();
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
   InfoBox: InfoBoxHandler = new InfoBoxHandler();
+  // #endregion
 
   formDisabled: Boolean = true;
 
@@ -72,40 +70,40 @@ export default class AccountComponent {
   onLoginChange() {
     const res = this.accountFormService.ValidateLogin();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertLoginDiv);
+    if (!res) {
+      this.LoginAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertLoginDiv, res);
+      this.LoginAlertBox.Alert(res);
     }
   }
 
   onNameChange() {
     const res = this.accountFormService.ValidateName();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertNameDiv);
+    if (!res) {
+      this.NameAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertNameDiv, res);
+      this.NameAlertBox.Alert(res);
     }
   }
 
   onSurnameChange() {
     const res = this.accountFormService.ValidateSurname();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertSurnameDiv);
+    if (!res) {
+      this.SurnameAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertSurnameDiv, res);
+      this.SurnameAlertBox.Alert(res);
     }
   }
 
   onEMailChange() {
     const res = this.accountFormService.ValidateEMail();
 
-    if (res === null) {
-      Alert.hideAlertMessage(this.alertEMailDiv);
+    if (!res) {
+      this.EMailAlertBox.hideAlert();
     } else {
-      Alert.alertMessage(this.alertEMailDiv, res);
+      this.EMailAlertBox.Alert(res);
     }
   }
 
@@ -126,7 +124,7 @@ export default class AccountComponent {
 
   cancel() {
     this.formDisabled = true;
-    this.form.reset();
+    this.accountFormService.reset();
   }
 
   // #region submition
@@ -156,7 +154,7 @@ export default class AccountComponent {
         this.loadCustomer();
       },
       error: (errMsg: string) => {
-        this.loadCustomer();
+        this.accountFormService.reset();
         if (typeof errMsg !== 'string')
           this.WarningBox.Warn("Ooops, something went wrong! Couldn't save changes");
         else this.WarningBox.Warn(errMsg);

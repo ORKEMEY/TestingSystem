@@ -1,10 +1,11 @@
 <div class="page" [@fadeInOnEnter]>
 
     <div class="header">
-        <div class="h-center">
-            <div id="Alert" class="alert alert-danger col-12" #alertDiv hidden>
-            </div>
-        </div>
+
+        <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
+            class="warning-component" [message]="AlertBox.Message">
+        </alert-component>
+
     </div>
 
     <div class="scroll">

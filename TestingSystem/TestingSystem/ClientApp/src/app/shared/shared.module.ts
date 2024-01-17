@@ -7,6 +7,7 @@ import NotFoundComponent from './not-found/not-found.component';
 import ForbiddenComponent from './forbidden/forbidden.component';
 import WarningComponent from './warning/warning.component';
 import InfoComponent from './info/info.component';
+import AlertComponent from './alert/alert.component';
 import GarlandComponent from './garland/garland.component';
 
 import TimeSpanPipe from './pipes/time-span.pipe';
@@ -18,6 +19,7 @@ import TimeSpanPipe from './pipes/time-span.pipe';
     ForbiddenComponent,
     WarningComponent,
     InfoComponent,
+    AlertComponent,
     GarlandComponent,
     TimeSpanPipe,
   ],
@@ -26,6 +28,7 @@ import TimeSpanPipe from './pipes/time-span.pipe';
     ForbiddenComponent,
     WarningComponent,
     InfoComponent,
+    AlertComponent,
     GarlandComponent,
     TimeSpanPipe,
   ],

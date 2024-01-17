@@ -2,10 +2,9 @@
     [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
     <div class="item grid" (mouseleave)="isSettingsVisible = false">
         <div class="header h-end setings-container">
-            <div class="setings" [ngClass]="{visible: isSettingsVisible, invisible: !isSettingsVisible}"
+            <div class="setings" *ngIf="isSettingsVisible" [@flipInXOnEnter] [@flipOutXOnLeave]
                 (mouseleave)="isSettingsVisible = false">
                 <ul>
-
                     <li
                         [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
                         Settings </li>

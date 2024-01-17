@@ -19,11 +19,6 @@
             <form id="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
 
                 <div class="form-group col-12">
-                    <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden>
-                    </div>
-                </div>
-
-                <div class="form-group col-12">
                     <!-- Query -->
                     <label for="Query" class="col-form-label">
                         <h6>*Query:</h6>
@@ -36,8 +31,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Query Alert-->
-                    <div class="alert alert-danger" role="alert" #alertQueryDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="QueryAlertBox.isVisible"
+                        (closeButtonPushed)="QueryAlertBox.hideAlert()" class="warning-component"
+                        [message]="QueryAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -76,8 +73,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Difficulty Alert-->
-                    <div class="alert alert-danger" role="alert" #alertDifficultyDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="DifficultyAlertBox.isVisible"
+                        (closeButtonPushed)="DifficultyAlertBox.hideAlert()" class="warning-component"
+                        [message]="DifficultyAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -92,8 +91,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Discrimination Alert-->
-                    <div class="alert alert-danger" role="alert" #alertDiscriminationDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="DiscriminationAlertBox.isVisible"
+                        (closeButtonPushed)="DiscriminationAlertBox.hideAlert()" class="warning-component"
+                        [message]="DiscriminationAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <div class="form-group col-12">
@@ -108,8 +109,10 @@
                 </div>
                 <div class="form-group col-12">
                     <!-- Pseudo-Guessing -->
-                    <div class="alert alert-danger" role="alert" #alertPseudoGuessingDiv hidden>
-                    </div>
+                    <alert-component [isVisible]="PseudoGuessingAlertBox.isVisible"
+                        (closeButtonPushed)="PseudoGuessingAlertBox.hideAlert()" class="warning-component"
+                        [message]="PseudoGuessingAlertBox.Message">
+                    </alert-component>
                 </div>
 
                 <br>
