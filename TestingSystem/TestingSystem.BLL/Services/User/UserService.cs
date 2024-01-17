@@ -49,7 +49,6 @@ namespace TestingSystem.BLL.Services
 			return MapperBLL.Mapper.Map<UserDTO>(userDAL);
 		}
 
-
 		public void DeleteItem(UserDTO userDTO)
 		{
 			if (userDTO.Id <= 0)
@@ -66,23 +65,39 @@ namespace TestingSystem.BLL.Services
 			var userDALold = uof.Users.GetItem(userDTO.Id);
 			if (userDALold == null) throw new Infrastructure.ValidationException("Item not found");
 
-			if(userDTO.Login != null)
-			{
-				if (userDTO.Password == null)
-					throw new Infrastructure.ValidationException("You must confirm password to change login", "Login");
-				else ps.HashPassword(userDTO);
+			if (userDTO.Password != null)
+				ps.HashPassword(userDTO);
 
-				var loginCheck = uof.Users.GetItems(u => u.Login == userDTO.Login).FirstOrDefault();
+			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
+
+			UserPatcher.Patch(userDALold, userDALnew);
+
+			uof.Users.Update(userDALold);
+			uof.Save();
+		}
+
+		public void UpdateAccount(UserDTO userDTO)
+		{
+			if (userDTO.Id <= 0)
+				throw new Infrastructure.ValidationException("Wrong or empty properties");
+
+			var userDALold = uof.Users.GetItem(userDTO.Id);
+			if (userDALold == null) throw new Infrastructure.ValidationException("Account not found");
+
+
+			if (userDTO.Password == null)
+				throw new Infrastructure.ValidationException("You must confirm password to change account", "Password");
+			else ps.HashPassword(userDTO);
+
+			if(userDALold.Password != userDTO.Password && (userDTO.Login == null || userDTO.Login == userDALold.Login))
+				throw new Infrastructure.ValidationException("Wrong password", "Password");
+
+			if (userDTO.Login != null)
+			{
+				var loginCheck = uof.Users.GetItems(u => u.Login == userDTO.Login && u.Id != userDALold.Id).FirstOrDefault();
 				if (loginCheck != null)
 					throw new Infrastructure.ValidationException("This Login is already taken", "Login");
-
 			}
-			else
-			{
-				if (userDTO.Password != null)
-					throw new Infrastructure.ValidationException("You cann't change password", "Login");
-			}
-
 
 			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
 

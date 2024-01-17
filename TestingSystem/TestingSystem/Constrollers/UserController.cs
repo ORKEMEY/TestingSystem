@@ -161,7 +161,7 @@ namespace TestSystem.PL.Controllers
 
 				value.Id = userDTO.Id;
 
-				service.UpdateItem(MapperWEB.Mapper.Map<UserDTO>(value));
+				service.UpdateAccount(MapperWEB.Mapper.Map<UserDTO>(value));
 
 				userDTO = service.GetItem(userDTO.Id);
 
