@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import ItemService from '../utils/item.service';
 import Log from '../models/log.model';
 
 @Injectable({ providedIn: 'root' })
-export default class LogService {
-  private dataLogs: BehaviorSubject<Log[] | null>;
-
-  public dataLogs$: Observable<Log[] | null>;
-
+export default class LogService extends ItemService<Log> {
   constructor(private http: HttpClient) {
-    this.dataLogs = new BehaviorSubject<Log[] | null>(null);
-    this.dataLogs$ = this.dataLogs.asObservable();
+    super();
   }
 
   public getById(id: number, observer?: Observer<Log>) {
@@ -37,10 +33,10 @@ export default class LogService {
       .get('api/Logs')
       .pipe(map((data) => data as Log[]))
       .subscribe({
-        next: (data: Log[]) => this.dataLogs.next(data),
+        next: (data: Log[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataLogs.next(null);
+          this.subject.next(null);
         },
       });
   }
@@ -51,12 +47,12 @@ export default class LogService {
       .pipe(map((data) => data as Log[]))
       .subscribe({
         next: (data: Log[]) => {
-          this.dataLogs.next(data);
+          this.subject.next(data);
           observer?.next?.();
         },
         error: (err) => {
           console.error(err);
-          this.dataLogs.next(null);
+          this.subject.next(null);
         },
       });
   }

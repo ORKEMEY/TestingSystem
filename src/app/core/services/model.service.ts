@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import ItemService from '../utils/item.service';
 import Model from '../models/model.model';
 
 @Injectable({ providedIn: 'root' })
-export default class ModelService {
-  private dataModels: BehaviorSubject<Model[] | null>;
-
-  public dataModels$: Observable<Model[] | null>;
-
+export default class ModelService extends ItemService<Model> {
   constructor(private http: HttpClient) {
-    this.dataModels = new BehaviorSubject<Model[] | null>(null);
-    this.dataModels$ = this.dataModels.asObservable();
+    super();
   }
 
   public getById(id: number, observer?: Observer<Model>) {
@@ -37,10 +33,10 @@ export default class ModelService {
       .get('api/Models')
       .pipe(map((data) => data as Model[]))
       .subscribe({
-        next: (data: Model[]) => this.dataModels.next(data),
+        next: (data: Model[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataModels.next(null);
+          this.subject.next(null);
         },
       });
   }

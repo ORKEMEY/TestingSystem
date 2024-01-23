@@ -62,13 +62,11 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   }
 
   ngOnInit(): void {
-    this.testsSub = this.testService.dataTests$.subscribe((data: Test[] | null) => {
+    this.testsSub = this.testService.value$.subscribe((data: Test[] | null) => {
       this.tests = data;
-      this.isLoading = false;
       this.toFirstPage();
       this.checkCollection();
     });
-    this.isLoading = true;
     this.testService.refreshOwnedTests();
   }
 
@@ -106,7 +104,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   }
 
   private checkCollection() {
-    if (this.tests === null || this.tests.length === 0) {
+    if ((this.tests === null || this.tests.length === 0) && !this.isLoading) {
       this.AlertBox.Alert('No tests found!');
     } else {
       this.AlertBox.hideAlert();

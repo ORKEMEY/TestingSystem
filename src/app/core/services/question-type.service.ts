@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import ItemService from '../utils/item.service';
 import QuestionType from '../models/question-type.model';
 
 @Injectable({ providedIn: 'root' })
-export default class QuestionTypeService {
-  private dataQuestionTypes: BehaviorSubject<QuestionType[] | null>;
-
-  public dataQuestionTypes$: Observable<QuestionType[] | null>;
-
+export default class QuestionTypeService extends ItemService<QuestionType> {
   constructor(private http: HttpClient) {
-    this.dataQuestionTypes = new BehaviorSubject<QuestionType[] | null>(null);
-    this.dataQuestionTypes$ = this.dataQuestionTypes.asObservable();
+    super();
   }
 
   public getById(id: number, observer?: Observer<QuestionType>) {
@@ -37,10 +33,10 @@ export default class QuestionTypeService {
       .get('api/QuestionTypes')
       .pipe(map((data) => data as QuestionType[]))
       .subscribe({
-        next: (data: QuestionType[]) => this.dataQuestionTypes.next(data),
+        next: (data: QuestionType[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataQuestionTypes.next(null);
+          this.subject.next(null);
         },
       });
   }

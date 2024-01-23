@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observer } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import ItemService from '../utils/item.service';
 import TestVariant from '../models/test-variant.model';
 
 @Injectable({ providedIn: 'root' })
-export default class TestVariantService {
-  private dataTestVariants: BehaviorSubject<TestVariant[] | null>;
-
-  public dataTestVariants$: Observable<TestVariant[] | null>;
-
+export default class TestVariantService extends ItemService<TestVariant> {
   constructor(private http: HttpClient) {
-    this.dataTestVariants = new BehaviorSubject<TestVariant[] | null>(null);
-    this.dataTestVariants$ = this.dataTestVariants.asObservable();
+    super();
   }
 
   public getById(id: number, observer?: Observer<TestVariant>) {
@@ -33,27 +29,39 @@ export default class TestVariantService {
   }
 
   public refreshTestVariants() {
+    this.loading.value = true;
     this.http
       .get('api/TestVariants')
-      .pipe(map((data) => data as TestVariant[]))
+      .pipe(
+        map((data) => data as TestVariant[]),
+        tap(() => {
+          this.loading.value = false;
+        }),
+      )
       .subscribe({
-        next: (data: TestVariant[]) => this.dataTestVariants.next(data),
+        next: (data: TestVariant[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataTestVariants.next(null);
+          this.subject.next(null);
         },
       });
   }
 
   public searchTestVariantsByTestId(id: number) {
+    this.loading.value = true;
     this.http
       .get(`api/TestVariants/search?testId=${id}`)
-      .pipe(map((data) => data as TestVariant[]))
+      .pipe(
+        map((data) => data as TestVariant[]),
+        tap(() => {
+          this.loading.value = false;
+        }),
+      )
       .subscribe({
-        next: (data: TestVariant[]) => this.dataTestVariants.next(data),
+        next: (data: TestVariant[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataTestVariants.next(null);
+          this.subject.next(null);
         },
       });
   }

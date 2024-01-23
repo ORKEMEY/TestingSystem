@@ -51,7 +51,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
   }
 
   ngOnInit(): void {
-    this.logsSub = this.logService.dataLogs$.subscribe((data: Log[] | null) => {
+    this.logsSub = this.logService.value$.subscribe((data: Log[] | null) => {
       this.logs = data;
       this.isLoading = false;
       this.toFirstPage();

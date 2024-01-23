@@ -41,7 +41,7 @@ export default class QuestionsManagerComponent
   }
 
   ngOnInit(): void {
-    this.testVariantsSub = this.testVariantService.dataTestVariants$.subscribe(
+    this.testVariantsSub = this.testVariantService.value$.subscribe(
       (data: TestVariant[] | null) => {
         this.testVariants = data;
         this.toFirstPage();

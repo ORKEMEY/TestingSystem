@@ -89,7 +89,7 @@ export default class QuestionsListComponent
   }
 
   ngOnInit(): void {
-    this.questionsSub = this.questionService.dataQuestions$.subscribe((data: Question[] | null) => {
+    this.questionsSub = this.questionService.value$.subscribe((data: Question[] | null) => {
       this.questions = data;
       this.toFirstPage();
       this.checkCollection();

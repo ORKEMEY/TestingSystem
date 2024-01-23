@@ -108,7 +108,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.answersSub = this.variantOfAnswerService.dataVariantsOfAnswer$.subscribe(
+    this.answersSub = this.variantOfAnswerService.value$.subscribe(
       (data: VariantOfAnswer[] | null) => {
         this.answers = data;
         this.isLoading = false;

@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import ItemService from '../utils/item.service';
 import VariantOfAnswer from '../models/variant-of-answer.model';
 
 @Injectable({ providedIn: 'root' })
-export default class VariantOfAnswerService {
-  private dataVariantsOfAnswer: BehaviorSubject<VariantOfAnswer[] | null>;
-
-  public dataVariantsOfAnswer$: Observable<VariantOfAnswer[] | null>;
-
+export default class VariantOfAnswerService extends ItemService<VariantOfAnswer> {
   constructor(private http: HttpClient) {
-    this.dataVariantsOfAnswer = new BehaviorSubject<VariantOfAnswer[] | null>(null);
-    this.dataVariantsOfAnswer$ = this.dataVariantsOfAnswer.asObservable();
+    super();
   }
 
   public getById(id: number, observer?: Observer<VariantOfAnswer>) {
@@ -37,10 +33,10 @@ export default class VariantOfAnswerService {
       .get('api/Answers')
       .pipe(map((data) => data as VariantOfAnswer[]))
       .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
+        next: (data: VariantOfAnswer[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataVariantsOfAnswer.next(null);
+          this.subject.next(null);
         },
       });
   }
@@ -50,10 +46,10 @@ export default class VariantOfAnswerService {
       .get(`api/Answers/search/name?name=${name}`)
       .pipe(map((data) => data as VariantOfAnswer[]))
       .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
+        next: (data: VariantOfAnswer[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataVariantsOfAnswer.next(null);
+          this.subject.next(null);
         },
       });
   }
@@ -63,10 +59,10 @@ export default class VariantOfAnswerService {
       .get(`api/Answers/search/questionId?questionId=${questionId}`)
       .pipe(map((data) => data as VariantOfAnswer[]))
       .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
+        next: (data: VariantOfAnswer[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataVariantsOfAnswer.next(null);
+          this.subject.next(null);
         },
       });
   }

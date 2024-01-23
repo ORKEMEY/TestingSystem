@@ -215,7 +215,7 @@ export default class TestComponent extends Paginator<Test> {
 
   private loadTest() {
     if (this.TestId !== 0) {
-      this.testService.getById(this.TestId, {
+      this.testService.getById(this.TestId).subscribe({
         next: (item) => {
           this.Test = item;
           this.setTestVariant();
