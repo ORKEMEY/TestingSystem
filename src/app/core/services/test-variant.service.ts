@@ -1,39 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observer } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import ItemService from '../utils/item.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import ItemService from './item.service';
 import TestVariant from '../models/test-variant.model';
 
 @Injectable({ providedIn: 'root' })
 export default class TestVariantService extends ItemService<TestVariant> {
-  constructor(private http: HttpClient) {
-    super();
+  public constructor(http: HttpClient) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<TestVariant>) {
-    this.http
-      .get(`api/TestVariants/${id}`)
-      .pipe(map((data) => data as TestVariant))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<TestVariant> {
+    return this.get<TestVariant>(`api/TestVariants/${id}`);
   }
 
   public refreshTestVariants() {
     this.loading.value = true;
-    this.http
-      .get('api/TestVariants')
+    this.get<TestVariant[]>('api/TestVariants')
       .pipe(
-        map((data) => data as TestVariant[]),
         tap(() => {
           this.loading.value = false;
         }),
@@ -49,10 +34,8 @@ export default class TestVariantService extends ItemService<TestVariant> {
 
   public searchTestVariantsByTestId(id: number) {
     this.loading.value = true;
-    this.http
-      .get(`api/TestVariants/search?testId=${id}`)
+    this.get<TestVariant[]>(`api/TestVariants/search?testId=${id}`)
       .pipe(
-        map((data) => data as TestVariant[]),
         tap(() => {
           this.loading.value = false;
         }),
@@ -66,81 +49,29 @@ export default class TestVariantService extends ItemService<TestVariant> {
       });
   }
 
-  public postTestVariant(testVariant: TestVariant, observer?: Observer<number>) {
-    this.http.post('api/TestVariants', testVariant).subscribe({
-      next: (id) => observer?.next?.(id as number),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public postTestVariant(testVariant: TestVariant): Observable<number> {
+    return this.post<number>('api/TestVariants', testVariant);
   }
 
   public postQuestionToTestVariant(
     testVariantId: number,
     questionId: number,
-    observer?: Observer<void>,
-  ) {
-    this.http.post(`api/TestVariants/${testVariantId}/${questionId}`, null).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  ): Observable<void | Object> {
+    return this.post<void | Object>(`api/TestVariants/${testVariantId}/${questionId}`, null);
   }
 
-  public putTestVariant(testVariant: TestVariant, observer?: Observer<void>) {
-    this.http.put('api/TestVariants', testVariant).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public putTestVariant(testVariant: TestVariant): Observable<void | Object> {
+    return this.put('api/TestVariants', testVariant);
   }
 
-  public DeleteQuestionFromTestVariant(
+  public deleteQuestionFromTestVariant(
     testVariantId: number,
     questionId: number,
-    observer?: Observer<void>,
-  ) {
-    this.http.put(`api/TestVariants/${testVariantId}/${questionId}`, null).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  ): Observable<void | Object> {
+    return this.put(`api/TestVariants/${testVariantId}/${questionId}`, null);
   }
 
-  public async DeleteTestVariantAsync(testVariantId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/TestVariants/${testVariantId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public deleteTestVariant(testVariantId: number): Observable<void | Object> {
+    return this.delete(`api/TestVariants/${testVariantId}`);
   }
 }

@@ -1,101 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
-import ItemService from '../utils/item.service';
+import { Observable } from 'rxjs';
+import ItemService from './item.service';
 import Log from '../models/log.model';
 
 @Injectable({ providedIn: 'root' })
 export default class LogService extends ItemService<Log> {
-  constructor(private http: HttpClient) {
-    super();
+  public constructor(http: HttpClient) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<Log>) {
-    this.http
-      .get(`api/Logs/${id}`)
-      .pipe(map((data) => data as Log))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<Log> {
+    return this.get<Log>(`api/Logs/${id}`);
   }
 
   public refreshLogs() {
-    this.http
-      .get('api/Logs')
-      .pipe(map((data) => data as Log[]))
-      .subscribe({
-        next: (data: Log[]) => this.subject.next(data),
-        error: (err) => {
-          console.error(err);
-          this.subject.next(null);
-        },
-      });
-  }
-
-  public searchLogsByTestId(testId: number, observer?: Observer<void>) {
-    this.http
-      .get(`api/Logs/search?testId=${testId}`)
-      .pipe(map((data) => data as Log[]))
-      .subscribe({
-        next: (data: Log[]) => {
-          this.subject.next(data);
-          observer?.next?.();
-        },
-        error: (err) => {
-          console.error(err);
-          this.subject.next(null);
-        },
-      });
-  }
-
-  public postLog(log: Log, observer?: Observer<number>) {
-    this.http.post('api/Logs', log).subscribe({
-      next: (id) => observer?.next?.(id as number),
+    this.get<Log[]>('api/Logs').subscribe({
+      next: (data: Log[]) => this.subject.next(data),
       error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
+        console.error(err);
+        this.subject.next(null);
       },
-      complete: () => observer?.complete?.(),
     });
   }
 
-  public putModel(log: Log, observer?: Observer<void>) {
-    this.http.put('api/Logs', log).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
+  public searchLogsByTestId(testId: number) {
+    this.get<Log[]>(`api/Logs/search?testId=${testId}`).subscribe({
+      next: (data: Log[]) => {
+        this.subject.next(data);
       },
-      complete: () => observer?.complete?.(),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
     });
   }
 
-  public async DeleteModelTypeAsync(logId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Logs/${logId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public postLog(log: Log): Observable<number> {
+    return this.post<number>('api/Logs', log);
+  }
+
+  public putModel(log: Log): Observable<void | Object> {
+    return this.put('api/Logs', log);
+  }
+
+  public deleteModelType(logId: number): Observable<void | Object> {
+    return this.delete(`api/Logs/${logId}`);
   }
 }

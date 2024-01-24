@@ -33,7 +33,7 @@ export default class ResultComponent {
 
   private loadLog() {
     if (this.LogId !== 0) {
-      this.logService.getById(this.LogId, {
+      this.logService.getById(this.LogId).subscribe({
         next: (item) => {
           this.Log = item;
         },

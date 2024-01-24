@@ -7,9 +7,10 @@ import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
+import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
+import LoadingState from '../../../shared/utils/loading-state';
 // import Answer from '../../../core/models/variant-of-answer.model';
 // import QuestionType from '../../../core/models/question-type.model';
-import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 
 @Component({
   selector: 'questions-list-component',
@@ -29,6 +30,8 @@ export default class QuestionsListComponent
   public searchLine: string | null;
 
   private testVar: TestVariant = null;
+
+  loadingState: LoadingState = new LoadingState(true);
 
   @Input()
   public set testVariant(testVar: TestVariant) {
@@ -91,9 +94,11 @@ export default class QuestionsListComponent
   ngOnInit(): void {
     this.questionsSub = this.questionService.value$.subscribe((data: Question[] | null) => {
       this.questions = data;
+      this.loadingState.stopLoading();
       this.toFirstPage();
       this.checkCollection();
     });
+    this.loadingState.startLoading();
     this.questionService.searchQuestionsByTestVarId(this.testVariantId);
   }
 
@@ -102,18 +107,14 @@ export default class QuestionsListComponent
   }
 
   deleteItem(question: Question) {
-    this.questionService.DeleteQuestionFromTestVariant(
-      this.testVariant.id,
-      question.id as number,
-      {
+    this.questionService
+      .deleteQuestionFromTestVariant(this.testVariant.id, question.id as number)
+      .subscribe({
         next: () => {
           this.questionService.searchQuestionsByTestVarId(this.testVariantId);
         },
         error: (errMsg: string) => console.log(errMsg),
-      } as Observer<void>,
-    );
-    /* const index = this.questions.indexOf(question);
-    this.questions.splice(index, 1); */
+      } as Observer<void>);
   }
 
   addQuestion() {
@@ -128,20 +129,22 @@ export default class QuestionsListComponent
 
   onSearchLineEmpty() {
     if (this.searchLine === '') {
-      this.questionService.searchQuestionsByTestVarId(this.testVariantId);
+      this.questions = this.questionService.value;
     }
   }
 
   searchItems() {
     if (this.searchLine !== '' && this.searchLine !== undefined) {
-      this.questions = this.questions.filter((el) => el.query.includes(this.searchLine.trim()));
+      this.questions = this.questionService.value?.filter((el) =>
+        el.query.includes(this.searchLine.trim()),
+      );
     } else {
       console.log('searching line is empty');
     }
   }
 
   private checkCollection() {
-    if (this.questions === null || this.questions.length === 0) {
+    if ((this.questions === null || this.questions.length === 0) && !this.loadingState) {
       this.AlertBox.Alert('No question was found!');
     } else {
       this.AlertBox.hideAlert();

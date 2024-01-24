@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observer, timer, takeWhile } from 'rxjs';
+import { Observer, tap } from 'rxjs';
 import TestService from '../../../core/services/test.service';
 import TestCheckService from '../shared/test-check.service';
 import Test from '../../../core/models/test.model';
@@ -8,6 +8,8 @@ import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
 import Log from '../../../core/models/log.model';
 import Paginator from '../../../shared/paginator';
+import LoadingState from '../../../shared/utils/loading-state';
+import Scroller from '../../../shared/utils/scroller';
 
 // import Answer from '../../../core/models/variant-of-answer.model';
 // import QuestionType from '../../../core/models/question-type.model';
@@ -78,6 +80,10 @@ export default class TestComponent extends Paginator<Test> {
     return this.TestVariant?.questions;
   }
 
+  loadingState: LoadingState = new LoadingState(true);
+
+  scroller: Scroller = new Scroller();
+
   private TestId: number = 0;
 
   private Test: Test = null;
@@ -104,55 +110,58 @@ export default class TestComponent extends Paginator<Test> {
       this.loadTest();
     });
 
-    /* this.Test = new Test(
-      'test name',
-      '10:10:10',
-      '2023-06-01T13:45:30',
-      '2024-07-01T13:45:30',
-      null,
-      'description',
-    );
+    /* setTimeout(() => {
+      this.Test = new Test(
+        'test name',
+        '10:10:10',
+        '2023-06-01T13:45:30',
+        '2024-07-01T13:45:30',
+        null,
+        'description',
+      );
 
-    const qTypes = [
-      new QuestionType('Single Choise'),
-      new QuestionType('True / False'),
-      new QuestionType('Short Answer'),
-    ];
+      const qTypes = [
+        new QuestionType('Single Choise'),
+        new QuestionType('True / False'),
+        new QuestionType('Short Answer'),
+      ];
 
-    const answers = [
-      new Answer('answer 1', 1),
-      new Answer('answer 2', 2),
-      new Answer('answer 3', 3),
-      new Answer('answer 4', 4),
-      new Answer('answer 5', 5),
-    ];
+      const answers = [
+        new Answer('answer 1', 1),
+        new Answer('answer 2', 2),
+        new Answer('answer 3', 3),
+        new Answer('answer 4', 4),
+        new Answer('answer 5', 5),
+      ];
 
-    answers.forEach((el, ind) => {
-      el.isCorrect = !!(ind % 2);
-      el.id = ind;
-    });
+      answers.forEach((el, ind) => {
+        el.isCorrect = !!(ind % 2);
+        el.id = ind;
+      });
 
-    this.TestVariant = new TestVariant(1, 1);
+      this.TestVariant = new TestVariant(1, 1);
 
-    this.TestVariant.questions = [
-      new Question('query1', answers.slice(0, 2)),
-      new Question('query2', answers.slice(1, 3)),
-      new Question('query3', answers.slice(2, 4)),
-      new Question('query4', answers.slice(3)),
-      new Question('query1', answers.slice(0, 2)),
-      new Question('query2', answers.slice(1, 3)),
-      new Question('query3', answers.slice(2, 4)),
-      new Question('query1', answers.slice(0, 2)),
-      new Question('query2', answers.slice(1, 3)),
-      new Question('query3', answers.slice(2, 4)),
-    ];
+      this.TestVariant.questions = [
+        new Question('query1', answers.slice(0, 2)),
+        new Question('query2', answers.slice(1, 3)),
+        new Question('query3', answers.slice(2, 4)),
+        new Question('query4', answers.slice(3)),
+        new Question('query1', answers.slice(0, 2)),
+        new Question('query2', answers.slice(1, 3)),
+        new Question('query3', answers.slice(2, 4)),
+        new Question('query1', answers.slice(0, 2)),
+        new Question('query2', answers.slice(1, 3)),
+        new Question('query3', answers.slice(2, 4)),
+      ];
 
-    this.TestVariant.questions.forEach((q, ind) => {
-      q.questionType = qTypes[ind % 3];
-      q.id = ind;
-    });
+      this.TestVariant.questions.forEach((q, ind) => {
+        q.questionType = qTypes[ind % 3];
+        q.id = ind;
+      });
 
-    this.Test.testVariants = [this.TestVariant]; */
+      this.Test.testVariants = [this.TestVariant];
+      this.loadingState.stopLoading();
+    }, 3000); */
   }
 
   startTest() {
@@ -177,10 +186,15 @@ export default class TestComponent extends Paginator<Test> {
     const expiredTimeSpan = this.getDurationStr(expiredTimeSec);
     const log = new Log(expiredTimeSpan, new Date().toISOString());
     this.isTestRunning = false;
+    this.loadingState.startLoading();
     this.testCheckService.submit(this.Test, this.TestVariant, log, {
       next: (createdLog) => {
-        console.log(createdLog);
+        this.loadingState.stopLoading();
         this.router.navigate(['/menus/menu/testing/test/result', createdLog.id]);
+      },
+      error: (err) => {
+        this.loadingState.stopLoading();
+        console.error(err);
       },
     } as Observer<Log>);
   }
@@ -215,12 +229,21 @@ export default class TestComponent extends Paginator<Test> {
 
   private loadTest() {
     if (this.TestId !== 0) {
-      this.testService.getById(this.TestId).subscribe({
-        next: (item) => {
-          this.Test = item;
-          this.setTestVariant();
-        },
-      } as Observer<Test>);
+      this.loadingState.startLoading();
+      this.testService
+        .getById(this.TestId)
+        .pipe(
+          tap({
+            next: this.loadingState.stopLoading,
+            error: this.loadingState.stopLoading,
+          }),
+        )
+        .subscribe({
+          next: (item) => {
+            this.Test = item;
+            this.setTestVariant();
+          },
+        } as Observer<Test>);
     } else {
       this.Test = null;
     }
@@ -253,29 +276,13 @@ export default class TestComponent extends Paginator<Test> {
 
   public toPrevPage() {
     if (this.previous()) {
-      this.scrollToTop(2);
+      this.scroller.scrollToTop(2);
     }
   }
 
   public toNextPage() {
     if (this.next()) {
-      this.scrollToTop(2);
+      this.scroller.scrollToTop(2);
     }
-  }
-
-  scrollToTop(acceleration: number = 1) {
-    let scrollAvailable = true;
-
-    timer(0, 1)
-      .pipe(takeWhile(() => scrollAvailable))
-      .subscribe((e) => {
-        if (window.pageYOffset >= 0) {
-          window.scrollTo(0, window.pageYOffset - e * acceleration);
-        }
-
-        if (window.pageYOffset === 0) {
-          scrollAvailable = false;
-        }
-      });
   }
 }

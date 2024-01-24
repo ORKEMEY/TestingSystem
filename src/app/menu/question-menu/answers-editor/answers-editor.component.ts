@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { fadeInOnEnterAnimation } from 'angular-animations';
-import { Observer, Subscription } from 'rxjs';
+import { Observer, Subscription, tap } from 'rxjs';
 import AnswerFormService from '../shared/answer-form.service';
 import VariantOfAnswerService from '../../../core/services/variant-of-answer.service';
 import VariantOfAnswer from '../../../core/models/variant-of-answer.model';
@@ -11,6 +11,7 @@ import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
+import LoadingState from '../../../shared/utils/loading-state';
 
 @Component({
   selector: 'answers-editor-component',
@@ -29,23 +30,15 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
 
   InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
+  loadingState: LoadingState = new LoadingState(true);
+
   private questionId: number = 0;
 
   public get form(): FormGroup {
     return this.answerEditorFormService.form;
   }
 
-  isLoading: boolean = true;
-
-  private question: Question = null;
-
-  public get Question(): Question {
-    return this.question;
-  }
-
-  public set Question(item: Question) {
-    this.question = item;
-  }
+  public Question: Question = null;
 
   public answers: VariantOfAnswer[] | null;
 
@@ -60,6 +53,17 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
+    this.answersSub = this.variantOfAnswerService.value$
+      .pipe(
+        tap({
+          next: this.loadingState.stopLoading,
+          error: this.loadingState.stopLoading,
+        }),
+      )
+      .subscribe((data: VariantOfAnswer[] | null) => {
+        this.answers = data;
+        this.checkCollection();
+      });
     this.activatedRoute.parent.params.subscribe((params) => {
       this.questionId = Number.parseInt(params.id, 10);
       this.loadQuestion().then(() => {
@@ -85,17 +89,25 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   private loadQuestion(): Promise<void> {
     return new Promise((res, rej) => {
       if (this.questionId !== 0) {
-        this.isLoading = true;
-        this.questionService.getById(this.questionId, {
-          next: (item) => {
-            this.Question = item;
-            res();
-          },
-          error: (err) => {
-            this.WarningBox.Warn(err);
-            rej();
-          },
-        } as Observer<Question>);
+        this.loadingState.startLoading();
+        this.questionService
+          .getById(this.questionId)
+          .pipe(
+            tap({
+              next: this.loadingState.stopLoading,
+              error: this.loadingState.stopLoading,
+            }),
+          )
+          .subscribe({
+            next: (item) => {
+              this.Question = item;
+              res();
+            },
+            error: (err) => {
+              this.WarningBox.Warn(err);
+              rej();
+            },
+          } as Observer<Question>);
       } else {
         this.Question = null;
         rej();
@@ -103,23 +115,17 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadAnswer(id: number, observer: Observer<VariantOfAnswer>) {
-    this.variantOfAnswerService.getById(id, observer);
-  }
-
   ngOnInit(): void {
-    this.answersSub = this.variantOfAnswerService.value$.subscribe(
-      (data: VariantOfAnswer[] | null) => {
-        this.answers = data;
-        this.isLoading = false;
-        this.checkCollection();
-      },
-    );
+    this.loadingState.startLoading();
     this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
   }
 
   ngOnDestroy(): void {
-    this.answersSub.unsubscribe();
+    this.answersSub?.unsubscribe();
+  }
+
+  private loadAnswer(id: number, observer: Observer<VariantOfAnswer>) {
+    this.variantOfAnswerService.getById(id).subscribe(observer);
   }
 
   onAnswerChange() {
@@ -140,16 +146,13 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       this.WarningBox.Warn("Last answer cann't be deleted");
       return;
     }
-    this.variantOfAnswerService.DeleteVariantOfAnswerAsync(
-      variantOfAnswer.id as number,
-      {
-        next: () => {
-          this.InfoBox.Info('Answer succesfully deleted!');
-          this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
-        },
-        error: (errMsg: string) => console.log(errMsg),
-      } as Observer<void>,
-    );
+    this.variantOfAnswerService.deleteVariantOfAnswer(variantOfAnswer.id as number).subscribe({
+      next: () => {
+        this.InfoBox.Info('Answer succesfully deleted!');
+        this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
+      },
+      error: (errMsg: string) => console.log(errMsg),
+    } as Observer<void>);
     /* const index = this.answers.indexOf(variantOfAnswer);
     this.answers.splice(index, 1); */
   }
@@ -203,7 +206,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
   }
 
   private checkCollection() {
-    if (this.answers === null || this.answers.length === 0) {
+    if ((this.answers === null || this.answers.length === 0) && !this.loadingState.value) {
       this.ListAlertBox.Alert('No answer was found!');
     } else {
       this.ListAlertBox.hideAlert();

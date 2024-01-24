@@ -1,98 +1,42 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
-import ItemService from '../utils/item.service';
+import { Observable } from 'rxjs';
+import ItemService from './item.service';
 import Model from '../models/model.model';
 
 @Injectable({ providedIn: 'root' })
 export default class ModelService extends ItemService<Model> {
-  constructor(private http: HttpClient) {
-    super();
+  public constructor(http: HttpClient) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<Model>) {
-    this.http
-      .get(`api/Models/${id}`)
-      .pipe(map((data) => data as Model))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<Model> {
+    return this.get<Model>(`api/Models/${id}`);
   }
 
   public refreshModels() {
-    this.http
-      .get('api/Models')
-      .pipe(map((data) => data as Model[]))
-      .subscribe({
-        next: (data: Model[]) => this.subject.next(data),
-        error: (err) => {
-          console.error(err);
-          this.subject.next(null);
-        },
-      });
-  }
-
-  public searchModelsByName(name: string, observer?: Observer<Model>) {
-    this.http
-      .get(`api/Models/search?name=${name}`)
-      .pipe(map((data) => data as Model))
-      .subscribe({
-        next: (data: Model) => observer?.next?.(data),
-        error: (err) => {
-          console.error(err);
-          observer?.error?.(err);
-        },
-      });
-  }
-
-  public postModel(model: Model, observer?: Observer<number>) {
-    this.http.post('api/Models', model).subscribe({
-      next: (id) => observer?.next?.(id as number),
+    this.get<Model[]>('api/Models').subscribe({
+      next: (data: Model[]) => this.subject.next(data),
       error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
+        console.error(err);
+        this.subject.next(null);
       },
-      complete: () => observer?.complete?.(),
     });
   }
 
-  public putModel(model: Model, observer?: Observer<void>) {
-    this.http.put('api/Models', model).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public searchModelByName(name: string): Observable<Model> {
+    return this.get<Model>(`api/Models/search?name=${name}`);
   }
 
-  public async DeleteModelTypeAsync(modelId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Models/${modelId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public postModel(model: Model): Observable<number> {
+    return this.post<number>('api/Models', model);
+  }
+
+  public putModel(model: Model): Observable<void | Object> {
+    return this.put('api/Models', model);
+  }
+
+  public deleteModelType(modelId: number): Observable<void | Object> {
+    return this.delete(`api/Models/${modelId}`);
   }
 }

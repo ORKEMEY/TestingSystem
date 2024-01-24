@@ -1,115 +1,63 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
-import ItemService from '../utils/item.service';
+import { Observable } from 'rxjs';
+import ItemService from './item.service';
 import TestVariantService from './test-variant.service';
 import Question from '../models/question.model';
 
 @Injectable({ providedIn: 'root' })
 export default class QuestionService extends ItemService<Question> {
-  constructor(private http: HttpClient, private testVariantService: TestVariantService) {
-    super();
+  public constructor(http: HttpClient, private testVariantService: TestVariantService) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<Question>) {
-    this.http
-      .get(`api/Questions/${id}`)
-      .pipe(map((data) => data as Question))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<Question> {
+    return this.get<Question>(`api/Questions/${id}`);
   }
 
   public refreshQuestions() {
-    this.http
-      .get('api/Questions')
-      .pipe(map((data) => data as Question[]))
-      .subscribe({
-        next: (data: Question[]) => this.subject.next(data),
-        error: (err) => {
-          console.error(err);
-          this.subject.next(null);
-        },
-      });
+    this.get<Question[]>('api/Questions').subscribe({
+      next: (data: Question[]) => this.subject.next(data),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
+    });
   }
 
   public searchQuestionsByTestVarId(id: number) {
-    this.http
-      .get(`api/Questions/search?testVariantId=${id}`)
-      .pipe(map((data) => data as Question[]))
-      .subscribe({
-        next: (data: Question[]) => this.subject.next(data),
-        error: (err) => {
-          console.error(err);
-          this.subject.next(null);
-        },
-      });
+    this.get<Question[]>(`api/Questions/search?testVariantId=${id}`).subscribe({
+      next: (data: Question[]) => this.subject.next(data),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
+    });
   }
 
-  public postQuestion(question: Question, observer?: Observer<number>) {
-    this.http.post('api/Questions', question).subscribe({
-      next: (id) => observer?.next?.(id as number),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public postQuestion(question: Question): Observable<number> {
+    return this.post<number>('api/Questions', question);
   }
 
   public postQuestionToTestVariant(
     testVariantId: number,
     questionId: number,
-    observer?: Observer<void>,
-  ) {
-    this.testVariantService.postQuestionToTestVariant(testVariantId, questionId, observer);
+  ): Observable<void | Object> {
+    return this.testVariantService.postQuestionToTestVariant(testVariantId, questionId);
   }
 
-  public putQuestion(question: Question, observer?: Observer<void>) {
-    this.http.put('api/Questions', question).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public putQuestion(question: Question): Observable<void | Object> {
+    return this.put('api/Questions', question);
   }
 
-  public DeleteQuestionFromTestVariant(
+  public deleteQuestionFromTestVariant(
     testVariantId: number,
     questionId: number,
-    observer?: Observer<void>,
-  ) {
-    this.testVariantService.DeleteQuestionFromTestVariant(testVariantId, questionId, observer);
+  ): Observable<void | Object> {
+    return this.testVariantService.deleteQuestionFromTestVariant(testVariantId, questionId);
   }
 
-  public async DeleteQuestionAsync(questiontId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Questions/${questiontId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public deleteQuestion(questiontId: number): Observable<void | Object> {
+    return this.delete(`api/Questions/${questiontId}`);
   }
 }

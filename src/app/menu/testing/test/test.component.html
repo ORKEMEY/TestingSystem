@@ -1,14 +1,24 @@
 <div class="page">
 
-    <div *ngIf="isTestRunning" class="header ">
-        <div class="h-center">
-            <h4 class="timer">{{TimerStr}}</h4>
+    <div class="header">
+        <div *ngIf="isTestRunning">
+            <div class="h-center">
+                <h4 class="timer">{{TimerStr}}</h4>
+            </div>
+            <hr />
         </div>
-        <hr />
+
+        <div *ngIf="loadingState.value" class="loading">
+            <div class="spinner-border text-primary " role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
     </div>
 
+
     <div class="scroll">
-        <div (click)="scrollToTop(2)" class="scroll-container" *ngIf="isTestRunning">
+        <div (click)="scroller.scrollToTop(2)" class="scroll-container" *ngIf="isTestRunning">
             <div class="sticky-bot scroll-btn">
                 <i class="fa-solid fa-angle-up"></i> Up
             </div>
@@ -27,7 +37,7 @@
         </div>
         <ng-template #preview>
 
-            <div class="item-container">
+            <div *ngIf="!loadingState.value" class="item-container">
                 <div class="item grid">
 
                     <div class="test-name ">

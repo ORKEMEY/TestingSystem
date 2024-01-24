@@ -59,7 +59,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="!itemsPaginated && isLoading" class="loading">
+            <div *ngIf="!itemsPaginated && loadingState.value" class="loading">
                 <div class="spinner-border text-primary " role="status">
                     <span class="sr-only">Loading...</span>
                 </div>

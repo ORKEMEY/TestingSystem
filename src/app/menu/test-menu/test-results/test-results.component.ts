@@ -8,7 +8,7 @@ import TestResultCalc from '../../../core/utils/test-result-calc';
 import Paginator from '../../../shared/paginator';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
-
+import LoadingState from '../../../shared/utils/loading-state';
 // import Customer from '../../../core/models/customer.model';
 
 @Component({
@@ -35,7 +35,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
 
   WarningBox: WarningBoxHandler = new WarningBoxHandler();
 
-  isLoading: boolean = true;
+  loadingState: LoadingState = new LoadingState(true);
 
   private id: number = 0;
 
@@ -53,11 +53,11 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
   ngOnInit(): void {
     this.logsSub = this.logService.value$.subscribe((data: Log[] | null) => {
       this.logs = data;
-      this.isLoading = false;
+      this.loadingState.stopLoading();
       this.toFirstPage();
       this.checkCollection();
     });
-    this.isLoading = true;
+    this.loadingState.startLoading();
     this.logService.searchLogsByTestId(this.id);
 
     /* setTimeout(() => {
@@ -113,7 +113,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
   }
 
   private checkCollection() {
-    if (this.logs === null || this.logs.length === 0) {
+    if ((this.logs === null || this.logs.length === 0) && !this.loadingState.value) {
       this.AlertBox.Alert('No test result was found!');
     } else {
       this.AlertBox.hideAlert();

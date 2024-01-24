@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fadeInOnEnterAnimation } from 'angular-animations';
-import { Observer, Subscription, timer, takeWhile } from 'rxjs';
+import { Observer, Subscription } from 'rxjs';
 import TestVariantService from '../../../core/services/test-variant.service';
 import Paginator from '../../../shared/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
+import LoadingState from '../../../shared/utils/loading-state';
+import Scroller from '../../../shared/utils/scroller';
 
 @Component({
   selector: 'questions-manager-component',
@@ -29,6 +31,10 @@ export default class QuestionsManagerComponent
     return this.testVariants;
   }
 
+  loadingState: LoadingState = new LoadingState(true);
+
+  scroller: Scroller = new Scroller();
+
   constructor(
     private testVariantService: TestVariantService,
     private activatedRoute: ActivatedRoute,
@@ -44,6 +50,7 @@ export default class QuestionsManagerComponent
     this.testVariantsSub = this.testVariantService.value$.subscribe(
       (data: TestVariant[] | null) => {
         this.testVariants = data;
+        this.loadingState.stopLoading();
         this.toFirstPage();
         this.checkCollection();
       },
@@ -53,6 +60,7 @@ export default class QuestionsManagerComponent
 
   loadTestVariants() {
     if (this.testId !== 0) {
+      this.loadingState.startLoading();
       this.testVariantService.searchTestVariantsByTestId(this.testId);
     }
   }
@@ -62,19 +70,19 @@ export default class QuestionsManagerComponent
   }
 
   deleteItem(testVariant: TestVariant) {
-    this.testVariantService.DeleteTestVariantAsync(
-      testVariant.id as number,
-      {
-        next: () => {
-          this.testVariantService.searchTestVariantsByTestId(this.testId);
-        },
-        error: (errMsg: string) => console.log(errMsg),
-      } as Observer<void>,
-    );
+    this.testVariantService.deleteTestVariant(testVariant.id as number).subscribe({
+      next: () => {
+        this.testVariantService.searchTestVariantsByTestId(this.testId);
+      },
+      error: (errMsg: string) => console.log(errMsg),
+    } as Observer<void>);
   }
 
   private checkCollection() {
-    if (this.testVariants === null || this.testVariants.length === 0) {
+    if (
+      (this.testVariants === null || this.testVariants.length === 0) &&
+      !this.loadingState.value
+    ) {
       this.AlertBox.Alert('No test variant found!');
     } else {
       this.AlertBox.hideAlert();
@@ -83,29 +91,13 @@ export default class QuestionsManagerComponent
 
   public toPrevPage() {
     if (this.previous()) {
-      this.scrollToTop(2);
+      this.scroller.scrollToTop(2);
     }
   }
 
   public toNextPage() {
     if (this.next()) {
-      this.scrollToTop(2);
+      this.scroller.scrollToTop(2);
     }
-  }
-
-  scrollToTop(acceleration: number = 1) {
-    let scrollAvailable = true;
-
-    timer(0, 1)
-      .pipe(takeWhile(() => scrollAvailable))
-      .subscribe((e) => {
-        if (window.pageYOffset >= 0) {
-          window.scrollTo(0, window.pageYOffset - e * acceleration);
-        }
-
-        if (window.pageYOffset === 0) {
-          scrollAvailable = false;
-        }
-      });
   }
 }
