@@ -56,8 +56,8 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
     this.answersSub = this.variantOfAnswerService.value$
       .pipe(
         tap({
-          next: this.loadingState.stopLoading,
-          error: this.loadingState.stopLoading,
+          next: () => this.loadingState.stopLoading(),
+          error: () => this.loadingState.stopLoading(),
         }),
       )
       .subscribe((data: VariantOfAnswer[] | null) => {
@@ -66,9 +66,11 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       });
     this.activatedRoute.parent.params.subscribe((params) => {
       this.questionId = Number.parseInt(params.id, 10);
-      this.loadQuestion().then(() => {
-        this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
-      });
+      if (this.questionId !== 0) {
+        this.loadQuestion().then(() => {
+          this.variantOfAnswerService.searchVariantsOfAnswerByQuestionId(this.questionId);
+        });
+      }
     });
 
     /* setTimeout(() => {
@@ -94,8 +96,8 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
           .getById(this.questionId)
           .pipe(
             tap({
-              next: this.loadingState.stopLoading,
-              error: this.loadingState.stopLoading,
+              next: () => this.loadingState.stopLoading(),
+              error: () => this.loadingState.stopLoading(),
             }),
           )
           .subscribe({

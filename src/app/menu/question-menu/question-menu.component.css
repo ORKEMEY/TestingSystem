@@ -1,15 +1,37 @@
 .navigation {
-    display: flex;
-    justify-content: center;
+  display: grid;
 
-    margin: 0;
-    margin-bottom: 0.5em;
+  grid-template-areas: 'back nav .';
+  grid-template-columns: 1fr 5fr 1fr;
+
+  margin: 0;
+  margin-bottom: 0.5em;
 }
 
-.navigation button:first-child {
-    border-top-left-radius: 0;
+.back {
+  grid-area: back;
+  padding: 0;
 }
 
-.navigation button:last-child {
-    border-top-right-radius: 0;
+.nav {
+  grid-area: nav;
+  margin: 0 1em;
+  padding: 0 15px;
+}
+
+button.back {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+
+  border-top: none;
+  border-left: none;
+}
+
+.nav button:first-child {
+  border-top-left-radius: 0;
+}
+
+.nav button:last-child {
+  border-top-right-radius: 0;
 }

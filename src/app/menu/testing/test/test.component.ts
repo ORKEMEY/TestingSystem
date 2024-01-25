@@ -234,8 +234,8 @@ export default class TestComponent extends Paginator<Test> {
         .getById(this.TestId)
         .pipe(
           tap({
-            next: this.loadingState.stopLoading,
-            error: this.loadingState.stopLoading,
+            next: () => this.loadingState.stopLoading(),
+            error: () => this.loadingState.stopLoading(),
           }),
         )
         .subscribe({

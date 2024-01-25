@@ -117,13 +117,18 @@ export default class QuestionsListComponent
       } as Observer<void>);
   }
 
+  memorizePath() {
+    localStorage.setItem('prev', this.router.url);
+  }
+
   addQuestion() {
     if (this.testVariantId === 0) {
-      this.WarningBox.Warn('Firstly create question!');
+      this.WarningBox.Warn('Firstly create test!');
       return;
     }
     this.questionAddingService.clear();
     this.questionAddingService.pushTestVariant(this.testVariantId);
+    this.memorizePath();
     this.router.navigate(['/menus/menu/questionmenu/question/0/settings']);
   }
 

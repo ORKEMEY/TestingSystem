@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { flipInXOnEnterAnimation, flipOutXOnLeaveAnimation } from 'angular-animations';
 import Question from '../../../core/models/question.model';
 
@@ -26,6 +27,8 @@ export default class QuestionsListItemComponent {
 
   @Output() deleteButtonPushed = new EventEmitter<Question>();
 
+  constructor(private router: Router) {}
+
   public delete() {
     this.deleteButtonPushed.emit(this.item);
   }
@@ -35,5 +38,9 @@ export default class QuestionsListItemComponent {
       return 'Query is not set';
     }
     return this.item.query;
+  }
+
+  memorizePath() {
+    localStorage.setItem('prev', this.router.url);
   }
 }
