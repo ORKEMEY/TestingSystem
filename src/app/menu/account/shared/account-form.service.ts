@@ -83,7 +83,7 @@ export default class AccountFormService {
     } else {
       const user = this.readFormVals();
       user.password = password || null;
-      this.userService.putCurrentUser(user, observer);
+      this.userService.putCurrentUser(user).subscribe(observer);
     }
   }
 
