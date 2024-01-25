@@ -40,5 +40,5 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
 
 .submit-btn-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }

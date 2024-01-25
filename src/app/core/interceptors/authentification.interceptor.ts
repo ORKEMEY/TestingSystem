@@ -8,8 +8,8 @@ import {
   HttpClient,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, Observer, Subject } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { mergeMap, retryWhen, catchError } from 'rxjs/operators';
 import CredentialsService from '../services/credentials.service';
 import UserService from '../services/user.service';
 
@@ -31,41 +31,47 @@ export default class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = this.setAccessToken(req);
 
-    return next.handle(authReq).pipe(
-      catchError((error) => {
-        const subj: Subject<HttpEvent<any>> = new Subject<HttpEvent<any>>();
+    let count = 1;
 
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          this.userService.refreshToken().subscribe({
-            next: () => {
-              this.http.request(authReq).subscribe({
-                next: (data) => subj.next(data),
-                error: (msg) => subj.error(msg),
-              });
-            },
-            error: (msg) => {
-              console.log(authReq);
-              subj.error(msg);
-            },
-          } as Observer<void>);
-        } else {
-          subj.error(error);
-        }
-        return subj.asObservable();
-      }),
-      tap({
-        error: (err) => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              this.router.navigate(['/users']);
-              console.error('Unauthorized');
-            } else if (err.status === 403) {
-              this.router.navigate(['/forbidden']);
-              console.error('Forbidden');
+    return next.handle(authReq).pipe(
+      retryWhen((errors) =>
+        errors.pipe(
+          mergeMap((error) => {
+            if (error instanceof HttpErrorResponse && error.status === 401 && count > 0) {
+              count -= 1;
+              return this.userService
+                .refreshToken()
+                .pipe(catchError(() => throwError(() => error)));
             }
-          }
-        },
+            return throwError(() => error);
+          }),
+        ),
+      ),
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse) {
+          if (this.check401(error)) return throwError(() => error);
+          this.check403(error);
+        }
+        return throwError(() => error);
       }),
     );
+  }
+
+  check401(error: HttpErrorResponse) {
+    if (error.status === 401) {
+      this.router.navigate(['/users']);
+      console.error('Unauthorized');
+      return true;
+    }
+    return false;
+  }
+
+  check403(error: HttpErrorResponse) {
+    if (error.status === 402) {
+      this.router.navigate(['/forbidden']);
+      console.error('Forbidden');
+      return true;
+    }
+    return false;
   }
 }
