@@ -1,15 +1,22 @@
 .navigation {
-    display: flex;
-    justify-content: center;
+  display: grid;
 
-    margin: 0;
-    margin-bottom: 0.5em;
+  grid-template-areas: '. nav .';
+  grid-template-columns: 1fr 4fr 1fr;
+
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+.nav {
+  grid-area: nav;
+  padding: 0 15px;
 }
 
 .navigation button:first-child {
-    border-top-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .navigation button:last-child {
-    border-top-right-radius: 0;
+  border-top-right-radius: 0;
 }

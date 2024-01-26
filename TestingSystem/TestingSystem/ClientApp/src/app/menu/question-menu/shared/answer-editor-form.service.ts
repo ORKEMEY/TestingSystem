@@ -32,7 +32,7 @@ export default class AnswerEditorFormService {
     } else {
       const answer = this.readFormVals();
       answer.questionId = questionId;
-      this.variantOfAnswerService.postVariantOfAnswer(answer, {
+      this.variantOfAnswerService.postVariantOfAnswer(answer).subscribe({
         next: (num) => {
           this.clearForm();
           observer.next(num);

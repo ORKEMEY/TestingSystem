@@ -61,7 +61,7 @@ export default class TestSettingsComponent {
 
   private loadTest() {
     if (this.id !== 0) {
-      this.testService.getOwnedById(this.id, {
+      this.testService.getOwnedById(this.id).subscribe({
         next: (item) => {
           this.Test = item;
         },

@@ -1,115 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import ItemService from './item.service';
 import VariantOfAnswer from '../models/variant-of-answer.model';
 
 @Injectable({ providedIn: 'root' })
-export default class VariantOfAnswerService {
-  private dataVariantsOfAnswer: BehaviorSubject<VariantOfAnswer[] | null>;
-
-  public dataVariantsOfAnswer$: Observable<VariantOfAnswer[] | null>;
-
-  constructor(private http: HttpClient) {
-    this.dataVariantsOfAnswer = new BehaviorSubject<VariantOfAnswer[] | null>(null);
-    this.dataVariantsOfAnswer$ = this.dataVariantsOfAnswer.asObservable();
+export default class VariantOfAnswerService extends ItemService<VariantOfAnswer> {
+  public constructor(http: HttpClient) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<VariantOfAnswer>) {
-    this.http
-      .get(`api/Answers/${id}`)
-      .pipe(map((data) => data as VariantOfAnswer))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<VariantOfAnswer> {
+    return this.get<VariantOfAnswer>(`api/Answers/${id}`);
   }
 
   public refreshAnswers() {
-    this.http
-      .get('api/Answers')
-      .pipe(map((data) => data as VariantOfAnswer[]))
-      .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
-        error: (err) => {
-          console.error(err);
-          this.dataVariantsOfAnswer.next(null);
-        },
-      });
+    this.get<VariantOfAnswer[]>('api/Answers').subscribe({
+      next: (data: VariantOfAnswer[]) => this.subject.next(data),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
+    });
   }
 
   public searchVariantsOfAnswerByQuestionName(name: string) {
-    this.http
-      .get(`api/Answers/search/name?name=${name}`)
-      .pipe(map((data) => data as VariantOfAnswer[]))
-      .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
-        error: (err) => {
-          console.error(err);
-          this.dataVariantsOfAnswer.next(null);
-        },
-      });
+    this.get<VariantOfAnswer[]>(`api/Answers/search/name?name=${name}`).subscribe({
+      next: (data: VariantOfAnswer[]) => this.subject.next(data),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
+    });
   }
 
   public searchVariantsOfAnswerByQuestionId(questionId: number) {
-    this.http
-      .get(`api/Answers/search/questionId?questionId=${questionId}`)
-      .pipe(map((data) => data as VariantOfAnswer[]))
-      .subscribe({
-        next: (data: VariantOfAnswer[]) => this.dataVariantsOfAnswer.next(data),
+    this.get<VariantOfAnswer[]>(`api/Answers/search/questionId?questionId=${questionId}`).subscribe(
+      {
+        next: (data: VariantOfAnswer[]) => this.subject.next(data),
         error: (err) => {
           console.error(err);
-          this.dataVariantsOfAnswer.next(null);
+          this.subject.next(null);
         },
-      });
+      },
+    );
   }
 
-  public postVariantOfAnswer(variantOfAnswer: VariantOfAnswer, observer?: Observer<number>) {
-    this.http.post('api/Answers', variantOfAnswer).subscribe({
-      next: (id) => observer?.next?.(id as number),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public postVariantOfAnswer(variantOfAnswer: VariantOfAnswer): Observable<number> {
+    return this.post<number>('api/Answers', variantOfAnswer);
   }
 
-  public putVariantOfAnswer(variantOfAnswer: VariantOfAnswer, observer?: Observer<void>) {
-    this.http.put('api/Answers', variantOfAnswer).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public putVariantOfAnswer(variantOfAnswer: VariantOfAnswer): Observable<void | Object> {
+    return this.put('api/Answers', variantOfAnswer);
   }
 
-  public async DeleteVariantOfAnswerAsync(variantOfAnswerId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Answers/${variantOfAnswerId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public deleteVariantOfAnswer(variantOfAnswerId: number): Observable<void | Object> {
+    return this.delete(`api/Answers/${variantOfAnswerId}`);
   }
 }

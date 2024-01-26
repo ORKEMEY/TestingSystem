@@ -153,14 +153,14 @@ export default class UserRegistrationService {
       user.surname = this.form.controls.Surname.value;
       user.eMail = this.form.controls.EMail.value;
 
-      this.userService.post(user, {
+      this.userService.post(user).subscribe({
         next: () => {
           observer?.next?.();
           this.router.navigate(['/menus']);
         },
         error: (msg) => observer?.error?.(msg),
         complete: () => observer?.complete?.(),
-      } as Observer<void>);
+      });
     }
   }
 }

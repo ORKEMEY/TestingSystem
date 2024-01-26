@@ -49,9 +49,9 @@ export default class UserLoginService {
     if (!this.form.valid) {
       throw new Error('submit on invalid form');
     } else {
-      this.userService.getToken(
-        new User(this.form.controls.Login.value, this.form.controls.Password.value),
-        {
+      this.userService
+        .getToken(new User(this.form.controls.Login.value, this.form.controls.Password.value))
+        .subscribe({
           next: () => {
             observer?.next?.();
             if (this.credentialsService.isAdmin()) {
@@ -62,8 +62,7 @@ export default class UserLoginService {
           },
           error: (msg) => observer?.error?.(msg),
           complete: () => observer?.complete?.(),
-        } as Observer<void>,
-      );
+        });
     }
   }
 }

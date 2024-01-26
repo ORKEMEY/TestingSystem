@@ -6,6 +6,7 @@ import Test from '../../../core/models/test.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
+import LoadingState from '../../../shared/utils/loading-state';
 
 @Component({
   selector: 'test-list-component',
@@ -29,7 +30,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   InfoBox: InfoBoxHandler = new InfoBoxHandler();
 
-  isLoading: boolean = true;
+  loadingState: LoadingState = new LoadingState(true);
 
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
@@ -62,13 +63,17 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   }
 
   ngOnInit(): void {
-    this.testsSub = this.testService.dataTests$.subscribe((data: Test[] | null) => {
+    this.testsSub = this.testService.value$.subscribe((data: Test[] | null) => {
       this.tests = data;
-      this.isLoading = false;
+      this.loadingState.stopLoading();
       this.toFirstPage();
       this.checkCollection();
     });
-    this.isLoading = true;
+    this.refreshTests();
+  }
+
+  refreshTests() {
+    this.loadingState.startLoading();
     this.testService.refreshOwnedTests();
   }
 
@@ -78,12 +83,13 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
 
   onSearchLineEmpty() {
     if (this.searchLine === '') {
-      this.testService.refreshOwnedTests();
+      this.refreshTests();
     }
   }
 
   searchItems() {
     if (this.searchLine !== '' && this.searchLine !== undefined) {
+      this.loadingState.startLoading();
       this.testService.searchOwnedTestsByName(this.searchLine.trim());
     } else {
       console.log('searching line is empty');
@@ -91,22 +97,19 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   }
 
   deleteItem(test: Test) {
-    this.testService.DeleteOwnedTestAsync(
-      test.id as number,
-      {
-        next: () => {
-          this.InfoBox.Info('Test succesfully deleted!');
-          this.testService.refreshOwnedTests();
-        },
-        error: (errMsg: string) => this.WarningBox.Warn(errMsg),
-      } as Observer<void>,
-    );
+    this.testService.deleteOwnedTest(test.id as number).subscribe({
+      next: () => {
+        this.InfoBox.Info('Test succesfully deleted!');
+        this.testService.refreshOwnedTests();
+      },
+      error: (errMsg: string) => this.WarningBox.Warn(errMsg),
+    } as Observer<void>);
     /* const index = this.tests.indexOf(test);
     this.tests.splice(index, 1); */
   }
 
   private checkCollection() {
-    if (this.tests === null || this.tests.length === 0) {
+    if ((this.tests === null || this.tests.length === 0) && !this.loadingState.value) {
       this.AlertBox.Alert('No tests found!');
     } else {
       this.AlertBox.hideAlert();

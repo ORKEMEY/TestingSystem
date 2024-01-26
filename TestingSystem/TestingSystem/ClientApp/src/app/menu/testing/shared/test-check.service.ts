@@ -60,7 +60,7 @@ export default class TestCheckService {
     const sendTest: Test = new Test();
     Object.assign(sendTest, test);
     sendTest.testVariants = [testVar];
-    this.testService.checkTest(sendTest, log, observer);
+    this.testService.checkTest(sendTest, log).subscribe(observer);
 
     this.reset();
   }

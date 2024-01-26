@@ -1,145 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import ItemService from './item.service';
 import Test from '../models/test.model';
 import Log from '../models/log.model';
 
 @Injectable({ providedIn: 'root' })
-export default class TestService {
-  private dataTests: BehaviorSubject<Test[] | null>;
-
-  public dataTests$: Observable<Test[] | null>;
-
-  constructor(private http: HttpClient) {
-    this.dataTests = new BehaviorSubject<Test[] | null>(null);
-    this.dataTests$ = this.dataTests.asObservable();
+export default class TestService extends ItemService<Test> {
+  public constructor(http: HttpClient) {
+    super(http);
   }
 
-  public getById(id: number, observer?: Observer<Test>) {
-    this.http
-      .get(`api/Tests/${id}`)
-      .pipe(map((data) => data as Test))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            // observer?.error?.(err);
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getById(id: number): Observable<Test> {
+    return this.get(`api/Tests/${id}`);
   }
 
-  public getOwnedById(id: number, observer?: Observer<Test>) {
-    this.http
-      .get(`api/Tests/owned/${id}`)
-      .pipe(map((data) => data as Test))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            // observer?.error?.(err);
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getOwnedById(id: number): Observable<Test> {
+    return this.get(`api/Tests/owned/${id}`);
   }
 
   public refreshOwnedTests() {
-    this.http
-      .get('api/Tests/owned')
-      .pipe(map((data) => data as Test[]))
-      .subscribe({
-        next: (data: Test[]) => this.dataTests.next(data),
-        error: (err) => {
-          console.error(err);
-          this.dataTests.next(null);
-        },
-      });
+    this.get<Test[]>('api/Tests/owned').subscribe({
+      next: (data: Test[]) => this.subject.next(data),
+      error: (err) => {
+        console.error(err);
+        this.subject.next(null);
+      },
+    });
   }
 
   public searchOwnedTestsByName(name: string) {
-    this.http
-      .get(`api/Tests/owned/search?name=${name}`)
-      .pipe(map((data) => data as Test[]))
-      .subscribe({
-        next: (data: Test[]) => this.dataTests.next(data),
-        error: (err) => {
-          console.error(err);
-          this.dataTests.next(null);
-        },
-      });
-  }
-
-  public postOwnedTest(test: Test, observer?: Observer<number>) {
-    this.http.post('api/Tests/owned', test).subscribe({
-      next: (id) => observer?.next?.(id as number),
+    this.get<Test[]>(`api/Tests/owned/search?name=${name}`).subscribe({
+      next: (data: Test[]) => this.subject.next(data),
       error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          // observer?.error?.(err);
-          console.error(err);
-        }
+        console.error(err);
+        this.subject.next(null);
       },
-      complete: () => observer?.complete?.(),
     });
   }
 
-  public checkTest(test: Test, log: Log, observer?: Observer<Log>) {
-    this.http
-      .post('api/Tests/checktest', {
-        test,
-        log,
-      })
-      .subscribe({
-        next: (res) => observer?.next?.(res as Log),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            // observer?.error?.(err);
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public postOwnedTest(test: Test): Observable<number> {
+    return this.post<number>('api/Tests/owned', test);
   }
 
-  public putOwnedTest(test: Test, observer?: Observer<void>) {
-    this.http.put('api/Tests/owned', test).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          // observer?.error?.(err);
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
+  public checkTest(test: Test, log: Log): Observable<Log> {
+    return this.post<Log>('api/Tests/checktest', {
+      test,
+      log,
     });
   }
 
-  public async DeleteOwnedTestAsync(testId: number, observer?: Observer<void>) {
-    await this.http.delete(`api/Tests/owned/${testId}`).subscribe({
-      next: () => observer?.next?.(),
-      error: (err) => {
-        if (err.status === 400) {
-          observer?.error?.(err.error.errorText);
-        } else {
-          // observer?.error?.(err);
-          console.error(err);
-        }
-      },
-      complete: () => observer?.complete?.(),
-    });
+  public putOwnedTest(test: Test): Observable<void | Object> {
+    return this.put('api/Tests/owned', test);
+  }
+
+  public deleteOwnedTest(testId: number): Observable<void | Object> {
+    return this.delete(`api/Tests/owned/${testId}`);
   }
 }

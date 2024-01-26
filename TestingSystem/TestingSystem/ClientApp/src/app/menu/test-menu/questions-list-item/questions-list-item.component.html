@@ -4,7 +4,8 @@
             <div class="setings" *ngIf="isSettingsVisible" [@flipInXOnEnter] [@flipOutXOnLeave]
                 (mouseleave)="isSettingsVisible = false">
                 <ul>
-                    <li [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings
+                    <li (click)="memorizePath()"
+                        [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings
                     </li>
                     <li class="delete-btn" (click)="this.delete()"> Delete </li>
                 </ul>

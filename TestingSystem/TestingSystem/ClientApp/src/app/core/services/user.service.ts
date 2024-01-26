@@ -1,8 +1,8 @@
 /* eslint-disable no-bitwise */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observer } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 import { MD5, SHA256 } from 'crypto-js';
 import User from '../models/user.model';
 import Customer from '../models/customer.model';
@@ -12,132 +12,88 @@ import CredentialsService, { Credentials } from './credentials.service';
 export default class UserService {
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {}
 
-  public getToken(user: User, observer: Observer<void>) {
+  public getToken(user: User): Observable<void | Credentials> {
     this.HashPassword(user);
-    return this.http
-      .post('api/Users/token', user)
-      .pipe(
-        tap({
-          next: (res: any) => {
-            this.credentialsService.saveCredentials({
-              accessToken: res.accessToken,
-              login: res.login,
-              role: res.role,
-              refreshToken: res.refreshToken,
-            } as Credentials);
-          },
-        }),
-      )
-      .subscribe({
-        next: () => observer?.next?.(),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
+    return this.http.post('api/Users/token', user).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
         },
-        complete: () => observer?.complete?.(),
-      });
+      }),
+    );
   }
 
-  public refreshToken(observer?: Observer<void>) {
+  public refreshToken(): Observable<void | Credentials> {
     const credentials = this.credentialsService.getCredentials();
-    return this.http
-      .post('api/Users/refresh', credentials)
-      .pipe(
-        tap({
-          next: (res: any) => {
-            this.credentialsService.saveCredentials({
-              accessToken: res.accessToken,
-              login: res.login,
-              role: res.role,
-              refreshToken: res.refreshToken,
-            } as Credentials);
-          },
-        }),
-      )
-      .subscribe({
-        next: () => observer?.next?.(),
-        error: (err) => observer?.error?.(err),
-        complete: () => observer?.complete?.(),
-      });
+    return this.http.post('api/Users/refresh', credentials).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
+        },
+      }),
+    );
   }
 
-  public post(user: User, observer: Observer<void>) {
+  public post(user: User): Observable<void | Credentials> {
     this.HashPassword(user);
-    return this.http
-      .post('api/Users', user)
-      .pipe(
-        tap({
-          next: (res: any) => {
-            this.credentialsService.saveCredentials({
-              accessToken: res.accessToken,
-              login: res.login,
-              role: res.role,
-              refreshToken: res.refreshToken,
-            } as Credentials);
-          },
-        }),
-      )
-      .subscribe({
-        next: () => observer?.next?.(),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
+    return this.http.post('api/Users', user).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
         },
-        complete: () => observer?.complete?.(),
-      });
+      }),
+    );
   }
 
-  public putCurrentUser(user: User, observer: Observer<void>) {
+  public putCurrentUser(user: User): Observable<void | Credentials> {
     this.HashPassword(user);
-    return this.http
-      .put('api/Users/current', user)
-      .pipe(
-        tap({
-          next: (res: any) => {
-            this.credentialsService.saveCredentials({
-              accessToken: res.accessToken,
-              login: res.login,
-              role: res.role,
-              refreshToken: res.refreshToken,
-            } as Credentials);
-          },
-        }),
-      )
-      .subscribe({
-        next: () => observer?.next?.(),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            console.error(err);
-          }
+    return this.http.put('api/Users/current', user).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
         },
-        complete: () => observer?.complete?.(),
-      });
+      }),
+    );
   }
 
-  public getCurrentCustomer(observer: Observer<Customer>) {
-    this.http
-      .get('api/Users/current')
-      .pipe(map((data) => data as Customer))
-      .subscribe({
-        next: (data) => observer?.next?.(data),
-        error: (err) => {
-          if (err.status === 400) {
-            observer?.error?.(err.error.errorText);
-          } else {
-            observer?.error?.(err);
-            console.error(err);
-          }
-        },
-        complete: () => observer?.complete?.(),
-      });
+  public getCurrentCustomer(): Observable<Customer> {
+    return this.http.get('api/Users/current').pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Customer),
+    );
   }
 
   public logOut() {

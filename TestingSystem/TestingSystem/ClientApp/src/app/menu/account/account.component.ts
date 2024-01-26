@@ -53,7 +53,7 @@ export default class AccountComponent {
   }
 
   private loadCustomer() {
-    this.userService.getCurrentCustomer({
+    this.userService.getCurrentCustomer().subscribe({
       next: (item) => {
         this.Customer = item;
       },

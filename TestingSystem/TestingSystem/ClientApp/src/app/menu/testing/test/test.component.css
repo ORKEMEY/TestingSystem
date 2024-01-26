@@ -1,223 +1,231 @@
-.page{
-    min-height: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-areas: "scroll . . ."
-                        "scroll . header ."
-                        "scroll . . ."
-                        "scroll . content ."
-                        "scroll . . ."
-                        "scroll . footer ."
-                        "scroll . . .";
-    grid-template-columns: 1fr 1fr 5fr 2fr;
-    grid-template-rows: 1.5em auto 1.5em 1fr 1.5em auto 1em;
-    
+.page {
+  min-height: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    'scroll . . .'
+    'scroll . header .'
+    'scroll . . .'
+    'scroll . content .'
+    'scroll . . .'
+    'scroll . footer .'
+    'scroll . . .';
+  grid-template-columns: 1fr 1fr 5fr 2fr;
+  grid-template-rows: 1.5em auto 1.5em 1fr 1.5em auto 1em;
 }
 
 .header {
-    grid-area: header;
-    margin: 0 1em;
-    padding: 0;
+  grid-area: header;
+  margin: 0 1em;
+  padding: 0;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .content {
-    grid-area: content;
-    margin: 0 1em;
-    padding: 0;
+  grid-area: content;
+  margin: 0 1em;
+  padding: 0;
 }
 
 .scroll {
-    grid-area: scroll;
+  grid-area: scroll;
 }
 
 .footer {
-    grid-area: footer;
-    margin: 0 1em;
-    padding: 0;
+  grid-area: footer;
+  margin: 0 1em;
+  padding: 0;
 }
 
 /*-------------------------------*/
 .scroll-container {
-   height: 100%;
-   display: flex;
-   flex-direction: column;
-   justify-content: end;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 
-   padding: 0.1px;
+  padding: 0.1px;
 
-   border-top-left-radius: 1rem;
+  border-top-left-radius: 1rem;
 
-   color: lightgray;
+  color: lightgray;
 }
 
 .scroll-container:hover {
-   background-image: linear-gradient(to bottom, rgba(211,211,211,0.4) 95%, rgba(211,211,211,0) 100%);
-   color: gray;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(211, 211, 211, 0.4) 95%,
+    rgba(211, 211, 211, 0) 100%
+  );
+  color: gray;
 }
 
-.scroll-container p{
-   font-size: xx-large;
-   margin: 1em auto;
+.scroll-container p {
+  font-size: xx-large;
+  margin: 1em auto;
 }
 
-.scroll-btn{
-    font-weight: 500;
-    font-style: normal;
-    font-size: 2em;
+.scroll-btn {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 2em;
 
-    padding: 5px;
+  padding: 5px;
 }
 
-.sticky-bot{
-   position: sticky;
-   bottom: 3em;
+.sticky-bot {
+  position: sticky;
+  bottom: 3em;
 
-   align-self: center;
+  align-self: center;
 }
 
 /*-------------------------------*/
 
 .invisible {
-    opacity: 0;
-    visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .visible {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 /*-------------------------------*/
 
-.carousel-container{
-    
-    margin: 0.5em 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.carousel-container {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-ul.pagination-carousel{
-    margin: 0;
-    padding: 5px;
-    text-align: center;
+ul.pagination-carousel {
+  margin: 0;
+  padding: 5px;
+  text-align: center;
 }
 
-ul.pagination-carousel li{
-    display: inline;
-    margin: 0 0.5em;
+ul.pagination-carousel li {
+  display: inline;
+  margin: 0 0.5em;
 }
 
-ul.pagination-carousel li:hover{
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-
+ul.pagination-carousel li:hover {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
+/*-----------------------------*/
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em;
+}
 
 /*-----------------------------*/
 
 .submit-btn-container {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 /*-----------------------------*/
 
 .item.grid {
-    display:grid;
-    grid-template-areas: 
-    "."
-    "test-name"
-    "duration"
-    "opening"
-    "closure"
-    "status"
-    "button"
-    ".";
-    grid-template-rows: 1em auto auto auto auto auto auto 1em;
+  display: grid;
+  grid-template-areas:
+    '.'
+    'test-name'
+    'duration'
+    'opening'
+    'closure'
+    'status'
+    'button'
+    '.';
+  grid-template-rows: 1em auto auto auto auto auto auto 1em;
 }
 
 .test-name {
-    grid-area: test-name ;
-    margin: 0 1.5em;
+  grid-area: test-name;
+  margin: 0 1.5em;
 
-    white-space: normal;
+  white-space: normal;
 }
 
 .duration {
-    grid-area: duration;
-    margin: 0 1.5em;
-    white-space: normal;
+  grid-area: duration;
+  margin: 0 1.5em;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .opening {
-    grid-area: opening;
-    margin: 0 1.5em;
-    white-space: normal;
+  grid-area: opening;
+  margin: 0 1.5em;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .closure {
-    grid-area: closure;
-    margin: 0 1.5em;
-    white-space: normal;
+  grid-area: closure;
+  margin: 0 1.5em;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .status {
-    grid-area: status;
-    margin: 0 1.5em;
-    white-space: normal;
+  grid-area: status;
+  margin: 0 1.5em;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
-
 
 .button {
-    grid-area: button;
-    margin: 0 1.5em;
+  grid-area: button;
+  margin: 0 1.5em;
 }
 
-
 .item-container {
-    display: block;
+  display: block;
 
-    border-radius: 1em;
-    border: 1px solid gray;
+  border-radius: 1em;
+  border: 1px solid gray;
 
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 .item {
-    width: 100%;
-    min-height: 8em;
-    background-color: rgba(255,255,255,1);
-    border-radius: inherit;
-    border: 0px;
-    padding: 0;
-    font-size: x-large;
+  width: 100%;
+  min-height: 8em;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: inherit;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
 }
 
 .h-start {
-    display: flex;
-    justify-content: start;
+  display: flex;
+  justify-content: start;
 }
 
 .h-center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.button-container{
-    font-size:medium;
-    margin-left: 0.5em;
-    margin: 0.5em 0;
+.button-container {
+  font-size: medium;
+  margin-left: 0.5em;
+  margin: 0.5em 0;
 }

@@ -70,7 +70,7 @@ export default class QuestionSettingsComponent {
 
   private loadQuestion() {
     if (this.id !== 0) {
-      this.questionService.getById(this.id, {
+      this.questionService.getById(this.id).subscribe({
         next: (item) => {
           this.Question = item;
         },

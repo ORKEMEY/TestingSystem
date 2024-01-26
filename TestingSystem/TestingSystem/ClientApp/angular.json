@@ -14,26 +14,23 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.json",
-            "assets": [
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/assets"],
+            "styles": ["src/styles.css"],
             "aot": true
           },
-          "configurations" : {
+          "configurations": {
             "production": {
-              "budgets": [{
-                      "type": "initial",
-                      "maximumWarning": "500kb",
-                      "maximumError": "1mb"
-                  },
-                  {
-                      "type": "anyComponentStyle",
-                      "maximumWarning": "2kb",
-                      "maximumError": "4kb"
-                  }
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
               ],
               "outputHashing": "all"
             },
@@ -47,26 +44,23 @@
             },
             "defaultConfiguration": "production"
           }
-        },  
+        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-                "browserTarget": "testing-system-client:build:production"
+              "browserTarget": "testing-system-client:build:production"
             },
             "development": {
-                "browserTarget": "testing-system-client:build:development"
+              "browserTarget": "testing-system-client:build:development"
             }
-        },
-        "defaultConfiguration": "development"
+          },
+          "defaultConfiguration": "development"
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

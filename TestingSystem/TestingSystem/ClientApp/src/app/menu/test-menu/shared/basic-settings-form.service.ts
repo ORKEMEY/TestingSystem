@@ -131,7 +131,7 @@ export default class BasicSettingsFormService {
       throw new Error('submit on invalid form');
     } else {
       const test = this.readFormVals();
-      this.testService.postOwnedTest(test, observer);
+      this.testService.postOwnedTest(test).subscribe(observer);
     }
   }
 
@@ -142,7 +142,7 @@ export default class BasicSettingsFormService {
       const test = this.readFormVals();
       test.id = id;
 
-      this.testService.putOwnedTest(test, observer);
+      this.testService.putOwnedTest(test).subscribe(observer);
     }
   }
 

@@ -109,7 +109,7 @@ export default class BasicSettingsFormService {
     } else {
       this.readFormValsAsync().then(
         (question) => {
-          this.questionService.postQuestion(question, observer);
+          this.questionService.postQuestion(question).subscribe(observer);
         },
         (rej) => {
           observer.error(rej);
@@ -125,7 +125,7 @@ export default class BasicSettingsFormService {
       this.readFormValsAsync().then(
         (question) => {
           question.id = id;
-          this.questionService.putQuestion(question, observer);
+          this.questionService.putQuestion(question).subscribe(observer);
         },
         (rej) => {
           observer.error(rej);
@@ -178,7 +178,7 @@ export default class BasicSettingsFormService {
     const questionTypeName = this.form.controls.QuestionType.value;
 
     return new Promise<QuestionType>((res, rej) => {
-      this.questionTypeService.searchQuestionTypesByName(questionTypeName, {
+      this.questionTypeService.searchQuestionTypeByName(questionTypeName).subscribe({
         next: (data: QuestionType) => {
           if (!data) {
             rej(new Error('Specified question type not found'));
@@ -205,7 +205,7 @@ export default class BasicSettingsFormService {
     }
 
     return new Promise<Model>((res, rej) => {
-      this.modelService.searchModelsByName(modelName, {
+      this.modelService.searchModelByName(modelName).subscribe({
         next: (data: Model) => {
           if (!data) {
             rej(new Error('Specified model not found'));
