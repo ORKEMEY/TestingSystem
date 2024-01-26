@@ -19,12 +19,12 @@
 
 .h-start {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .h-end {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .center {

@@ -1,117 +1,112 @@
-.page{
-    min-height: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-areas: 
-                        " . . ."
-                        " . content ."
-                        " . . ."
-                        ;
-    grid-template-columns: 2fr 5fr 2fr;
-    grid-template-rows: 1.5em 1fr 1.5em;
-    
+.page {
+  min-height: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    ' . . .'
+    ' . content .'
+    ' . . .';
+  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-rows: 1.5em 1fr 1.5em;
 }
 
 .content {
-    grid-area: content;
-    margin: 0 1em;
-    padding: 0;
+  grid-area: content;
+  margin: 0 1em;
+  padding: 0;
 }
 
 /*-----------------------------*/
 
 .item.grid {
-    display:grid;
-    grid-template-areas: 
-    "."
-    "header"
-    "points"
-    "percent"
-    "expired-time"
-    "date-time"
-    ".";
-    grid-template-rows: 1em auto auto auto auto auto 1em;
+  display: grid;
+  grid-template-areas:
+    '.'
+    'header'
+    'points'
+    'percent'
+    'expired-time'
+    'date-time'
+    '.';
+  grid-template-rows: 1em auto auto auto auto auto 1em;
 }
 
 .header {
-    grid-area: header ;
-    margin: 0 1.5em;
+  grid-area: header;
+  margin: 0 1.5em;
 
-    white-space: normal;
-
+  white-space: normal;
 }
 
-
 .points {
-    grid-area: points ;
-    margin: 0 1.5em;
+  grid-area: points;
+  margin: 0 1.5em;
 
-    white-space: normal;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .percent {
-    grid-area: percent ;
-    margin: 0 1.5em;
+  grid-area: percent;
+  margin: 0 1.5em;
 
-    white-space: normal;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
 .expired-time {
-    grid-area: expired-time;
-    margin: 0 1.5em;
+  grid-area: expired-time;
+  margin: 0 1.5em;
 
-    white-space: normal;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
 
-.date-time{
-    grid-area: date-time;
-    margin: 0 1.5em;
+.date-time {
+  grid-area: date-time;
+  margin: 0 1.5em;
 
-    white-space: normal;
+  white-space: normal;
 
-    font-size: medium;
+  font-size: medium;
 }
-
 
 /*-------------------------*/
 
 .item-container {
-    display: block;
+  display: block;
 
-    border-radius: 1em;
-    border: 1px solid gray;
+  border-radius: 1em;
+  border: 1px solid gray;
 
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 .item {
-    width: 100%;
-    min-height: 8em;
-    background-color: rgba(255,255,255,1);
-    border-radius: inherit;
-    border: 0px;
-    padding: 0;
-    font-size: x-large;
+  width: 100%;
+  min-height: 8em;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: inherit;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
 }
 
 .h-start {
-    display: flex;
-    justify-content: start;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .h-center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.button-container{
-    font-size:medium;
-    margin-left: 0.5em;
-    margin: 0.5em 0;
+.button-container {
+  font-size: medium;
+  margin-left: 0.5em;
+  margin: 0.5em 0;
 }

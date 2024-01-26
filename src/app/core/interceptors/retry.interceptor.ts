@@ -44,6 +44,9 @@ export default class RetryInterceptor implements HttpInterceptor {
     if (httpError.status === 408) {
       return httpError;
     }
+    if (httpError.status === 401) {
+      return httpError;
+    }
     if (httpError.status < 500) {
       throw httpError;
     }

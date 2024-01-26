@@ -7,7 +7,7 @@
                     <li (click)="memorizePath()"
                         [routerLink]="['/menus/menu/questionmenu/question/' + (item?.id || 0) + '/settings']"> Settings
                     </li>
-                    <li class="delete-btn" (click)="this.delete()"> Delete </li>
+                    <li class="delete-btn" (click)="this.delete($event)"> Delete </li>
                 </ul>
             </div>
             <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>

@@ -15,6 +15,7 @@ import AppComponent from './app.component';
 
 import AuthInterceptor from './core/interceptors/authentification.interceptor';
 import RetryInterceptor from './core/interceptors/retry.interceptor';
+import AuthTokenRefreshInterceptor from './core/interceptors/token-refresh.interceptor';
 
 import AuthGuard from './core/guards/auth.guard';
 
@@ -38,6 +39,11 @@ import AuthGuard from './core/guards/auth.guard';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenRefreshInterceptor,
       multi: true,
     },
     AuthGuard,

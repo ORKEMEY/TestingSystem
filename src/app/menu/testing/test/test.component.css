@@ -43,7 +43,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
 
   padding: 0.1px;
 
@@ -132,7 +132,7 @@ ul.pagination-carousel li:hover {
 
 .submit-btn-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 /*-----------------------------*/
@@ -216,7 +216,7 @@ ul.pagination-carousel li:hover {
 
 .h-start {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .h-center {

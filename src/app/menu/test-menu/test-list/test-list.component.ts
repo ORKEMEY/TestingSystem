@@ -58,8 +58,8 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
         el.id = ind + 1;
       });
 
-      this.isLoading = false;
-    }, 3000); */
+      this.loadingState.stopLoading();
+    }, 100); */
   }
 
   ngOnInit(): void {

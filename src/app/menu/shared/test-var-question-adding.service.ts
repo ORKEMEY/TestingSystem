@@ -25,7 +25,9 @@ export default class TestVariantQuestionAddingService {
 
   private submit() {
     if (this.testVariantId !== 0 && this.questionId !== 0) {
-      this.testVariantService.postQuestionToTestVariant(this.testVariantId, this.questionId);
+      this.testVariantService
+        .postQuestionToTestVariant(this.testVariantId, this.questionId)
+        .subscribe();
       this.clear();
     }
   }

@@ -29,7 +29,8 @@ export default class QuestionsListItemComponent {
 
   constructor(private router: Router) {}
 
-  public delete() {
+  public delete(event: Event) {
+    event.stopPropagation();
     this.deleteButtonPushed.emit(this.item);
   }
 
