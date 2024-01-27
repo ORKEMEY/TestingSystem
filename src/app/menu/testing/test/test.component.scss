@@ -1,3 +1,5 @@
+@import '../../../../styles/styles.scss';
+
 .page {
   min-height: 100%;
   height: 100%;
@@ -14,18 +16,20 @@
   grid-template-rows: 1.5em auto 1.5em 1fr 1.5em auto 1em;
 }
 
-.header {
-  grid-area: header;
+@mixin page-indent {
   margin: 0 1em;
   padding: 0;
+}
 
+.header {
+  grid-area: header;
+  @include page-indent;
   font-size: medium;
 }
 
 .content {
   grid-area: content;
-  margin: 0 1em;
-  padding: 0;
+  @include page-indent;
 }
 
 .scroll {
@@ -34,20 +38,20 @@
 
 .footer {
   grid-area: footer;
-  margin: 0 1em;
-  padding: 0;
+  @include page-indent;
 }
 
 /*-------------------------------*/
 .scroll-container {
   height: 100%;
-  display: flex;
+
+  @extend .h-end;
+
   flex-direction: column;
-  justify-content: flex-end;
 
   padding: 0.1px;
 
-  border-top-left-radius: 1rem;
+  border-top-left-radius: $border-radius;
 
   color: lightgray;
 }
@@ -81,58 +85,19 @@
   align-self: center;
 }
 
-/*-------------------------------*/
-
-.invisible {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*-------------------------------*/
-
-.carousel-container {
-  margin: 0.5em 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-ul.pagination-carousel {
-  margin: 0;
-  padding: 5px;
-  text-align: center;
-}
-
-ul.pagination-carousel li {
-  display: inline;
-  margin: 0 0.5em;
-}
-
-ul.pagination-carousel li:hover {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 /*-----------------------------*/
 
 .loading {
-  display: flex;
-  justify-content: center;
+  @extend .h-center;
   align-items: center;
+
   margin: 0.5em;
 }
 
 /*-----------------------------*/
 
 .submit-btn-container {
-  display: flex;
-  justify-content: flex-end;
+  @extend .h-end;
 }
 
 /*-----------------------------*/
@@ -151,42 +116,37 @@ ul.pagination-carousel li:hover {
   grid-template-rows: 1em auto auto auto auto auto auto 1em;
 }
 
+@mixin item-grid-indent {
+  margin: 0 1.5em;
+  white-space: normal;
+}
+
 .test-name {
   grid-area: test-name;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 }
 
 .duration {
   grid-area: duration;
-  margin: 0 1.5em;
-  white-space: normal;
-
+  @include item-grid-indent;
   font-size: medium;
 }
 
 .opening {
   grid-area: opening;
-  margin: 0 1.5em;
-  white-space: normal;
-
+  @include item-grid-indent;
   font-size: medium;
 }
 
 .closure {
   grid-area: closure;
-  margin: 0 1.5em;
-  white-space: normal;
-
+  @include item-grid-indent;
   font-size: medium;
 }
 
 .status {
   grid-area: status;
-  margin: 0 1.5em;
-  white-space: normal;
-
+  @include item-grid-indent;
   font-size: medium;
 }
 
@@ -197,31 +157,18 @@ ul.pagination-carousel li:hover {
 
 .item-container {
   display: block;
-
-  border-radius: 1em;
-  border: 1px solid gray;
-
+  @include border;
   margin: 1em 0;
 }
 
 .item {
   width: 100%;
   min-height: 8em;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: white;
   border-radius: inherit;
   border: 0px;
   padding: 0;
   font-size: x-large;
-}
-
-.h-start {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.h-center {
-  display: flex;
-  justify-content: center;
 }
 
 .button-container {

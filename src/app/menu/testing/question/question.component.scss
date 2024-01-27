@@ -1,39 +1,27 @@
+@import '../../../../styles/styles.scss';
+
 .item-container {
   display: block;
-
-  border-radius: 1em;
-  border: 1px solid gray;
-
+  @include border;
   margin: 1em 0;
 }
 
 .item {
   width: 100%;
   min-height: 8em;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: white;
   border-radius: inherit;
   border: 0px;
   padding: 0;
   font-size: x-large;
 }
 
-.h-start {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.h-end {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .center {
-  display: flex;
-  justify-content: center;
+  @extend .h-center;
   align-items: center;
 }
 
-/*-----------------------*/
+/*----------------------------*/
 
 .grid {
   display: grid;
@@ -53,7 +41,6 @@
 .query {
   grid-area: query;
   margin: 0 1.5em;
-
   white-space: normal;
 }
 
@@ -80,14 +67,4 @@
 
 .check-label {
   margin: 0 0.5em;
-}
-
-.invisible {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
 }

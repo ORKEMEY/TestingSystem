@@ -37,19 +37,6 @@
 
 /*-----------------------------------*/
 
-.invisible {
-  opacity: 0;
-  display: none !important;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*-----------------------------------*/
-
 input.ng-touched.ng-invalid.ng-dirty,
 textarea.ng-touched.ng-invalid.ng-dirty {
   border: solid red 1px;
@@ -61,10 +48,6 @@ div.ng-touched.ng-invalid.ng-dirty textarea.ng-touched.ng-dirty {
 }
 
 /*-----------------------------------*/
-.h-center {
-  display: flex;
-  justify-content: center;
-}
 
 .warning-component {
   width: 100%;

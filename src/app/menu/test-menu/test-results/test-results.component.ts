@@ -75,7 +75,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
       log.maxPoints = 0;
       log.maxNumberOfCorrectAnswers = 25;
       this.logs = [log, log, log, log];
-      this.isLoading = false;
+      this.loadingState.stopLoading();
     }, 3000); */
   }
 

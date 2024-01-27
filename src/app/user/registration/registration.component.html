@@ -1,111 +1,114 @@
 <div>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="form-signin col-10">
-    <h2 class="form-signin-heading col-12">Sign up</h2>
-    <br />
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form col-10">
+        <h2 class="col-12">Sign up</h2>
+        <br />
 
-    <div class="form-block col-12">
-      <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden></div>
-    </div>
-    <div>
-      <!-- Login -->
-      <div class="form-block">
-        <label for="Login" class="col-2 col-form-label">Login:</label>
-        <div class="col-12">
-          <input type="text" name="Login" id="LoginRegister" (ngModelChange)="loginChange()"
-            class="input-block-level form-control" placeholder="Login" formControlName="Login" required />
+        <div class="form-block col-12">
+            <div class="alert alert-danger form-block" role="alert" #alertCommonDiv hidden></div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="LoginAlertBox.isVisible" (closeButtonPushed)="LoginAlertBox.hideAlert()"
-          [message]="LoginAlertBox.Message">
-        </alert-component>
-      </div>
-    </div>
-
-    <div>
-      <!-- Name -->
-      <div class="form-block">
-        <label for="Name" class="col-2 col-form-label">Name:</label>
-        <div class="col-12">
-          <input type="text" name="Name" id="NameRegister" (ngModelChange)="nameChange()"
-            class="input-block-level form-control" placeholder="Name" formControlName="Name" required />
+        <div>
+            <!-- Login -->
+            <div class="form-block">
+                <label for="Login" class="col-2 col-form-label">Login:</label>
+                <div class="col-12">
+                    <input type="text" name="Login" id="LoginRegister" (ngModelChange)="loginChange()"
+                        class="input-block-level form-control" placeholder="Login" formControlName="Login" required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="LoginAlertBox.isVisible" (closeButtonPushed)="LoginAlertBox.hideAlert()"
+                    [message]="LoginAlertBox.Message">
+                </alert-component>
+            </div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="NameAlertBox.isVisible" (closeButtonPushed)="NameAlertBox.hideAlert()"
-          [message]="NameAlertBox.Message">
-        </alert-component>
-      </div>
-    </div>
 
-    <div>
-      <!-- Surname -->
-      <div class="form-block">
-        <label for="Surname" class="col-2 col-form-label">Surname:</label>
-        <div class="col-12">
-          <input type="text" name="Surname" id="SurnameRegister" (ngModelChange)="surnameChange()"
-            class="input-block-level form-control" placeholder="Surname" formControlName="Surname" required />
+        <div>
+            <!-- Name -->
+            <div class="form-block">
+                <label for="Name" class="col-2 col-form-label">Name:</label>
+                <div class="col-12">
+                    <input type="text" name="Name" id="NameRegister" (ngModelChange)="nameChange()"
+                        class="input-block-level form-control" placeholder="Name" formControlName="Name" required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="NameAlertBox.isVisible" (closeButtonPushed)="NameAlertBox.hideAlert()"
+                    [message]="NameAlertBox.Message">
+                </alert-component>
+            </div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="SurnameAlertBox.isVisible" (closeButtonPushed)="SurnameAlertBox.hideAlert()"
-          [message]="SurnameAlertBox.Message">
-        </alert-component>
-      </div>
-    </div>
 
-    <div>
-      <!-- EMail -->
-      <div class="form-block">
-        <label for="EMail" class="col-2 col-form-label">E-Mail:</label>
-        <div class="col-12">
-          <input type="text" name="EMail" id="EMailRegister" (ngModelChange)="emailChange()"
-            class="input-block-level form-control" placeholder="E-Mail" formControlName="EMail" required />
+        <div>
+            <!-- Surname -->
+            <div class="form-block">
+                <label for="Surname" class="col-2 col-form-label">Surname:</label>
+                <div class="col-12">
+                    <input type="text" name="Surname" id="SurnameRegister" (ngModelChange)="surnameChange()"
+                        class="input-block-level form-control" placeholder="Surname" formControlName="Surname"
+                        required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="SurnameAlertBox.isVisible"
+                    (closeButtonPushed)="SurnameAlertBox.hideAlert()" [message]="SurnameAlertBox.Message">
+                </alert-component>
+            </div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="EMailAlertBox.isVisible" (closeButtonPushed)="EMailAlertBox.hideAlert()"
-          [message]="EMailAlertBox.Message">
-        </alert-component>
-      </div>
-    </div>
 
-    <div formGroupName="Passwords">
-      <!-- Passwords -->
-      <div class="form-block">
-        <!-- Password -->
-        <label for="Password" class="col-2 col-form-label">Password:</label>
-        <div class="col-12">
-          <input type="password" (ngModelChange)="passwordChange()" name="Password" id="PasswordRegiser"
-            class="input-block-level form-control" placeholder="Password" formControlName="Password" required />
+        <div>
+            <!-- EMail -->
+            <div class="form-block">
+                <label for="EMail" class="col-2 col-form-label">E-Mail:</label>
+                <div class="col-12">
+                    <input type="text" name="EMail" id="EMailRegister" (ngModelChange)="emailChange()"
+                        class="input-block-level form-control" placeholder="E-Mail" formControlName="EMail" required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="EMailAlertBox.isVisible" (closeButtonPushed)="EMailAlertBox.hideAlert()"
+                    [message]="EMailAlertBox.Message">
+                </alert-component>
+            </div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="PasswordAlertBox.isVisible" (closeButtonPushed)="PasswordAlertBox.hideAlert()"
-          [message]="PasswordAlertBox.Message">
-        </alert-component>
-      </div>
 
-      <div class="form-block">
-        <!-- Password Confirmation-->
-        <label for="ConfirmPassword" class="col-5 col-form-label">Confirm password:</label>
-        <div class="col-12">
-          <input type="password" name="ConfirmPassword" (ngModelChange)="confirmPasswordChange()"
-            id="ConfirmPasswordRegiser" class="input-block-level form-control" placeholder="Password"
-            formControlName="ConfirmPassword" (keydown.enter)="form.invalid ? null : submit()" required />
+        <div formGroupName="Passwords">
+            <!-- Passwords -->
+            <div class="form-block">
+                <!-- Password -->
+                <label for="Password" class="col-2 col-form-label">Password:</label>
+                <div class="col-12">
+                    <input type="password" (ngModelChange)="passwordChange()" name="Password" id="PasswordRegiser"
+                        class="input-block-level form-control" placeholder="Password" formControlName="Password"
+                        required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="PasswordAlertBox.isVisible"
+                    (closeButtonPushed)="PasswordAlertBox.hideAlert()" [message]="PasswordAlertBox.Message">
+                </alert-component>
+            </div>
+
+            <div class="form-block">
+                <!-- Password Confirmation-->
+                <label for="ConfirmPassword" class="col-5 col-form-label">Confirm password:</label>
+                <div class="col-12">
+                    <input type="password" name="ConfirmPassword" (ngModelChange)="confirmPasswordChange()"
+                        id="ConfirmPasswordRegiser" class="input-block-level form-control" placeholder="Password"
+                        formControlName="ConfirmPassword" (keydown.enter)="form.invalid ? null : submit()" required />
+                </div>
+            </div>
+            <div class="form-block col-12">
+                <alert-component [isVisible]="ConfirmPasswordAlertBox.isVisible"
+                    (closeButtonPushed)="ConfirmPasswordAlertBox.hideAlert()"
+                    [message]="ConfirmPasswordAlertBox.Message">
+                </alert-component>
+            </div>
         </div>
-      </div>
-      <div class="form-block col-12">
-        <alert-component [isVisible]="ConfirmPasswordAlertBox.isVisible"
-          (closeButtonPushed)="ConfirmPasswordAlertBox.hideAlert()" [message]="ConfirmPasswordAlertBox.Message">
-        </alert-component>
-      </div>
-    </div>
-    <br />
-    <div class="submit-btn-container col-12">
-      <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnRegiserForm"
-        value="Sign up" />
-    </div>
+        <br />
+        <div class="submit-btn-container col-12">
+            <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" id="btnRegiserForm"
+                value="Sign up" />
+        </div>
 
-  </form>
+    </form>
 </div>

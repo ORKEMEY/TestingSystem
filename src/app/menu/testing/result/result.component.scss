@@ -1,3 +1,5 @@
+@import '../../../../styles/styles.scss';
+
 .page {
   min-height: 100%;
   height: 100%;
@@ -31,45 +33,40 @@
   grid-template-rows: 1em auto auto auto auto auto 1em;
 }
 
+@mixin item-grid-indent {
+  margin: 0 1.5em;
+  white-space: normal;
+}
+
 .header {
   grid-area: header;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 }
 
 .points {
   grid-area: points;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 
   font-size: medium;
 }
 
 .percent {
   grid-area: percent;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 
   font-size: medium;
 }
 
 .expired-time {
   grid-area: expired-time;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 
   font-size: medium;
 }
 
 .date-time {
   grid-area: date-time;
-  margin: 0 1.5em;
-
-  white-space: normal;
+  @include item-grid-indent;
 
   font-size: medium;
 }
@@ -79,9 +76,7 @@
 .item-container {
   display: block;
 
-  border-radius: 1em;
-  border: 1px solid gray;
-
+  @include border;
   margin: 1em 0;
 }
 
@@ -93,16 +88,6 @@
   border: 0px;
   padding: 0;
   font-size: x-large;
-}
-
-.h-start {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.h-center {
-  display: flex;
-  justify-content: center;
 }
 
 .button-container {

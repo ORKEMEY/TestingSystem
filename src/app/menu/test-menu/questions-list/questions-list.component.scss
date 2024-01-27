@@ -1,4 +1,5 @@
-@import url('../../../../styles/animations.scss');
+@import '../../../../styles/styles.scss';
+@import '../../../../styles/animations.scss';
 
 .page {
   min-height: 100%;
@@ -39,11 +40,6 @@
   grid-area: content;
 }
 
-.h-center {
-  display: flex;
-  justify-content: center;
-}
-
 /*------------------------------------------*/
 
 .add-item {
@@ -51,12 +47,12 @@
   min-height: 8em;
   width: 100%;
   aspect-ratio: 3.5 / 1;
-  border-radius: 1rem;
-  border: 1px solid gray;
+  @include border;
 }
 
 .add-item:hover {
   border-color: transparent;
+  @include gradient-border;
 }
 
 .add-btn {
@@ -79,16 +75,6 @@
 }
 
 /*---------------------------------*/
-.invisible {
-  opacity: 0;
-  display: none !important;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
-}
 
 .warning-component {
   width: 100%;

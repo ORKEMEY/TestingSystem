@@ -12,16 +12,19 @@
   grid-template-rows: 1.5em auto 1.5em 1fr 1em;
 }
 
-.header {
-  grid-area: header;
+@mixin indent {
   margin: 0 1em;
   padding: 0;
 }
 
+.header {
+  grid-area: header;
+  @include indent;
+}
+
 .content {
   grid-area: content;
-  margin: 0 1em;
-  padding: 0;
+  @include indent;
 }
 
 /*-----------------------------------*/
@@ -32,36 +35,9 @@
 
 /*-----------------------------------*/
 
-.invisible {
-  opacity: 0;
-  display: none !important;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*-----------------------------------*/
-
-input.ng-touched.ng-invalid.ng-dirty {
-  border: solid red 1px;
-}
-
+input.ng-touched.ng-invalid.ng-dirty,
 div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
   border: solid red 1px;
-}
-
-/*-----------------------------------*/
-.h-center {
-  display: flex;
-  justify-content: center;
-}
-
-.warning-component {
-  width: 100%;
-  padding: 0;
 }
 
 /*-----------------------------------*/

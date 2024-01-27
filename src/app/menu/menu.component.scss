@@ -1,3 +1,5 @@
+@import '../../styles/styles.scss';
+
 .page {
   min-height: 100vh;
   display: grid;
@@ -39,8 +41,8 @@
 
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(2px);
-  border: 1px solid gray;
-  border-radius: 1rem;
+
+  @include border;
 
   margin: 1em;
 }
