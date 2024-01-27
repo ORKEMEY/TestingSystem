@@ -30,44 +30,28 @@
   width: 100%;
 }
 
-/*-----------------------------------*/
-
-input.ng-touched.ng-invalid.ng-dirty {
-  border: solid red 1px;
-}
-
-div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
-  border: solid red 1px;
-}
-
-/*-----------------------------------*/
-.h-center {
+.submit-btn-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
+
+/*-----------------------------------*/
+
+input.ng-touched.ng-invalid.ng-dirty,
+textarea.ng-touched.ng-invalid.ng-dirty {
+  border: solid red 1px;
+}
+
+div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty,
+div.ng-touched.ng-invalid.ng-dirty textarea.ng-touched.ng-dirty {
+  border: solid red 1px;
+}
+
+/*-----------------------------------*/
 
 .warning-component {
   width: 100%;
   padding: 0;
-
-  /*background-color: black;
-  transition: background-color;
-  transition-duration: 10s;*/
-
-  /*transform: rotateX(90deg) scale(0.9);*/
-}
-
-/*-----------------------------------*/
-
-.invisible {
-  opacity: 0;
-  display: none !important;
-  visibility: hidden;
-}
-
-.visible {
-  opacity: 1;
-  visibility: visible;
 }
 
 /*-----------------------------------*/
@@ -79,16 +63,6 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
 .form-group .card-header {
   padding-left: 0;
   padding-right: 0;
-}
-
-.submit-btn-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.change-btn-container {
-  display: flex;
-  justify-content: end;
 }
 
 .btn-collapse {

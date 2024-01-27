@@ -16,7 +16,7 @@ import LoadingState from '../../../shared/utils/loading-state';
 @Component({
   selector: 'answers-editor-component',
   templateUrl: './answers-editor.component.html',
-  styleUrls: ['./answers-editor.component.css'],
+  styleUrls: ['./answers-editor.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class AnswersEditorComponent implements OnInit, OnDestroy {

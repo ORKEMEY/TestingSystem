@@ -1,0 +1,83 @@
+@import '../../../../styles/styles.scss';
+@import '../test-menu.component.scss';
+
+.item-container {
+  display: block;
+
+  @include border;
+
+  margin: 1em 0;
+}
+
+.item {
+  width: 100%;
+  min-height: 8em;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: inherit;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*-----------------------*/
+
+.grid {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'query'
+    'answers'
+    'footer';
+  grid-template-rows: 1fr auto auto 0.7fr;
+}
+
+.header {
+  grid-area: header;
+  margin: 0 0.7em;
+  margin-top: 0.3em;
+}
+
+.query {
+  grid-area: query;
+  margin: 0 1.5em;
+
+  white-space: normal;
+}
+
+.answers {
+  grid-area: answers;
+  margin: 0 1.5em;
+}
+
+.footer {
+  grid-area: footer;
+  margin: 0.5em;
+}
+
+/*-----------------------------*/
+
+.answers-container {
+  font-size: large;
+  margin-left: 0.5em;
+}
+
+.answer {
+  margin: 0.5em 0;
+}
+
+.check-label {
+  margin: 0 0.5em;
+}
+
+/*-----------------------------*/
+
+.settings {
+  @extend .settings;
+  font-size: 0.9em;
+}

@@ -1,0 +1,70 @@
+@import './styles.scss';
+
+@mixin gradient-border($width: $border-width, $radius: $border-radius) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: calc(-1 * $width);
+    left: calc(-1 * $width);
+    z-index: -1;
+    width: calc(100% + $width * 2);
+    height: calc(100% + $width * 2);
+    background: linear-gradient(
+      60deg,
+      hsl(224, 85%, 66%),
+      hsl(269, 85%, 66%),
+      hsl(314, 85%, 66%),
+      hsl(359, 85%, 66%),
+      hsl(44, 85%, 66%),
+      hsl(89, 85%, 66%),
+      hsl(134, 85%, 66%),
+      hsl(179, 85%, 66%)
+    );
+    background-size: 300% 300%;
+    background-position: 0 50%;
+    border-radius: $radius;
+    animation: moveGradient 4s alternate infinite;
+  }
+}
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/*------------------------------------*/
+
+.bg-animation {
+  background: radial-gradient(
+    circle,
+    rgba(252, 176, 69, 0.3) 25%,
+    rgba(231, 60, 126, 0.3) 50%,
+    rgba(35, 165, 213, 0.3) 75%,
+    rgba(50, 215, 35, 0.3) 100%
+  );
+  animation: gradient 15s ease infinite alternate;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  20% {
+    background-position: 25% 25%;
+  }
+  40% {
+    background-position: 25% 75%;
+  }
+  60% {
+    background-position: 75% 25%;
+  }
+  80% {
+    background-position: 75% 75%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}

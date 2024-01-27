@@ -1,0 +1,70 @@
+@import '../../../../styles/styles.scss';
+
+.item-container {
+  display: block;
+  @include border;
+  margin: 1em 0;
+}
+
+.item {
+  width: 100%;
+  min-height: 8em;
+  background-color: white;
+  border-radius: inherit;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
+}
+
+.center {
+  @extend .h-center;
+  align-items: center;
+}
+
+/*----------------------------*/
+
+.grid {
+  display: grid;
+  grid-template-areas:
+    '.'
+    'query'
+    'answers'
+    '.';
+  grid-template-rows: 1em auto auto 1em;
+}
+
+.header {
+  grid-area: header;
+  margin: 0 0.5em;
+}
+
+.query {
+  grid-area: query;
+  margin: 0 1.5em;
+  white-space: normal;
+}
+
+.answers {
+  grid-area: answers;
+  margin: 0 1.5em;
+}
+
+.footer {
+  grid-area: footer;
+  margin: 0.5em;
+}
+
+/*-----------------------------*/
+
+.answers-container {
+  font-size: medium;
+  margin-left: 0.5em;
+}
+
+.answer {
+  margin: 0.5em 0;
+}
+
+.check-label {
+  margin: 0 0.5em;
+}

@@ -7,7 +7,7 @@ import AlertBoxHandler from '../../shared/utils/alert-box-handler';
 @Component({
   selector: 'registration-component',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css'],
+  styleUrls: ['./registration.component.scss'],
 })
 export default class RegistrationComponent implements AfterViewInit {
   // #region msgBoxes

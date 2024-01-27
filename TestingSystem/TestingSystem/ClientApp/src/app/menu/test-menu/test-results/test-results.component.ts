@@ -14,7 +14,7 @@ import LoadingState from '../../../shared/utils/loading-state';
 @Component({
   selector: 'test-results-component',
   templateUrl: './test-results.component.html',
-  styleUrls: ['./test-results.component.css'],
+  styleUrls: ['./test-results.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestResultsComponent extends Paginator<Log> implements OnInit, OnDestroy {
@@ -75,7 +75,7 @@ export default class TestResultsComponent extends Paginator<Log> implements OnIn
       log.maxPoints = 0;
       log.maxNumberOfCorrectAnswers = 25;
       this.logs = [log, log, log, log];
-      this.isLoading = false;
+      this.loadingState.stopLoading();
     }, 3000); */
   }
 

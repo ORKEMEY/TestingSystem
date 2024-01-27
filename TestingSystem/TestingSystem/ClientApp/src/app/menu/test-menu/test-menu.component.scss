@@ -1,0 +1,59 @@
+.settings-dots {
+  color: gray;
+  cursor: default;
+}
+
+.settings-dots:hover {
+  color: black;
+}
+
+.settings-container {
+  position: relative;
+}
+
+.settings {
+  position: absolute;
+  top: 1em;
+  background-color: white;
+  border-radius: 1rem;
+  border: 1px solid gray;
+  padding: 0;
+  font-size: large;
+  z-index: 10;
+}
+
+.settings ul {
+  list-style: none;
+  border-radius: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.settings ul li:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.settings ul li:last-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.settings ul li {
+  display: block;
+  padding: 0.5em;
+  margin: 0;
+  text-decoration: none;
+}
+
+.settings ul li:hover:not(.delete-btn) {
+  background-color: lightgray;
+  color: blue;
+  cursor: pointer;
+}
+
+.settings ul li.delete-btn:hover {
+  background-color: lightgray;
+  color: red;
+  cursor: pointer;
+}

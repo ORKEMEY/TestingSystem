@@ -1,0 +1,78 @@
+@import '../../../../styles/animations.scss';
+@import '../../../../styles/styles.scss';
+@import '../test-menu.component.scss';
+
+.item-container {
+  display: block;
+  aspect-ratio: 1 / 1;
+
+  @include border;
+  background-color: white;
+
+  margin: 0.5em;
+}
+
+.item-container:hover {
+  transform: scale(1.03, 1.03);
+  transition-duration: 0.2s;
+
+  border-color: transparent;
+  @include gradient-border;
+}
+
+.item-backdrop {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: inherit;
+}
+
+/*-------------------------------------------*/
+
+.item {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: white;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
+}
+
+.item:hover {
+  @extend .bg-animation;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*-----------------------*/
+
+.grid {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'content'
+    'footer';
+  grid-template-rows: 1fr 3fr 1fr;
+}
+
+.header {
+  grid-area: header;
+  margin: 0 0.5em;
+}
+
+.content {
+  grid-area: content;
+  white-space: normal;
+}
+
+.footer {
+  grid-area: footer;
+  margin: 0.5em;
+}
+
+/*-----------------------------*/

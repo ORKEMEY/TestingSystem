@@ -6,7 +6,7 @@ import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 @Component({
   selector: 'password-confirmation',
   templateUrl: 'password-confirmation.component.html',
-  styleUrls: ['password-confirmation.component.css'],
+  styleUrls: ['password-confirmation.component.scss'],
   animations: [
     fadeInOnEnterAnimation({ duration: 600 }),
     fadeOutOnLeaveAnimation({ duration: 200 }),

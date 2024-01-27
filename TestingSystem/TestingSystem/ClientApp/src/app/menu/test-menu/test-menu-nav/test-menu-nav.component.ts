@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'test-menu-nav-component',
   templateUrl: './test-menu-nav.component.html',
-  styleUrls: ['./test-menu-nav.component.css'],
+  styleUrls: ['./test-menu-nav.component.scss'],
 })
 export default class TestMenuNavComponent {
   public isBtnActive: Object = {

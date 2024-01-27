@@ -1,36 +1,39 @@
 <div class="page">
     <div class="header h-center">
-        <div class="input-group col-9">
-            <div class="input-group-prepend">
-                <button (click)="searchItems()" class="input-group-text" id="btnSearch">Search</button>
+        <div class="col-9" [ngStyle]="{'padding': 0}">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button (click)="searchItems()" class="input-group-text" id="btnSearch">Search</button>
+                </div>
+                <input [(ngModel)]="searchLine" (ngModelChange)="onSearchLineEmpty()" id="searchLine" type="text"
+                    class="form-control" placeholder="Name">
             </div>
-            <input [(ngModel)]="searchLine" (ngModelChange)="onSearchLineEmpty()" id="searchLine" type="text"
-                class="form-control" placeholder="Name">
+
         </div>
     </div>
 
     <div class="outer content">
         <div class="h-center">
             <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
-                class="col-10 warning-component" [message]="AlertBox.Message">
+                class="col-9 warning-component" [message]="AlertBox.Message">
             </alert-component>
         </div>
         <div class="h-center">
             <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
-                class="col-10 warning-component" [message]="WarningBox.warningMessage">
+                class="col-9 warning-component" [message]="WarningBox.warningMessage">
             </warning-component>
         </div>
         <div class="h-center">
             <info-component [isVisible]="InfoBox.isInfoVisible" (closeButtonPushed)="InfoBox.hideInfo()"
-                class="col-10 warning-component" [message]="InfoBox.infoMessage">
+                class="col-9 warning-component" [message]="InfoBox.infoMessage">
             </info-component>
         </div>
 
         <div class="grid">
-            <div class="item">
+            <div class="add-item">
                 <button
                     [routerLink]="['../../', 'test',  0 ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]"
-                    class="add-item" tabindex="-1">
+                    class="add-btn" tabindex="-1">
                     +
                 </button>
             </div>

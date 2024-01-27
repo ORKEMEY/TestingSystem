@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'question-menu-component',
   templateUrl: './question-menu.component.html',
-  styleUrls: ['./question-menu.component.css'],
+  styleUrls: ['./question-menu.component.scss'],
 })
 export default class QuestionMenuComponent {
   public isBtnActive: Object = {

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'garland',
   templateUrl: './garland.component.html',
-  styleUrls: ['./garland.component.css'],
+  styleUrls: ['./garland.component.scss'],
 })
 export default class GarlandComponent {
   public isVisible: boolean = false;

@@ -8,7 +8,7 @@ import AlertBoxHandler from '../../shared/utils/alert-box-handler';
 @Component({
   selector: 'login-component',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export default class LoginComponent implements AfterViewInit {
   // #region msgBoxes

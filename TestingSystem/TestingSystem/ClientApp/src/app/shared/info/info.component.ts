@@ -4,7 +4,7 @@ import { bounceInOnEnterAnimation, zoomOutOnLeaveAnimation } from 'angular-anima
 @Component({
   selector: 'info-component',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.css'],
+  styleUrls: ['./info.component.scss'],
   animations: [
     bounceInOnEnterAnimation({ duration: 600 }),
     zoomOutOnLeaveAnimation({ duration: 200 }),

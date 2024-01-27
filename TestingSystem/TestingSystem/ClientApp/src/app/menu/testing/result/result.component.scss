@@ -1,0 +1,97 @@
+@import '../../../../styles/styles.scss';
+
+.page {
+  min-height: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    ' . . .'
+    ' . content .'
+    ' . . .';
+  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-rows: 1.5em 1fr 1.5em;
+}
+
+.content {
+  grid-area: content;
+  margin: 0 1em;
+  padding: 0;
+}
+
+/*-----------------------------*/
+
+.item.grid {
+  display: grid;
+  grid-template-areas:
+    '.'
+    'header'
+    'points'
+    'percent'
+    'expired-time'
+    'date-time'
+    '.';
+  grid-template-rows: 1em auto auto auto auto auto 1em;
+}
+
+@mixin item-grid-indent {
+  margin: 0 1.5em;
+  white-space: normal;
+}
+
+.header {
+  grid-area: header;
+  @include item-grid-indent;
+}
+
+.points {
+  grid-area: points;
+  @include item-grid-indent;
+
+  font-size: medium;
+}
+
+.percent {
+  grid-area: percent;
+  @include item-grid-indent;
+
+  font-size: medium;
+}
+
+.expired-time {
+  grid-area: expired-time;
+  @include item-grid-indent;
+
+  font-size: medium;
+}
+
+.date-time {
+  grid-area: date-time;
+  @include item-grid-indent;
+
+  font-size: medium;
+}
+
+/*-------------------------*/
+
+.item-container {
+  display: block;
+
+  @include border;
+  margin: 1em 0;
+}
+
+.item {
+  width: 100%;
+  min-height: 8em;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: inherit;
+  border: 0px;
+  padding: 0;
+  font-size: x-large;
+}
+
+.button-container {
+  font-size: medium;
+  margin-left: 0.5em;
+  margin: 0.5em 0;
+}

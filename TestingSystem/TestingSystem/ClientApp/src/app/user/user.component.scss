@@ -1,0 +1,33 @@
+@import '../../styles/styles.scss';
+
+input.ng-touched.ng-invalid.ng-dirty,
+div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
+  border: 1px solid red;
+}
+
+.form {
+  padding: 1.5em;
+  margin: 0 auto 20px;
+  background-color: white;
+  width: 400pt;
+  @include border;
+}
+
+.form input[type='text'],
+.form input[type='password'] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+
+.submit-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+img {
+  max-width: 100%;
+  height: 1.5em;
+  width: 1.5em;
+}

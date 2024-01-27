@@ -1,3 +1,5 @@
+@import '../../../styles/styles.scss';
+
 .navigation {
   display: grid;
 
@@ -20,7 +22,7 @@
 }
 
 button.back {
-  border-top-left-radius: 1rem;
+  border-top-left-radius: $border-radius;
   border-top-right-radius: 0;
   border-bottom-left-radius: 0;
 
