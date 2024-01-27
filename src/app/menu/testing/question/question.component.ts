@@ -6,7 +6,7 @@ import TestCheckService from '../shared/test-check.service';
 @Component({
   selector: 'question',
   templateUrl: 'question.component.html',
-  styleUrls: ['question.component.css'],
+  styleUrls: ['question.component.scss'],
 })
 export default class QuestionComponent implements OnInit {
   public form: FormGroup;

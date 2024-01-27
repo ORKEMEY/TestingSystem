@@ -12,7 +12,7 @@ import Scroller from '../../../shared/utils/scroller';
 @Component({
   selector: 'questions-manager-component',
   templateUrl: './questions-manager.component.html',
-  styleUrls: ['./questions-manager.component.css'],
+  styleUrls: ['./questions-manager.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class QuestionsManagerComponent

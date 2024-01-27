@@ -17,7 +17,7 @@ import Scroller from '../../../shared/utils/scroller';
 @Component({
   selector: 'test-component',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css'],
+  styleUrls: ['./test.component.scss'],
 })
 export default class TestComponent extends Paginator<Test> {
   public get Status(): string {

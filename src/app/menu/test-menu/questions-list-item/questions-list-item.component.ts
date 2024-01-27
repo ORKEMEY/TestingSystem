@@ -6,7 +6,7 @@ import Question from '../../../core/models/question.model';
 @Component({
   selector: 'questions-list-item-component',
   templateUrl: './questions-list-item.component.html',
-  styleUrls: ['./questions-list-item.component.css'],
+  styleUrls: ['./questions-list-item.component.scss'],
   animations: [
     flipInXOnEnterAnimation({ duration: 500 }),
     flipOutXOnLeaveAnimation({ duration: 300 }),

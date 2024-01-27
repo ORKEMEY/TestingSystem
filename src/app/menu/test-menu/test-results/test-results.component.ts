@@ -14,7 +14,7 @@ import LoadingState from '../../../shared/utils/loading-state';
 @Component({
   selector: 'test-results-component',
   templateUrl: './test-results.component.html',
-  styleUrls: ['./test-results.component.css'],
+  styleUrls: ['./test-results.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestResultsComponent extends Paginator<Log> implements OnInit, OnDestroy {

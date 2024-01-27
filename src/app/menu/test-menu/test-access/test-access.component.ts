@@ -6,7 +6,7 @@ import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 @Component({
   selector: 'test-access-component',
   templateUrl: './test-access.component.html',
-  styleUrls: ['./test-access.component.css'],
+  styleUrls: ['./test-access.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestAccessComponent {

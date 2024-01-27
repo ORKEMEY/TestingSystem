@@ -11,7 +11,7 @@ import AlertBoxHandler from '../../shared/utils/alert-box-handler';
 @Component({
   selector: 'account-component',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css'],
+  styleUrls: ['./account.component.scss'],
 })
 export default class AccountComponent {
   // #region msgBoxes

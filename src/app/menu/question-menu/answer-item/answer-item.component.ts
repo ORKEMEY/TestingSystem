@@ -5,7 +5,7 @@ import Answer from '../../../core/models/variant-of-answer.model';
 @Component({
   selector: 'answer-item-component',
   templateUrl: './answer-item.component.html',
-  styleUrls: ['./answer-item.component.css'],
+  styleUrls: ['./answer-item.component.scss'],
   animations: [headShakeAnimation()],
 })
 export default class AnswerItemComponent {

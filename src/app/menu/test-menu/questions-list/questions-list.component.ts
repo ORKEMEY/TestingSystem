@@ -15,7 +15,7 @@ import LoadingState from '../../../shared/utils/loading-state';
 @Component({
   selector: 'questions-list-component',
   templateUrl: './questions-list.component.html',
-  styleUrls: ['./questions-list.component.css'],
+  styleUrls: ['./questions-list.component.scss'],
 })
 export default class QuestionsListComponent
   extends Paginator<Question>

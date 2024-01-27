@@ -5,7 +5,7 @@ import Test from '../../../core/models/test.model';
 @Component({
   selector: 'test-list-item-component',
   templateUrl: './test-list-item.component.html',
-  styleUrls: ['./test-list-item.component.css'],
+  styleUrls: ['./test-list-item.component.scss'],
   animations: [
     flipInXOnEnterAnimation({ duration: 500 }),
     flipOutXOnLeaveAnimation({ duration: 300 }),

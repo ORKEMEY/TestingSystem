@@ -13,7 +13,7 @@ import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 @Component({
   selector: 'test-settings-component',
   templateUrl: './test-settings.component.html',
-  styleUrls: ['./test-settings.component.css'],
+  styleUrls: ['./test-settings.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class TestSettingsComponent {

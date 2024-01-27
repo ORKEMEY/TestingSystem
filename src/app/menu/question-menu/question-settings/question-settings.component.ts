@@ -14,7 +14,7 @@ import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 @Component({
   selector: 'question-settings-component',
   templateUrl: './question-settings.component.html',
-  styleUrls: ['./question-settings.component.css'],
+  styleUrls: ['./question-settings.component.scss'],
   animations: [fadeInOnEnterAnimation({ duration: 130 })],
 })
 export default class QuestionSettingsComponent {

@@ -4,7 +4,7 @@ import { expandOnEnterAnimation, collapseOnLeaveAnimation } from 'angular-animat
 @Component({
   selector: 'alert-component',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.css'],
+  styleUrls: ['./alert.component.scss'],
   animations: [
     expandOnEnterAnimation({ duration: 200 }),
     collapseOnLeaveAnimation({ duration: 200 }),

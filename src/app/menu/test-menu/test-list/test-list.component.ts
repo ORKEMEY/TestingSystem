@@ -11,7 +11,7 @@ import LoadingState from '../../../shared/utils/loading-state';
 @Component({
   selector: 'test-list-component',
   templateUrl: './test-list.component.html',
-  styleUrls: ['./test-list.component.css'],
+  styleUrls: ['./test-list.component.scss'],
 })
 export default class TestListComponent extends Paginator<Test> implements OnInit, OnDestroy {
   private testsSub: Subscription;
@@ -35,7 +35,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
 
-    /*  setTimeout(() => {
+    /* setTimeout(() => {
       this.tests = [
         new Test('name1', null, null, null, 1, 'description', 1),
         new Test('name2', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),

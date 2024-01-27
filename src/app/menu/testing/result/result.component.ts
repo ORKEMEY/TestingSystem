@@ -8,7 +8,7 @@ import Log from '../../../core/models/log.model';
 @Component({
   selector: 'result-component',
   templateUrl: './result.component.html',
-  styleUrls: ['./result.component.css'],
+  styleUrls: ['./result.component.scss'],
 })
 export default class ResultComponent {
   private LogId: number = 0;
