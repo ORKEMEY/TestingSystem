@@ -1,31 +1,31 @@
-<div class="item-container"
+<div class="item-container gradient-border-hover"
     [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
+    <div class="item-backdrop">
+        <div class="item grid item-bg-animation" [ngStyle]="{'background': BgGradient,  'background-size': '800% 800%'}"
+            (mouseleave)="isSettingsVisible = false">
 
-    <div class="item grid bg-animation" [ngStyle]="{'background': BgGradient,  'background-size': '800% 800%'}"
-        (mouseleave)="isSettingsVisible = false">
+            <div class="header h-end setings-container">
+                <div class="setings" *ngIf="isSettingsVisible" [@flipInXOnEnter] [@flipOutXOnLeave]
+                    (mouseleave)="isSettingsVisible = false">
+                    <ul>
+                        <li
+                            [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
+                            Settings </li>
+                        <li class="delete-btn" (click)="this.delete($event)"> Delete </li>
+                    </ul>
+                </div>
+                <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
 
-        <div class="header h-end setings-container">
-            <div class="setings" *ngIf="isSettingsVisible" [@flipInXOnEnter] [@flipOutXOnLeave]
-                (mouseleave)="isSettingsVisible = false">
-                <ul>
-                    <li
-                        [routerLink]="['../../', 'test',  (item?.id || 0) ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]">
-                        Settings </li>
-                    <li class="delete-btn" (click)="this.delete($event)"> Delete </li>
-                </ul>
             </div>
-            <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
+            <div class="content center">
+                <p>
+                    {{Name}}
+                </p>
+            </div>
+            <div class="footer h-end">
+                <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>
+            </div>
 
         </div>
-        <div class="content center">
-            <p>
-                {{Name}}
-            </p>
-        </div>
-        <div class="footer h-end">
-            <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>
-        </div>
-
     </div>
-
 </div>

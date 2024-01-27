@@ -35,7 +35,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
   constructor(private testService: TestService) {
     super(14); // numberOfElemsOnPage
 
-    /* setTimeout(() => {
+    /*  setTimeout(() => {
       this.tests = [
         new Test('name1', null, null, null, 1, 'description', 1),
         new Test('name2', null, '2023-06-01T13:45:30', '2024-06-01T13:45:30', 1, 'description', 1),

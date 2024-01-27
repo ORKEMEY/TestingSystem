@@ -1,3 +1,5 @@
+@import url('../../../../styles/animations.css');
+
 .item-container {
   display: block;
   aspect-ratio: 1 / 1;
@@ -13,50 +15,21 @@
 .item-container:hover {
   transform: scale(1.03, 1.03);
   transition-duration: 0.2s;
-}
-/*--------------------------------*/
-.gradient-border {
-  --border-width: 1px;
 
-  position: relative;
-
-  &::after {
-    position: absolute;
-    content: '';
-    top: calc(-1 * var(--border-width));
-    left: calc(-1 * var(--border-width));
-    z-index: -1;
-    width: calc(100% + var(--border-width) * 2);
-    height: calc(100% + var(--border-width) * 2);
-    background: linear-gradient(
-      60deg,
-      hsl(224, 85%, 66%),
-      hsl(269, 85%, 66%),
-      hsl(314, 85%, 66%),
-      hsl(359, 85%, 66%),
-      hsl(44, 85%, 66%),
-      hsl(89, 85%, 66%),
-      hsl(134, 85%, 66%),
-      hsl(179, 85%, 66%)
-    );
-    background-size: 300% 300%;
-    background-position: 0 50%;
-    border-radius: 1rem;
-    animation: moveGradient 4s alternate infinite;
-  }
+  border-color: transparent;
 }
 
-@keyframes moveGradient {
-  50% {
-    background-position: 100% 50%;
-  }
+.item-backdrop {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: inherit;
 }
-
-/*--------------------------------*/
+/*-------------------------------------------*/
 
 .item {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   border-radius: inherit;
   background: white;
   border: 0px;
@@ -64,29 +37,8 @@
   font-size: x-large;
 }
 
-.bg-animation:hover {
+.item-bg-animation:hover {
   animation: gradient 15s ease infinite alternate;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  20% {
-    background-position: 25% 25%;
-  }
-  40% {
-    background-position: 25% 75%;
-  }
-  60% {
-    background-position: 75% 25%;
-  }
-  80% {
-    background-position: 75% 75%;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
 }
 
 .h-end {

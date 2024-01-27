@@ -20,7 +20,8 @@ export default class ItemService<T> extends BehaviorSubjectItem<T[] | null> {
         if (err.status === 400) {
           throw err.error.errorText;
         }
-        throw err;
+        console.error(err);
+        throw new Error('Something went wrong!');
       }),
       map((data) => data as unknown as C),
     );
@@ -32,7 +33,8 @@ export default class ItemService<T> extends BehaviorSubjectItem<T[] | null> {
         if (err.status === 400) {
           throw err.error.errorText;
         }
-        throw err;
+        console.error(err);
+        throw new Error('Something went wrong!');
       }),
       map((data) => data as unknown as C),
     );
@@ -44,7 +46,8 @@ export default class ItemService<T> extends BehaviorSubjectItem<T[] | null> {
         if (err.status === 400) {
           throw err.error.errorText;
         }
-        throw err;
+        console.error(err);
+        throw new Error('Something went wrong!');
       }),
     );
   }
@@ -55,7 +58,8 @@ export default class ItemService<T> extends BehaviorSubjectItem<T[] | null> {
         if (err.status === 400) {
           throw err.error.errorText;
         }
-        throw err;
+        console.error(err);
+        throw new Error('Something went wrong!');
       }),
     );
   }

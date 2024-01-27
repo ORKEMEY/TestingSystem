@@ -5,6 +5,7 @@ import UserServise from '../../core/services/user.service';
 @Component({
   selector: 'admin-panel-nav-component',
   templateUrl: './admin-panel-nav.component.html',
+  styleUrls: ['./admin-panel-nav.component.css'],
 })
 export default class AdminPanelNavComponent {
   constructor(private userService: UserServise, private router: Router) {}
