@@ -147,6 +147,75 @@ namespace TestSystem.PL.Controllers
 			return Ok();
 		}
 
+		public class ChangeLoginPostParams
+		{
+
+			public UserViewModel UserNew { get; set; }
+			public UserViewModel UserOld { get; set; }
+		}
+
+
+		[HttpPut("current/login")]
+		[Authorize]
+		public IActionResult ChangeAccountLogin([FromBody] ChangeLoginPostParams parameters)
+		{
+			try
+			{
+
+				var userDTO = service.GetUserByAccessToken(new TokenDTO()
+				{
+					AccessToken = GetAccessToken()
+				});
+
+				parameters.UserNew.Id = userDTO.Id;
+
+				service.ChangeLogin(MapperWEB.Mapper.Map<UserDTO>(parameters.UserNew),
+					MapperWEB.Mapper.Map<UserDTO>(parameters.UserOld));
+
+				userDTO = service.GetItem(userDTO.Id);
+
+				var token = ts.GetToken(userDTO);
+
+				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(token));
+
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
+
+		}
+
+		[HttpPut("current/password")]
+		[Authorize]
+		public IActionResult ChangeAccountPassword([FromBody] UserViewModel value)
+		{
+			try
+			{
+
+				var userDTO = service.GetUserByAccessToken(new TokenDTO()
+				{
+					AccessToken = GetAccessToken()
+				});
+
+				value.Id = userDTO.Id;
+
+				service.ChangePassword(MapperWEB.Mapper.Map<UserDTO>(value));
+
+				userDTO = service.GetItem(userDTO.Id);
+
+				var token = ts.GetToken(userDTO);
+
+				return new JsonResult(MapperWEB.Mapper.Map<TokenViewModel>(token));
+
+			}
+			catch (ValidationException e)
+			{
+				return new BadRequestObjectResult(new { errorText = e.Message });
+			}
+
+		}
+
 		// PUT api/<UserController>
 		[HttpPut("current")]
 		[Authorize]

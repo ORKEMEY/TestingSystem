@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.PL", "TestingSystem\TestingSystem.PL.csproj", "{08EF4000-AD7A-4A65-9CDA-76FA2FC13714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.PL", "TestingSystem.PL\TestingSystem.PL.csproj", "{08EF4000-AD7A-4A65-9CDA-76FA2FC13714}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.BLL", "TestingSystem.BLL\TestingSystem.BLL.csproj", "{3582579F-BC04-4C1C-B4E7-2899707F5AF3}"
 EndProject

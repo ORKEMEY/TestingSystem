@@ -76,6 +76,49 @@ namespace TestingSystem.BLL.Services
 			uof.Save();
 		}
 
+		public void ChangeLogin(UserDTO userDTOnew, UserDTO userDTOold)
+		{
+			if (userDTOnew.Id <= 0 || userDTOnew.Password == null || userDTOnew.Login == null)
+				throw new Infrastructure.ValidationException("Wrong or empty properties");
+
+			var userDALold = uof.Users.GetItem(userDTOnew.Id);
+			if (userDALold == null) throw new Infrastructure.ValidationException("Account not found");
+
+			ps.HashPassword(userDTOold);
+
+			if (userDALold.Password != userDTOold.Password)
+				throw new Infrastructure.ValidationException("Wrong password", "Password");
+
+			ps.HashPassword(userDTOnew);
+
+			var userDALnew = MapperBLL.Mapper.Map<User>(userDTOnew);
+
+			UserPatcher.Patch(userDALold, userDALnew);
+
+			uof.Users.Update(userDALold);
+			uof.Save();
+
+		}
+
+		public void ChangePassword(UserDTO userDTO)
+		{
+			if (userDTO.Id <= 0 || userDTO.Password == null)
+				throw new Infrastructure.ValidationException("Wrong or empty properties");
+
+			var userDALold = uof.Users.GetItem(userDTO.Id);
+			if (userDALold == null) throw new Infrastructure.ValidationException("Account not found");
+
+			ps.HashPassword(userDTO);
+
+			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
+
+			UserPatcher.Patch(userDALold, userDALnew);
+
+			uof.Users.Update(userDALold);
+			uof.Save();
+
+		}
+
 		public void UpdateAccount(UserDTO userDTO)
 		{
 			if (userDTO.Id <= 0)
@@ -84,21 +127,16 @@ namespace TestingSystem.BLL.Services
 			var userDALold = uof.Users.GetItem(userDTO.Id);
 			if (userDALold == null) throw new Infrastructure.ValidationException("Account not found");
 
-
 			if (userDTO.Password == null)
 				throw new Infrastructure.ValidationException("You must confirm password to change account", "Password");
-			else ps.HashPassword(userDTO);
+			
+			ps.HashPassword(userDTO);
 
-			if(userDALold.Password != userDTO.Password && (userDTO.Login == null || userDTO.Login == userDALold.Login))
+			if(userDALold.Password != userDTO.Password)
 				throw new Infrastructure.ValidationException("Wrong password", "Password");
 
-			if (userDTO.Login != null)
-			{
-				var loginCheck = uof.Users.GetItems(u => u.Login == userDTO.Login && u.Id != userDALold.Id).FirstOrDefault();
-				if (loginCheck != null)
-					throw new Infrastructure.ValidationException("This Login is already taken", "Login");
-			}
-
+			userDTO.Login = null;
+			
 			var userDALnew = MapperBLL.Mapper.Map<User>(userDTO);
 
 			UserPatcher.Patch(userDALold, userDALnew);

@@ -13,5 +13,7 @@ namespace TestingSystem.BLL.Interfaces
 		public UserDTO Authentificate(string login, string password, bool hashPassword = true);
 		public UserDTO GetUserByAccessToken(TokenDTO token);
 		public void UpdateAccount(UserDTO userDTO);
+		public void ChangeLogin(UserDTO userDTOnew, UserDTO userDTOold);
+		public void ChangePassword(UserDTO userDTO);
 	}
 }
