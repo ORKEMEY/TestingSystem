@@ -43,16 +43,16 @@ import AuthGuard from './core/guards/auth.guard';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthTokenRefreshInterceptor,
-      multi: true,
-    },
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
       useClass: RetryInterceptor,
       multi: true,
     },
     { provide: 'attemptNum', useValue: 3 },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenRefreshInterceptor,
+      multi: true,
+    },
+    AuthGuard,
   ], // service registration
 })
 export default class AppModule {}

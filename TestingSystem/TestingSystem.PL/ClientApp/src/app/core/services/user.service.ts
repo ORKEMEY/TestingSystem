@@ -84,6 +84,52 @@ export default class UserService {
     );
   }
 
+  /**
+   * @param user user with new password and login
+   */
+  public changePassword(user: User): Observable<void | Credentials> {
+    this.HashPassword(user);
+    return this.http.put('api/Users/current/password', user).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
+        },
+      }),
+    );
+  }
+
+  /**
+   * @param user user with password and new login
+   */
+  public changeLogin(user: User): Observable<void | Credentials> {
+    const oldLogin = this.credentialsService.getLogin();
+    const userOld = new User(oldLogin, user.password);
+    this.HashPassword(user);
+    this.HashPassword(userOld);
+
+    return this.http.put('api/Users/current/login', { userNew: user, userOld }).pipe(
+      catchError((err) => {
+        if (err.status === 400) {
+          throw err.error.errorText;
+        }
+        throw err;
+      }),
+      map((data) => data as Credentials),
+      tap({
+        next: (cred: Credentials) => {
+          this.credentialsService.saveCredentials(cred);
+        },
+      }),
+    );
+  }
+
   public getCurrentCustomer(): Observable<Customer> {
     return this.http.get('api/Users/current').pipe(
       catchError((err) => {
@@ -100,7 +146,7 @@ export default class UserService {
     this.credentialsService.deleteCredentials();
   }
 
-  private async HashPassword(user: User) {
+  private HashPassword(user: User) {
     const sol = MD5(user.login).toString();
     const pas = MD5(user.password).toString();
 

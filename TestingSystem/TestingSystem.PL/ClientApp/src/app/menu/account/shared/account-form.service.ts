@@ -15,14 +15,13 @@ export default class AccountFormService {
     return this.customer;
   }
 
-  public set Customer(customer) {
+  public set Customer(customer: Customer) {
     this.customer = customer;
     this.setFormVals(this.customer);
   }
 
   constructor(private userService: UserService) {
     this.form = new FormGroup({
-      Login: new FormControl('', Validators.required),
       Name: new FormControl('', Validators.required),
       Surname: new FormControl('', Validators.required),
       EMail: new FormControl('', [Validators.required, Validators.email]),
@@ -33,48 +32,48 @@ export default class AccountFormService {
     if (this.form.controls.Login.valid || this.form.controls.Login.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Login.errors?.required) {
-      res = "Login can't be empty!";
+      return "Login can't be empty!";
     }
-    return res;
+    return null;
   }
 
   public ValidateName(): string | null {
     if (this.form.controls.Name.valid || this.form.controls.Name.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Name.errors?.required) {
-      res = "Name can't be empty!";
+      return "Name can't be empty!";
     }
-    return res;
+    return null;
   }
 
   ValidateSurname(): string | null {
     if (this.form.controls.Surname.valid || this.form.controls.Surname.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Surname.errors?.required) {
-      res = "Surname can't be empty!";
+      return "Surname can't be empty!";
     }
-    return res;
+    return null;
   }
 
   ValidateEMail(): string | null {
     if (this.form.controls.EMail.valid || this.form.controls.EMail.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.EMail.errors?.required) {
-      res = "E-Mail can't be empty!";
+      return "E-Mail can't be empty!";
     }
     if (this.form.controls.EMail.errors?.email) {
-      res = 'E-Mail is invalid!';
+      return 'E-Mail is invalid!';
     }
 
-    return res;
+    return null;
   }
 
   submit(password?: string, observer?: Observer<void>) {
@@ -89,10 +88,9 @@ export default class AccountFormService {
 
   private readFormVals(): User {
     const name = this.form.controls.Name.value;
-    const login = this.form.controls.Login.value;
     const surname = this.form.controls.Surname.value;
     const eMail = this.form.controls.EMail.value;
-    const user = new User(login, null);
+    const user = new User(null, null);
     user.surname = surname;
     user.name = name;
     user.eMail = eMail;
@@ -101,7 +99,7 @@ export default class AccountFormService {
 
   private setFormVals(customer: Customer | null): void {
     this.form.controls.Name.setValue(customer?.name || '');
-    this.form.controls.Login.setValue(customer?.login || '');
+
     this.form.controls.Surname.setValue(customer?.surname || '');
     this.form.controls.EMail.setValue(customer?.eMail || '');
   }

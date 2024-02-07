@@ -6,21 +6,17 @@ import {
   ValidationErrors,
   AbstractControl,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observer } from 'rxjs';
-import UserService from '../../core/services/user.service';
-import User from '../../core/models/user.model';
+import CredentialsService from '../../../core/services/credentials.service';
+import UserService from '../../../core/services/user.service';
+import User from '../../../core/models/user.model';
 
 @Injectable()
-export default class UserRegistrationService {
+export default class PasswordFormService {
   public readonly form: FormGroup;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private credentialsService: CredentialsService) {
     this.form = new FormGroup({
-      Login: new FormControl('', Validators.required),
-      Name: new FormControl('', Validators.required),
-      Surname: new FormControl('', Validators.required),
-      EMail: new FormControl('', [Validators.required, Validators.email]),
       Passwords: new FormGroup(
         {
           Password: new FormControl('', [
@@ -57,54 +53,6 @@ export default class UserRegistrationService {
     return null;
   }
 
-  public ValidateLogin(): string | null {
-    if (this.form.controls.Login.valid || this.form.controls.Login.pristine) {
-      return null;
-    }
-
-    if (this.form.controls.Login.errors?.required) {
-      return "Login can't be empty!";
-    }
-    return null;
-  }
-
-  public ValidateName(): string | null {
-    if (this.form.controls.Name.valid || this.form.controls.Name.pristine) {
-      return null;
-    }
-
-    if (this.form.controls.Name.errors?.required) {
-      return "Name can't be empty!";
-    }
-    return null;
-  }
-
-  ValidateSurname(): string | null {
-    if (this.form.controls.Surname.valid || this.form.controls.Surname.pristine) {
-      return null;
-    }
-
-    if (this.form.controls.Surname.errors?.required) {
-      return "Surname can't be empty!";
-    }
-    return null;
-  }
-
-  ValidateEMail(): string | null {
-    if (this.form.controls.EMail.valid || this.form.controls.EMail.pristine) {
-      return null;
-    }
-
-    if (this.form.controls.EMail.errors?.required) {
-      return "E-Mail can't be empty!";
-    }
-    if (this.form.controls.EMail.errors?.email) {
-      return 'E-Mail is invalid!';
-    }
-
-    return null;
-  }
-
   public ValidatePassword(): string | null {
     if (
       this.form.controls.Passwords.get('Password').valid ||
@@ -113,16 +61,15 @@ export default class UserRegistrationService {
       return null;
     }
 
+    let res: string | null = null;
     if (this.form.controls.Passwords.get('Password').errors?.required) {
-      return "Password can't be empty!";
+      res = "Password can't be empty!";
+    } else if (this.form.controls.Passwords.get('Password').errors?.minlength) {
+      res = "Password's minimum number of characters is 5!";
+    } else if (this.form.controls.Passwords.get('Password').errors?.specialcharacters) {
+      res = 'Password has to contain both letters and digits!';
     }
-    if (this.form.controls.Passwords.get('Password').errors?.minlength) {
-      return "Password's minimum number of characters is 5!";
-    }
-    if (this.form.controls.Passwords.get('Password').errors?.specialcharacters) {
-      return 'Password has to contain both letters and digits!';
-    }
-    return null;
+    return res;
   }
 
   public ValidatePasswordConfirmation(): string | null {
@@ -145,21 +92,21 @@ export default class UserRegistrationService {
       throw new Error('submit on invalid form');
     } else {
       const user = new User(
-        this.form.controls.Login.value,
+        this.credentialsService.getLogin(),
         this.form.controls.Passwords.get('Password').value,
       );
-      user.name = this.form.controls.Name.value;
-      user.surname = this.form.controls.Surname.value;
-      user.eMail = this.form.controls.EMail.value;
 
-      this.userService.post(user).subscribe({
+      this.userService.changePassword(user).subscribe({
         next: () => {
           observer?.next?.();
-          this.router.navigate(['/menus']);
         },
         error: (msg) => observer?.error?.(msg),
         complete: () => observer?.complete?.(),
       });
     }
+  }
+
+  public reset() {
+    this.form.reset();
   }
 }
