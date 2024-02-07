@@ -25,24 +25,25 @@ export default class UserLoginService {
     if (this.form.controls.Login.valid || this.form.controls.Login.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Login.errors?.required) {
-      res = "Login cann't be empty!";
+      return "Login cann't be empty!";
     }
-    return res;
+    return null;
   }
 
   public ValidatePassword(): string | null {
     if (this.form.controls.Password.valid || this.form.controls.Password.pristine) {
       return null;
     }
-    let res: string | null = null;
+
     if (this.form.controls.Password.errors?.required) {
-      res = "Password cann't be empty!";
-    } else if (this.form.controls.Password.errors?.minlength) {
-      res = "Password's minimum number of characters is 5!";
+      return "Password cann't be empty!";
     }
-    return res;
+    if (this.form.controls.Password.errors?.minlength) {
+      return "Password's minimum number of characters is 5!";
+    }
+    return null;
   }
 
   submit(observer: Observer<void>) {

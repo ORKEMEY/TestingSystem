@@ -1,5 +1,5 @@
 export default class WarningBoxHandler {
-  isWarningVisible: Boolean = false;
+  isWarningVisible: boolean = false;
 
   warningMessage: string = '';
 

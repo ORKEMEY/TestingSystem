@@ -8,9 +8,14 @@ import AccountRoutingModule from './account-routing.module';
 import SharedModule from '../../shared/shared.module';
 
 import AccountFormService from './shared/account-form.service';
+import PasswordFormService from './shared/password-form.service';
+import LoginFormService from './shared/login-form.service';
 
 import AccountComponent from './account.component';
 import PasswordConfirmationComponent from './password-confirmation/password-confirmation.component';
+import AccountAlterationComponent from './account-alteration/account-alteration.component';
+import PasswordAlterationComponent from './password-alteration/password-alteration.component';
+import LoginAlterationComponent from './login-alteration/login-alteration.component';
 
 @NgModule({
   imports: [
@@ -21,9 +26,21 @@ import PasswordConfirmationComponent from './password-confirmation/password-conf
     AccountRoutingModule,
     SharedModule,
   ],
-  declarations: [AccountComponent, PasswordConfirmationComponent],
+  declarations: [
+    AccountComponent,
+    PasswordConfirmationComponent,
+    AccountAlterationComponent,
+    PasswordAlterationComponent,
+    LoginAlterationComponent,
+  ],
   bootstrap: [],
-  providers: [AccountFormService],
-  exports: [AccountComponent, PasswordConfirmationComponent],
+  providers: [AccountFormService, PasswordFormService, LoginFormService],
+  exports: [
+    AccountComponent,
+    PasswordConfirmationComponent,
+    AccountAlterationComponent,
+    PasswordAlterationComponent,
+    LoginAlterationComponent,
+  ],
 })
 export default class AccountModule {}

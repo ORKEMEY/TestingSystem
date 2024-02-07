@@ -1,5 +1,5 @@
 export default class AlertBoxHandler {
-  isVisible: Boolean = false;
+  isVisible: boolean = false;
 
   Message: string = '';
 

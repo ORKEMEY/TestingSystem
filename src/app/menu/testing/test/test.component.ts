@@ -19,7 +19,7 @@ import Scroller from '../../../shared/utils/scroller';
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss'],
 })
-export default class TestComponent extends Paginator<Test> {
+export default class TestComponent extends Paginator<Question> {
   public get Status(): string {
     if (this.Test === null) return 'Not found!';
     const nullDate = new Date(null).getTime();
@@ -72,7 +72,7 @@ export default class TestComponent extends Paginator<Test> {
     return labelClasses;
   }
 
-  protected get items(): Test[] | null {
+  protected get items(): Question[] | null {
     return this.questions;
   }
 
@@ -86,7 +86,7 @@ export default class TestComponent extends Paginator<Test> {
 
   private TestId: number = 0;
 
-  private Test: Test = null;
+  public Test: Test = null;
 
   private TestVariant: TestVariant = null;
 
@@ -94,7 +94,7 @@ export default class TestComponent extends Paginator<Test> {
 
   private startTime: Date;
 
-  public isTestRunning: Boolean = false;
+  public isTestRunning: boolean = false;
 
   public TimerStr: string = '--:--:--';
 

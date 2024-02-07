@@ -1,6 +1,6 @@
 <div class="navigation">
   <button type="button" class="btn btn-outline-info back" (click)="back()">Back</button>
-  <div class="btn-group nav" role="group" aria-label="Basic example">
+  <div class="btn-group nav" role="group">
     <button type="button" class="btn btn-light" (click)="activateBtn('BasicSettings')"
       [ngClass]="{active: this.isBtnActive['BasicSettings']}"
       [routerLink]="['./', { outlets: { primary: ['settings'] } }]">Basic Settings</button>

@@ -1,5 +1,5 @@
 export default class InfoBoxHandler {
-  isInfoVisible: Boolean = false;
+  isInfoVisible: boolean = false;
 
   infoMessage: string = '';
 
