@@ -13,6 +13,7 @@ import AccountModule from './account/account.module';
 
 import MenuComponent from './menu.component';
 import UserMenuNavComponent from './user-menu-nav/user-menu-nav.component';
+import SidebarComponent from './sidebar/sidebar.component';
 
 import TestVariantQuestionAddingService from './shared/test-var-question-adding.service';
 
@@ -29,9 +30,9 @@ import TestVariantQuestionAddingService from './shared/test-var-question-adding.
     TestingModule,
     AccountModule,
   ],
-  declarations: [MenuComponent, UserMenuNavComponent],
+  declarations: [MenuComponent, UserMenuNavComponent, SidebarComponent],
   bootstrap: [],
   providers: [TestVariantQuestionAddingService],
-  exports: [MenuComponent, UserMenuNavComponent],
+  exports: [MenuComponent, UserMenuNavComponent, SidebarComponent],
 })
 export default class MenuModule {}

@@ -1,0 +1,40 @@
+<aside class="sidebar" [ngClass]="{'collapsed': isSidebarCollapsed}">
+
+    <div class="sidebar-content">
+        <a id="btn-collapse" class="sidebar-collapser" (click)="onCollapserClick()">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <ul class="menu">
+            <li>
+                <div class="menu-item"
+                    [routerLink]="['/menus/menu/testmenu/tests/', { outlets: {primary: 'list', nav: null } }]">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Tests</span>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item" (click)="onAccountSubMenuClick()">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Account</span>
+                </div>
+
+                <ul class="sub-menu" *ngIf="!isAccountSubMenuCollapsed" [@expandOnEnter] [@collapseOnLeave]>
+                    <li>
+                        <div class="menu-item" [routerLink]="['/menus/menu/account/settings']">
+                            <i class="fa-solid fa-gears"></i>
+                            <span>Settings</span>
+                        </div>
+                        <div class="menu-item" [routerLink]="['/menus/menu/account/login']">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Change Password</span>
+                        </div>
+                        <div class="menu-item" [routerLink]="['/menus/menu/account/password']">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Change Login</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>

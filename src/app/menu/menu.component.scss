@@ -4,10 +4,11 @@
   min-height: 100vh;
   display: grid;
   grid-template-areas:
-    'header'
-    'content'
-    'footer';
+    'header header'
+    'sidebar content'
+    'footer footer';
   grid-template-rows: auto 1fr auto;
+  grid-template-columns: min-content auto;
 }
 
 .header {
@@ -22,13 +23,13 @@
   grid-area: footer;
 }
 
-/*-------------------------------------------------*/
-.outer {
-  /*display: grid;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.sidebar {
+  grid-area: sidebar;
+  width: 100%;
+  padding: 1em 0;
 }
+
+/*-------------------------------------------------*/
 
 .menu-background {
   width: 100%;
@@ -43,6 +44,4 @@
   backdrop-filter: blur(2px);
 
   @include border;
-
-  margin: 1em;
 }

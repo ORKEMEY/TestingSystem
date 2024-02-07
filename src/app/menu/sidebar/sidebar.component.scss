@@ -1,0 +1,146 @@
+@import '../../../styles/styles.scss';
+
+$bar-min-width: 80px;
+$bar-max-width: 280px;
+$transition-duration: 0.3s;
+
+.sidebar.collapsed {
+  width: $bar-min-width;
+  min-width: $bar-min-width;
+}
+
+.sidebar {
+  position: relative;
+
+  min-height: 100%;
+  width: $bar-max-width;
+  min-width: $bar-max-width;
+  transition: width, $transition-duration;
+
+  padding: 2em 0em;
+  padding-left: 0;
+
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+
+  @include border;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.sidebar-content {
+  position: sticky;
+  top: 40px;
+}
+
+.sidebar-collapser {
+  position: relative;
+  left: 260px;
+
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+
+  background-color: rgb(0, 123, 255);
+
+  @extend .h-center;
+  align-items: center;
+
+  z-index: 111;
+
+  cursor: pointer;
+  color: white;
+  box-shadow: 2px 2px 4px rgb(0, 31, 68);
+
+  transition: left, right, $transition-duration;
+}
+
+.sidebar-collapser:hover {
+  transform: scale(1.05);
+  color: lightcyan;
+}
+
+.sidebar.collapsed .sidebar-collapser {
+  left: 60px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.sidebar .sidebar-collapser i {
+  transition: transform $transition-duration;
+}
+
+.sidebar.collapsed .sidebar-collapser i {
+  transform: rotate(180deg);
+}
+
+/*-------------------------------------------------*/
+
+@mixin menu {
+  display: block;
+  list-style: none;
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+ul.menu {
+  @include menu;
+  padding: 0;
+  margin: 1em 0;
+
+  font-size: x-large;
+
+  li {
+    margin: 5px 0;
+    cursor: pointer;
+  }
+
+  li i {
+    display: inline-flex;
+    justify-content: center;
+
+    width: $bar-min-width;
+  }
+}
+
+.menu-item:hover {
+  color: rgb(0, 123, 255);
+  i {
+    animation: swing ease-in-out 0.5s 1 alternate;
+  }
+}
+
+.sub-menu {
+  @include menu;
+  padding-left: 1em;
+  font-size: large;
+}
+
+@keyframes swing {
+  0%,
+  30%,
+  50%,
+  70%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(10deg);
+  }
+
+  40% {
+    transform: rotate(-10deg);
+  }
+
+  60% {
+    transform: rotate(5deg);
+  }
+
+  80% {
+    transform: rotate(-5deg);
+  }
+}

@@ -81,6 +81,7 @@ export default class AccountFormService {
       throw new Error('submit on invalid form');
     } else {
       const user = this.readFormVals();
+      user.login = this.Customer.login;
       user.password = password || null;
       this.userService.putCurrentUser(user).subscribe(observer);
     }
@@ -99,7 +100,6 @@ export default class AccountFormService {
 
   private setFormVals(customer: Customer | null): void {
     this.form.controls.Name.setValue(customer?.name || '');
-
     this.form.controls.Surname.setValue(customer?.surname || '');
     this.form.controls.EMail.setValue(customer?.eMail || '');
   }
