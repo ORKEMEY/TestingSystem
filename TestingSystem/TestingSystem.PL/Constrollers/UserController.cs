@@ -167,7 +167,7 @@ namespace TestSystem.PL.Controllers
 					AccessToken = GetAccessToken()
 				});
 
-				parameters.UserNew.Id = userDTO.Id;
+				parameters.UserNew.Id = parameters.UserOld.Id = userDTO.Id;
 
 				service.ChangeLogin(MapperWEB.Mapper.Map<UserDTO>(parameters.UserNew),
 					MapperWEB.Mapper.Map<UserDTO>(parameters.UserOld));

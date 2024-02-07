@@ -84,6 +84,10 @@ namespace TestingSystem.BLL.Services
 			var userDALold = uof.Users.GetItem(userDTOnew.Id);
 			if (userDALold == null) throw new Infrastructure.ValidationException("Account not found");
 
+			var loginCheck = uof.Users.GetItems(u => u.Login == userDTOnew.Login && u.Id != userDTOnew.Id).FirstOrDefault();
+			if (loginCheck != null)
+				throw new Infrastructure.ValidationException("This Login is already taken", "Login");
+
 			ps.HashPassword(userDTOold);
 
 			if (userDALold.Password != userDTOold.Password)
@@ -92,7 +96,7 @@ namespace TestingSystem.BLL.Services
 			ps.HashPassword(userDTOnew);
 
 			var userDALnew = MapperBLL.Mapper.Map<User>(userDTOnew);
-
+			
 			UserPatcher.Patch(userDALold, userDALnew);
 
 			uof.Users.Update(userDALold);
