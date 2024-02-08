@@ -40,7 +40,7 @@
 }
 
 .item:hover {
-  @extend .bg-animation;
+  @include bg-animation;
 }
 
 .center {

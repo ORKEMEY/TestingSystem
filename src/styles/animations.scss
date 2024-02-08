@@ -37,15 +37,16 @@
 
 /*------------------------------------*/
 
-.bg-animation {
+@mixin bg-animation($duration: 15s, $opacity: 1, $size: 800%) {
   background: radial-gradient(
     circle,
-    rgba(252, 176, 69, 0.3) 25%,
-    rgba(231, 60, 126, 0.3) 50%,
-    rgba(35, 165, 213, 0.3) 75%,
-    rgba(50, 215, 35, 0.3) 100%
+    rgba(252, 176, 69, $opacity) 25%,
+    rgba(231, 60, 126, $opacity) 50%,
+    rgba(35, 165, 213, $opacity) 75%,
+    rgba(50, 215, 35, $opacity) 100%
   );
-  animation: gradient 15s ease infinite alternate;
+  background-size: $size $size;
+  animation: gradient $duration ease infinite alternate;
 }
 
 @keyframes gradient {
@@ -66,5 +67,33 @@
   }
   100% {
     background-position: 100% 100%;
+  }
+}
+
+/*------------------------------------*/
+
+@keyframes swing {
+  0%,
+  30%,
+  50%,
+  70%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(10deg);
+  }
+
+  40% {
+    transform: rotate(-10deg);
+  }
+
+  60% {
+    transform: rotate(5deg);
+  }
+
+  80% {
+    transform: rotate(-5deg);
   }
 }
