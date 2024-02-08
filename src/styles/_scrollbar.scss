@@ -1,0 +1,49 @@
+$scrollbar-width: 12px;
+$sc-white: rgb(230, 230, 230);
+$sc-lightgray: rgb(190, 190, 190);
+$sc-softgray: rgb(170, 170, 170);
+$sc-gray: rgb(150, 150, 150);
+$sc-darkgray: rgb(130, 130, 130);
+
+::-webkit-scrollbar {
+  width: $scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  @include border(1px, rgb(204, 204, 204));
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  @include border(1px, $sc-softgray);
+
+  background: linear-gradient($sc-white, $sc-lightgray);
+
+  &:hover {
+    background: linear-gradient($sc-lightgray, $sc-gray);
+    border-color: $sc-darkgray;
+  }
+}
+
+::-webkit-scrollbar-button {
+  background: rgba(0, 0, 0, 0.2);
+
+  @include border(1px, $sc-softgray, 0);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: $sc-darkgray;
+  }
+
+  &:decrement {
+    border-top: none;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+
+  &:increment {
+    border-bottom: none;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+}
