@@ -17,10 +17,13 @@
                 <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
 
             </div>
-            <div class="content center">
-                <p>
-                    {{Name}}
-                </p>
+            <div class="content">
+                <div class="ticker-wrapper" #labelEl>
+                    <p class="label" [ngClass]="{'ticker': isLabelElOverflown}">
+                        {{Name}}
+                    </p>
+                </div>
+
             </div>
             <div class="footer h-end">
                 <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>

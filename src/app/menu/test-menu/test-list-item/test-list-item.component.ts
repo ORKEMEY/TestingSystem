@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { flipInXOnEnterAnimation, flipOutXOnLeaveAnimation } from 'angular-animations';
 import Test from '../../../core/models/test.model';
 
@@ -11,7 +19,7 @@ import Test from '../../../core/models/test.model';
     flipOutXOnLeaveAnimation({ duration: 300 }),
   ],
 })
-export default class TestListItemComponent {
+export default class TestListItemComponent implements AfterViewInit {
   public isSettingsVisible: boolean = false;
 
   public Label: String = 'Tag';
@@ -29,6 +37,16 @@ export default class TestListItemComponent {
   }
 
   public BgGradient: string = this.RandomRaialGradient();
+
+  @ViewChild('labelEl', { static: false })
+  public LabelEl: ElementRef | undefined;
+
+  public isLabelElOverflown: boolean = false;
+
+  ngAfterViewInit(): void {
+    this.isLabelElOverflown =
+      this.LabelEl.nativeElement.scrollWidth > this.LabelEl.nativeElement.clientWidth;
+  }
 
   public RandomRaialGradient(): string {
     const colors = [

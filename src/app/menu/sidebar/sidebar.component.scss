@@ -148,24 +148,6 @@ a {
   }
 }
 
-.ticker {
-  animation: ticker 7s infinite linear forwards;
-}
-
-@keyframes ticker {
-  0% {
-    transform: translate(100%, 0);
-  }
-
-  50% {
-    transform: translate(0, 0);
-  }
-
-  100% {
-    transform: translate(-100%, 0);
-  }
-}
-
 /*-------------------------------------------------*/
 
 ul.menu {
