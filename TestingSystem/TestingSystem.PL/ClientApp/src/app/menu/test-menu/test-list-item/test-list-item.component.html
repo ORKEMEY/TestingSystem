@@ -17,10 +17,12 @@
                 <p class="settings-dots" (mouseover)="isSettingsVisible = !isSettingsVisible">...</p>
 
             </div>
-            <div class="content center">
-                <p>
-                    {{Name}}
-                </p>
+            <div class="content">
+                <div class="ticker-wrapper" #nameWrapperEl>
+                    <div class="label" [attr.data-duplicate]="Name" #nameEl>
+                        {{Name}}
+                    </div>
+                </div>
             </div>
             <div class="footer h-end">
                 <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>

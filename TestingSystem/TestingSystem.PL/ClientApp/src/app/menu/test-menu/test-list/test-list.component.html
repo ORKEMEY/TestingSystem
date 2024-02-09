@@ -29,7 +29,7 @@
             </info-component>
         </div>
 
-        <div class="grid">
+        <div class="flex">
             <div class="add-item">
                 <button
                     [routerLink]="['../../', 'test',  0 ,{ outlets: { primary: ['settings'], nav: ['testmenunav'] } }]"
@@ -37,7 +37,7 @@
                     +
                 </button>
             </div>
-            <test-list-item-component *ngFor="let item of itemsPaginated" [item]="item"
+            <test-list-item-component class="item" *ngFor="let item of itemsPaginated" [item]="item"
                 (deleteButtonPushed)="deleteItem($event)">
             </test-list-item-component>
             <div *ngIf="!itemsPaginated && loadingState.value" class="loading">

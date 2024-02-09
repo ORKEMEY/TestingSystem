@@ -9,7 +9,7 @@
   @include border;
   background-color: white;
 
-  margin: 0.5em;
+  /* margin: 0.5em; */
 }
 
 .item-container:hover {
@@ -40,7 +40,7 @@
 }
 
 .item:hover {
-  @extend .bg-animation;
+  @include bg-animation;
 }
 
 .center {
@@ -67,7 +67,9 @@
 
 .content {
   grid-area: content;
+  position: relative;
   white-space: normal;
+  margin: 0 0.5em;
 }
 
 .footer {
@@ -76,3 +78,22 @@
 }
 
 /*-----------------------------*/
+
+.ticker-wrapper {
+  position: absolute;
+  @extend .center;
+
+  &:has(.ticker) {
+    justify-content: left;
+  }
+
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
+  width: 100%;
+
+  .label {
+    margin: 0;
+    width: fit-content;
+  }
+}

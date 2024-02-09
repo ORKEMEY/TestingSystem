@@ -5,14 +5,14 @@
   height: 100%;
   display: grid;
   grid-template-areas:
-    'scroll . . .'
-    'scroll . header .'
-    'scroll . . .'
-    'scroll . content .'
-    'scroll . . .'
-    'scroll . footer .'
-    'scroll . . .';
-  grid-template-columns: 0.5fr 0.5fr 4fr 1fr;
+    ' . . . scroll'
+    ' . header . scroll'
+    ' . . . scroll'
+    ' . content . scroll'
+    ' . . . scroll'
+    ' . footer . scroll'
+    ' . . . scroll';
+  grid-template-columns: 1fr 4fr 0.5fr 0.5fr;
   grid-template-rows: 1em auto 1em 1fr 1em auto 1em;
 }
 
