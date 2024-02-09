@@ -22,12 +22,15 @@ import Test from '../../../core/models/test.model';
 export default class TestListItemComponent implements AfterViewInit {
   public isSettingsVisible: boolean = false;
 
-  public Label: String = 'Tag';
-
   @Input()
   item: Test = null;
 
   @Output() deleteButtonPushed = new EventEmitter<Test>();
+
+  public delete(event: Event) {
+    event.stopPropagation();
+    this.deleteButtonPushed.emit(this.item);
+  }
 
   public get Name(): String {
     if (this.item === null) {
@@ -36,17 +39,52 @@ export default class TestListItemComponent implements AfterViewInit {
     return this.item.name;
   }
 
-  public BgGradient: string = this.RandomRaialGradient();
+  // #region ticker
 
-  @ViewChild('labelEl', { static: false })
-  public LabelEl: ElementRef | undefined;
+  @ViewChild('nameWrapperEl', { static: false })
+  public nameWrapperEl: ElementRef | undefined;
 
-  public isLabelElOverflown: boolean = false;
+  @ViewChild('nameEl', { static: false })
+  public nameEl: ElementRef | undefined;
+
+  public isNameElOverflown: boolean = false;
+
+  private nameEResizeObserver = null;
+
+  isLabelElOverflownCheck() {
+    if (this.nameEl.nativeElement.classList.contains('ticker')) {
+      this.isNameElOverflown =
+        this.nameWrapperEl.nativeElement.scrollWidth / 2 >
+        this.nameWrapperEl.nativeElement.clientWidth;
+    } else {
+      this.isNameElOverflown =
+        this.nameWrapperEl.nativeElement.scrollWidth > this.nameWrapperEl.nativeElement.clientWidth;
+    }
+  }
 
   ngAfterViewInit(): void {
-    this.isLabelElOverflown =
-      this.LabelEl.nativeElement.scrollWidth > this.LabelEl.nativeElement.clientWidth;
+    if (this.nameEResizeObserver) return;
+
+    this.nameEResizeObserver = new ResizeObserver(() => {
+      this.isLabelElOverflownCheck();
+
+      if (this.isNameElOverflown) {
+        this.nameEl.nativeElement.classList.add('ticker');
+
+        const duration = this.nameEl.nativeElement.scrollWidth / 25;
+        this.nameEl.nativeElement.style['animation-duration'] = `${Math.round(duration)}s`;
+      } else {
+        this.nameEl.nativeElement.classList.remove('ticker');
+      }
+    });
+
+    this.nameEResizeObserver.observe(this.nameWrapperEl.nativeElement);
   }
+  // #endregion
+
+  // #region background
+
+  public BgGradient: string = this.RandomRaialGradient();
 
   public RandomRaialGradient(): string {
     const colors = [
@@ -76,10 +114,11 @@ export default class TestListItemComponent implements AfterViewInit {
     return `linear-gradient(${angle}deg, ${genColor()}, ${genColor()}, ${genColor()}, ${genColor()})`;
   }
 
-  public delete(event: Event) {
-    event.stopPropagation();
-    this.deleteButtonPushed.emit(this.item);
-  }
+  // #endregion
+
+  // #region label
+
+  public Label: String = 'Tag';
 
   public get LabelClasses(): Object {
     const labelClasses = {};
@@ -109,4 +148,6 @@ export default class TestListItemComponent implements AfterViewInit {
 
     return labelClasses;
   }
+
+  // #endregion
 }

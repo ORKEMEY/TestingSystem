@@ -18,12 +18,11 @@
 
             </div>
             <div class="content">
-                <div class="ticker-wrapper" #labelEl>
-                    <p class="label" [ngClass]="{'ticker': isLabelElOverflown}">
+                <div class="ticker-wrapper" #nameWrapperEl>
+                    <div class="label" [attr.data-duplicate]="Name" #nameEl>
                         {{Name}}
-                    </p>
+                    </div>
                 </div>
-
             </div>
             <div class="footer h-end">
                 <span class="badge" [ngClass]="LabelClasses" *ngIf="this.item">{{Label}}</span>

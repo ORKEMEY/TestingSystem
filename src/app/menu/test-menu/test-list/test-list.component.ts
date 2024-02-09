@@ -39,7 +39,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       this.tests = [
         new Test('name1', null, null, null, 1, 'description', 1),
         new Test(
-          'name2 very long',
+          'name2 long',
           null,
           '2023-06-01T13:45:30',
           '2024-06-01T13:45:30',
@@ -64,8 +64,16 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
         ),
         new Test('name10 longer', null, null, null, 1, 'description', 1),
         new Test('name11', null, '2023-06-01T13:45:30', null, 1, 'description', 1),
-        new Test('name12', null, null, null, 1, 'description', 1),
-        new Test('name13', null, '2024-06-01T13:45:30', '2024-07-01T13:45:30', 1, 'description', 1),
+        new Test('name12 huge', null, null, null, 1, 'description', 1),
+        new Test(
+          'name13 the longest name ever oh my god its so big',
+          null,
+          '2024-06-01T13:45:30',
+          '2024-07-01T13:45:30',
+          1,
+          'description',
+          1,
+        ),
         new Test('name14', null, null, null, 1, 'description', 1),
         new Test('name15', null, null, null, 1, 'description', 1),
       ];

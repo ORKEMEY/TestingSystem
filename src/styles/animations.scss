@@ -102,18 +102,17 @@
 
 .ticker {
   animation: ticker 7s infinite linear forwards;
+
+  &::after {
+    content: attr(data-duplicate);
+  }
 }
 
 @keyframes ticker {
   0% {
-    transform: translate(100%, 0);
+    transform: translate(0%, 0);
   }
-
-  50% {
-    transform: translate(0, 0);
-  }
-
   100% {
-    transform: translate(-100%, 0);
+    transform: translate(-50%, 0);
   }
 }

@@ -11,7 +11,8 @@
                     <span class="logo">{{Logo}}</span>
                 </div>
                 <div class="ticker-wrapper" #gratitudeEl>
-                    <h4 [ngClass]="{'ticker': isGratitudeElOverflown}">{{Gratitude}}</h4>
+                    <h4 [ngClass]="{'ticker': isGratitudeElOverflown}" [attr.data-duplicate]="Gratitude">{{Gratitude}}
+                    </h4>
                 </div>
 
             </div>

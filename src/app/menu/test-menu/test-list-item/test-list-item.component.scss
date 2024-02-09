@@ -69,6 +69,7 @@
   grid-area: content;
   position: relative;
   white-space: normal;
+  margin: 0 0.5em;
 }
 
 .footer {
@@ -81,11 +82,15 @@
 .ticker-wrapper {
   position: absolute;
   @extend .center;
-  margin: 0 0.5em;
+
+  &:has(.ticker) {
+    justify-content: left;
+  }
+
   overflow: hidden;
   white-space: nowrap;
   height: 100%;
-  width: calc(100% - 1em);
+  width: 100%;
 
   .label {
     margin: 0;
