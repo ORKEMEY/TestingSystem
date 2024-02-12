@@ -6,6 +6,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  Renderer2,
 } from '@angular/core';
 import { flipInXOnEnterAnimation, flipOutXOnLeaveAnimation } from 'angular-animations';
 import Test from '../../../core/models/test.model';
@@ -39,6 +40,8 @@ export default class TestListItemComponent implements AfterViewInit {
     return this.item.name;
   }
 
+  constructor(private renderer: Renderer2) {}
+
   // #region ticker
 
   @ViewChild('nameWrapperEl', { static: false })
@@ -49,7 +52,7 @@ export default class TestListItemComponent implements AfterViewInit {
 
   public isNameElOverflown: boolean = false;
 
-  private nameEResizeObserver = null;
+  private nameResizeObserver: ResizeObserver = null;
 
   isLabelElOverflownCheck() {
     if (this.nameEl.nativeElement.classList.contains('ticker')) {
@@ -63,22 +66,27 @@ export default class TestListItemComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.nameEResizeObserver) return;
+    if (this.nameResizeObserver) return;
 
-    this.nameEResizeObserver = new ResizeObserver(() => {
+    this.nameResizeObserver = new ResizeObserver(() => {
       this.isLabelElOverflownCheck();
 
       if (this.isNameElOverflown) {
-        this.nameEl.nativeElement.classList.add('ticker');
+        this.renderer.addClass(this.nameEl.nativeElement, 'ticker');
 
         const duration = this.nameEl.nativeElement.scrollWidth / 25;
-        this.nameEl.nativeElement.style['animation-duration'] = `${Math.round(duration)}s`;
+
+        this.renderer.setStyle(
+          this.nameEl.nativeElement,
+          'animation-duration',
+          `${Math.round(duration)}s`,
+        );
       } else {
-        this.nameEl.nativeElement.classList.remove('ticker');
+        this.renderer.removeClass(this.nameEl.nativeElement, 'ticker');
       }
     });
 
-    this.nameEResizeObserver.observe(this.nameWrapperEl.nativeElement);
+    this.nameResizeObserver.observe(this.nameWrapperEl.nativeElement);
   }
   // #endregion
 

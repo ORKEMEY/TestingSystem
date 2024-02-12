@@ -10,13 +10,50 @@
 
 .nav {
   grid-area: nav;
-  padding: 0 15px;
+  margin: 0 15px;
 }
 
-.navigation button:first-child {
-  border-top-left-radius: 0;
-}
+/*---------------------------------------*/
 
-.navigation button:last-child {
-  border-top-right-radius: 0;
+ul {
+  position: relative;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 0.3em;
+  margin: 0;
+  font-size: 0;
+  background: transparent;
+  user-select: none;
+
+  li {
+    display: inline-block;
+    padding: 0 0.5em;
+    flex-grow: 1;
+    font-size: medium;
+    text-align: center;
+    line-height: 50px;
+
+    text-transform: uppercase;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+
+    &:hover {
+      color: rgb(0, 123, 255);
+      background: rgba(211, 211, 211, 0.4);
+      border-bottom: 4px solid rgba(0, 123, 255, 0.6);
+    }
+
+    &.slider {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100px;
+      height: 4px;
+      background: rgb(0, 123, 255);
+      transition: all 0.5s;
+    }
+  }
 }

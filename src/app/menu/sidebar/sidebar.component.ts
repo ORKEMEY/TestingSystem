@@ -16,7 +16,7 @@ export default class SidebarComponent implements AfterViewInit {
 
   public isAccountSubMenuCollapsed: boolean = true;
 
-  public Login: string = this.credentialsService.getLogin().trim();
+  public Login: string = this.credentialsService.getLogin()?.trim();
 
   public get Logo(): string {
     return this.Login?.[0] || '+';

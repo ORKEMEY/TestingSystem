@@ -69,11 +69,6 @@
   justify-content: center;
   align-items: center;
 
-  aspect-ratio: 1 / 1;
-
-  grid-row: 1 / span 1;
-  grid-column: 3 / span 1;
-
   margin: 0.5em;
 }
 
@@ -110,8 +105,3 @@
 }
 
 /*------------------------------------------*/
-
-.warning-component {
-  width: 100%;
-  padding: 0;
-}

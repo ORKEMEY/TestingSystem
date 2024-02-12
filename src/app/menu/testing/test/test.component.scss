@@ -52,17 +52,19 @@
   padding: 0.1px;
 
   border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 
   color: lightgray;
 }
 
 .scroll-container:hover {
-  background-image: linear-gradient(
+  /*  background-image: linear-gradient(
     to bottom,
     rgba(211, 211, 211, 0.4) 95%,
     rgba(211, 211, 211, 0) 100%
-  );
+  ); */
   color: gray;
+  background: rgba(211, 211, 211, 0.4);
 }
 
 .scroll-container p {
@@ -90,7 +92,7 @@
 .loading {
   @extend .h-center;
   align-items: center;
-
+  height: 100%;
   margin: 0.5em;
 }
 

@@ -1,14 +1,14 @@
 <div class="navigation">
-  <button type="button" class="btn btn-outline-info back" (click)="back()">Back</button>
-  <div class="btn-group nav" role="group">
-    <button type="button" class="btn btn-light" (click)="activateBtn('BasicSettings')"
-      [ngClass]="{active: this.isBtnActive['BasicSettings']}"
-      [routerLink]="['./', { outlets: { primary: ['settings'] } }]">Basic Settings</button>
-
-    <button type="button" class="btn btn-light" (click)="activateBtn('AnswersEditor')"
-      [ngClass]="{active: this.isBtnActive['AnswersEditor']}"
-      [routerLink]="['./', { outlets: { primary: ['answerseditor'] } }]">Answers Editor</button>
-
-  </div>
+  <button type="button" class="btn btn-outline-info back" (click)="back()">
+    <i class="fa-solid fa-circle-arrow-left"></i> Back</button>
+  <ul class="nav" #menuEl>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['./', { outlets: { primary: ['settings'] } }]">
+      Basic Settings
+    </li>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['./', { outlets: { primary: ['answerseditor'] } }]">
+      Answers Editor
+    </li>
+    <li class="slider" #sliderEl></li>
+  </ul>
 </div>
 <router-outlet name="primary"></router-outlet>
