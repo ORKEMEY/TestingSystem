@@ -17,7 +17,7 @@ ul.pagination-carousel li {
 }
 
 ul.pagination-carousel li:hover {
-  color: blue;
+  color: $bs-color;
   text-decoration: underline;
   cursor: pointer;
 }

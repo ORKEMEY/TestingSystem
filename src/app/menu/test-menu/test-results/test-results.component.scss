@@ -1,3 +1,5 @@
+@import '../../../../styles/styles.scss';
+
 .page {
   display: grid;
   grid-template-areas:
@@ -33,6 +35,14 @@
 }
 
 /*-----------------------------------*/
+
+table {
+  color: $bs-font-color;
+
+  tr:hover {
+    color: $bs-font-color;
+  }
+}
 
 .results-table {
   display: flex;

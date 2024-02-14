@@ -4,7 +4,7 @@
 $bar-min-width: 80px;
 $bar-max-width: 280px;
 $transition-duration: 0.3s;
-$color: rgb(0, 123, 255);
+$color: $bs-color;
 $collapser-diameter: 2em;
 
 a {
@@ -21,8 +21,7 @@ a {
   padding: 2em 0em;
   padding-left: 0;
 
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(2px);
+  @include bg-translucent;
 
   @include border;
   border-top-left-radius: 0;
@@ -32,6 +31,11 @@ a {
 .sidebar-content {
   position: sticky;
   top: 40px;
+
+  hr {
+    width: 80%;
+    opacity: 0.8;
+  }
 }
 
 .sidebar-collapser {
@@ -55,9 +59,10 @@ a {
 }
 
 .sidebar {
-  transition: width, $transition-duration;
+  transition: width $transition-duration, min-width $transition-duration;
+
   .sidebar-collapser {
-    transition: left, right, $transition-duration;
+    transition: left $transition-duration;
 
     &:hover {
       transform: scale(1.05);

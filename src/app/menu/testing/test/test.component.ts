@@ -11,8 +11,8 @@ import Paginator from '../../../shared/paginator';
 import LoadingState from '../../../shared/utils/loading-state';
 import Scroller from '../../../shared/utils/scroller';
 
-// import Answer from '../../../core/models/variant-of-answer.model';
-// import QuestionType from '../../../core/models/question-type.model';
+import Answer from '../../../core/models/variant-of-answer.model';
+import QuestionType from '../../../core/models/question-type.model';
 
 @Component({
   selector: 'test-component',
@@ -107,10 +107,10 @@ export default class TestComponent extends Paginator<Question> {
     super(5);
     this.activatedRoute.params.subscribe((params) => {
       this.TestId = Number.parseInt(params.id, 10);
-      this.loadTest();
+      // this.loadTest();
     });
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       this.Test = new Test(
         'test name',
         '10:10:10',
@@ -161,7 +161,7 @@ export default class TestComponent extends Paginator<Question> {
 
       this.Test.testVariants = [this.TestVariant];
       this.loadingState.stopLoading();
-    }, 3000); */
+    }, 3000);
   }
 
   startTest() {

@@ -84,7 +84,7 @@ export default class AnswersEditorComponent implements OnInit, OnDestroy {
       this.answers.forEach((el, ind) => {
         el.isCorrect = !!(ind % 2);
       });
-      this.isLoading = false;
+      this.loadingState.stopLoading();
     }, 3000); */
   }
 

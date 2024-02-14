@@ -1,5 +1,17 @@
+@import '../../../styles/styles.scss';
+
+nav {
+  background-color: $bs-color;
+}
+
 img {
   max-width: 100%;
   height: 1.5em;
   width: 1.5em;
+}
+
+.theme-switch-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }

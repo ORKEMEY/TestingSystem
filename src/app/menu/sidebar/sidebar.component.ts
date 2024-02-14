@@ -24,7 +24,9 @@ export default class SidebarComponent implements AfterViewInit {
 
   public get Gratitude(): string {
     if (this.Login) {
-      return `Hello, ${this.Login}`;
+      let str = `Hello, ${this.Login}`;
+      if (this.isGratitudeElOverflown) str += ' * ';
+      return str;
     }
     return 'Menu';
   }

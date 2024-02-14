@@ -1,6 +1,6 @@
 @import '../../../styles/styles.scss';
 
-:host {
+test-menu-component:host {
   display: block;
   height: 100%;
 }
@@ -25,7 +25,7 @@
 .settings {
   position: absolute;
   top: 1em;
-  background-color: white;
+  @include color-primary;
   @include border;
   padding: 0;
   font-size: large;
@@ -44,9 +44,9 @@
       text-decoration: none;
 
       &:hover {
-        background-color: rgba(211, 211, 211, 0.4);
+        background-color: $bs-bg-secondary;
         cursor: pointer;
-        color: blue;
+        color: $bs-color;
 
         &.delete-btn {
           color: red;

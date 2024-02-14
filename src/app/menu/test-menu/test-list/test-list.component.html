@@ -8,11 +8,11 @@
                 <input [(ngModel)]="searchLine" (ngModelChange)="onSearchLineEmpty()" id="searchLine" type="text"
                     class="form-control" placeholder="Name">
             </div>
-
         </div>
     </div>
-
+    <hr class="delimeter" />
     <div class="outer content">
+
         <div class="h-center">
             <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
                 class="col-9 warning-component" [message]="AlertBox.Message">

@@ -1,13 +1,16 @@
 <garland></garland>
-<nav class="navbar navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-dark sticky-top">
 
     <a class="col-3" [routerLink]="['/menus']" class="navbar-brand">
         <img src="../../../assets/favicon.png">
         Testing system
     </a>
 
-    <div class="btn-group col-2" role="group">
-        <button class="btn btn-large btn-danger" id="btnSignOut" [routerLink]="['/users']" (click)="LogOut()"> Sign
+    <div class="btn-group col-5" role="group">
+        <theme-switch class="theme-switch-container col-6"></theme-switch>
+
+        <button class="btn btn-large btn-danger col-6" id="btnSignOut" [routerLink]="['/users']" (click)="LogOut()">
+            Sign
             out &nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i>
         </button>
     </div>

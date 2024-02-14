@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import UserService from '../../core/services/user.service';
 
 @Component({
@@ -7,8 +8,6 @@ import UserService from '../../core/services/user.service';
   styleUrls: ['./user-menu-nav.component.scss'],
 })
 export default class UserMenuNavComponent {
-  public searchLine: string | null;
-
   constructor(private userService: UserService) {}
 
   LogOut() {

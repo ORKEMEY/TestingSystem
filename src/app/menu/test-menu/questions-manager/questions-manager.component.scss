@@ -54,16 +54,17 @@
 
   border-bottom-right-radius: $border-radius;
 
-  color: lightgray;
+  color: $bs-font-secondary;
+  opacity: 0.6;
 }
 
 .scroll-container:hover {
   background-image: linear-gradient(
     to bottom,
-    rgba(211, 211, 211, 0) 0%,
-    rgba(211, 211, 211, 0.4) 5%
+    rgba(0, 0, 0, 0) 0%,
+    $bs-bg-secondary-translucent 5%
   );
-  color: gray;
+  opacity: 1;
 }
 
 .scroll-container p {

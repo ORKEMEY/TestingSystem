@@ -9,7 +9,7 @@
 .item {
   width: 100%;
   min-height: 8em;
-  background-color: white;
+  @include color-primary;
   border-radius: inherit;
   border: 0px;
   padding: 0;

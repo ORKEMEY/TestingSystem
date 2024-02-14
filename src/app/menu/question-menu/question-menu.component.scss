@@ -65,9 +65,9 @@ ul {
     border-bottom: 4px solid transparent;
 
     &:hover {
-      color: rgb(0, 123, 255);
+      color: $bs-color;
       background: rgba(211, 211, 211, 0.4);
-      border-bottom: 4px solid rgba(0, 123, 255, 0.6);
+      border-bottom: 4px solid $bs-color-translucent;
     }
 
     &.slider {
@@ -77,7 +77,7 @@ ul {
       left: 0;
       width: 100px;
       height: 4px;
-      background: rgb(0, 123, 255);
+      background: $bs-color;
       transition: all 0.5s;
     }
   }

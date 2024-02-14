@@ -8,7 +8,8 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
 .form {
   padding: 1.5em;
   margin: 0 auto 20px;
-  background-color: white;
+
+  background-color: $bs-bg-color;
   width: 400pt;
   @include border;
 }
@@ -30,4 +31,10 @@ img {
   max-width: 100%;
   height: 1.5em;
   width: 1.5em;
+}
+
+.theme-switch-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }

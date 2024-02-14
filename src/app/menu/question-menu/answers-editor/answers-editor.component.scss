@@ -3,7 +3,7 @@
   grid-template-areas:
     '. . .'
     '. form .'
-    '. . .'
+    '. delimeter .'
     '. list .'
     '. . .';
   grid-template-columns: 1fr 5fr 1fr;
@@ -14,6 +14,15 @@
   grid-area: form;
   margin: 0 1em;
   padding: 0;
+}
+
+.delimeter {
+  grid-area: delimeter;
+  margin: 1em calc(1em + 15px);
+
+  &hr {
+    width: 100%;
+  }
 }
 
 .list {
