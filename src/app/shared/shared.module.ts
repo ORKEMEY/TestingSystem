@@ -10,6 +10,7 @@ import InfoComponent from './info/info.component';
 import AlertComponent from './alert/alert.component';
 import GarlandComponent from './garland/garland.component';
 import ThemeSwitchComponent from './theme-switch/theme-switch.component';
+import PaginationCarouselComponent from './pagination-carousel/pagination-carousel.component';
 
 import TimeSpanPipe from './pipes/time-span.pipe';
 
@@ -23,6 +24,7 @@ import TimeSpanPipe from './pipes/time-span.pipe';
     AlertComponent,
     GarlandComponent,
     ThemeSwitchComponent,
+    PaginationCarouselComponent,
     TimeSpanPipe,
   ],
   declarations: [
@@ -33,6 +35,7 @@ import TimeSpanPipe from './pipes/time-span.pipe';
     AlertComponent,
     GarlandComponent,
     ThemeSwitchComponent,
+    PaginationCarouselComponent,
     TimeSpanPipe,
   ],
 })

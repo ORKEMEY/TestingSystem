@@ -16,17 +16,18 @@
                 class="form-control" placeholder="Search">
         </div>
 
+        <div class="col-12 h-center">
+            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
+                class="warning-component" [message]="WarningBox.warningMessage">
+            </warning-component>
+        </div>
+
         <div class="col-12">
             <alert-component [isVisible]="AlertBox.isVisible" (closeButtonPushed)="AlertBox.hideAlert()"
                 class="warning-component" [message]="AlertBox.Message">
             </alert-component>
         </div>
 
-        <div class="col-12 h-center">
-            <warning-component [isVisible]="WarningBox.isWarningVisible" (closeButtonPushed)="WarningBox.hideWarning()"
-                class="warning-component" [message]="WarningBox.warningMessage">
-            </warning-component>
-        </div>
     </div>
 
     <div class="content">
@@ -69,11 +70,8 @@
 
     <div class="footer">
         <div class="carousel-container">
-            <ul class=" pagination-carousel">
-                <li (click)="previous()"> Prev </li>
-                <li> {{CurrentPage}} </li>
-                <li (click)="next()"> Next </li>
-            </ul>
+            <pagination-carousel [CurrentPage]="CurrentPage" (prevButtonPushed)="previous()"
+                (nextButtonPushed)="next()"></pagination-carousel>
         </div>
     </div>
 

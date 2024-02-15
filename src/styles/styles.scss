@@ -1,7 +1,6 @@
 ﻿@import 'themes';
 @import 'footer';
 @import 'border';
-@import 'pagination';
 @import 'loader';
 @import 'scrollbar';
 
@@ -40,6 +39,10 @@ body {
     linear-gradient(225deg, $bs-secondary 25%, transparent 25%) -27px 0/ 54px 54px,
     linear-gradient(315deg, $bs-secondary-translucent 25%, transparent 25%) 0px 0/ 54px 54px,
     linear-gradient(45deg, $bs-secondary 25%, $bs-body-bg-color 25%) 0px 0/ 54px 54px;
+}
+
+nav {
+  background-color: $bs-color;
 }
 
 @mixin bg-translucent {

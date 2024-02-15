@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observer, Subscription } from 'rxjs';
 import QuestionService from '../../../core/services/question.service';
 import TestVariantQuestionAddingService from '../../shared/test-var-question-adding.service';
-import Paginator from '../../../shared/paginator';
+import Paginator from '../../../shared/utils/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
