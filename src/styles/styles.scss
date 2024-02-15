@@ -6,10 +6,19 @@
 
 body {
   background-color: $bs-body-bg-color;
+  background: linear-gradient(135deg, $bs-secondary-translucent 25%, transparent 25%) -27px 0/ 54px
+      54px,
+    linear-gradient(225deg, $bs-secondary 25%, transparent 25%) -27px 0/ 54px 54px,
+    linear-gradient(315deg, $bs-secondary-translucent 25%, transparent 25%) 0px 0/ 54px 54px,
+    linear-gradient(45deg, $bs-secondary 25%, $bs-body-bg-color 25%) 0px 0/ 54px 54px;
   color: $bs-font-color;
 
   hr {
     border-color: $bs-secondary-translucent;
+  }
+
+  nav {
+    background-color: $bs-color;
   }
 
   input:not([type='submit'], [type='button'], [type='reset']),
@@ -33,21 +42,13 @@ body {
   }
 }
 
-.background {
-  background: linear-gradient(135deg, $bs-secondary-translucent 25%, transparent 25%) -27px 0/ 54px
-      54px,
-    linear-gradient(225deg, $bs-secondary 25%, transparent 25%) -27px 0/ 54px 54px,
-    linear-gradient(315deg, $bs-secondary-translucent 25%, transparent 25%) 0px 0/ 54px 54px,
-    linear-gradient(45deg, $bs-secondary 25%, $bs-body-bg-color 25%) 0px 0/ 54px 54px;
-}
-
-nav {
-  background-color: $bs-color;
-}
-
 @mixin bg-translucent {
   background-color: $bs-bg-color-translucent;
   backdrop-filter: blur(2px);
+}
+
+.spinner-border {
+  color: $bs-color;
 }
 
 /*---------------------------------*/

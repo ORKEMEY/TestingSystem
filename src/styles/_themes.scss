@@ -44,7 +44,7 @@ $bs-font-secondary: var(--bs-font-secondary);
   color: $bs-font-secondary;
 }
 
-body.theme-dark {
+.theme-dark {
   --bs-body-bg-color: rgb(33, 37, 41);
   --bs-bg-color: #{$gray-800};
   --bs-bg-color-translucent: #{color.change($gray-800, $alpha: 0.8)};

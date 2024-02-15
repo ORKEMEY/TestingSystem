@@ -83,7 +83,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       });
 
       this.loadingState.stopLoading();
-    }, 100); */
+    }, 2000); */
   }
 
   ngOnInit(): void {
