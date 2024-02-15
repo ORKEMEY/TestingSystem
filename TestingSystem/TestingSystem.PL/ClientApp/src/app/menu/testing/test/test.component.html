@@ -7,15 +7,7 @@
             </div>
             <hr />
         </div>
-
-        <div *ngIf="loadingState.value" class="loading">
-            <div class="spinner-border text-primary " role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-
     </div>
-
 
     <div class="scroll">
         <div (click)="scroller.scrollToTop(2)" class="scroll-container" *ngIf="isTestRunning">
@@ -23,10 +15,15 @@
                 <i class="fa-solid fa-angle-up"></i> Up
             </div>
         </div>
-
     </div>
 
     <div class="content">
+        <div *ngIf="loadingState.value" class="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <div *ngIf="isTestRunning; else preview">
             <question *ngFor="let item of itemsPaginated; let i = index" [Question]="item"
                 [Index]="(CurrentPage - 1) * NumberOfElemsOnPage + i"></question>
@@ -35,8 +32,8 @@
                     value="Send">
             </div>
         </div>
-        <ng-template #preview>
 
+        <ng-template #preview>
             <div *ngIf="!loadingState.value" class="item-container">
                 <div class="item grid">
 
@@ -87,18 +84,12 @@
 
                 </div>
             </div>
-
         </ng-template>
     </div>
 
     <div *ngIf="isTestRunning" class="footer">
-        <div class="carousel-container">
-            <ul class=" pagination-carousel">
-                <li (click)="toPrevPage()"> Prev </li>
-                <li> {{CurrentPage}} </li>
-                <li (click)="toNextPage()"> Next </li>
-            </ul>
-        </div>
+        <pagination-carousel [CurrentPage]="CurrentPage" (prevButtonPushed)="previous()"
+            (nextButtonPushed)="next()"></pagination-carousel>
     </div>
 
 </div>

@@ -52,17 +52,15 @@
   padding: 0.1px;
 
   border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 
-  color: lightgray;
-}
+  color: $bs-font-secondary;
+  opacity: 0.6;
 
-.scroll-container:hover {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(211, 211, 211, 0.4) 95%,
-    rgba(211, 211, 211, 0) 100%
-  );
-  color: gray;
+  &:hover {
+    opacity: 1;
+    background: $bs-bg-secondary-translucent;
+  }
 }
 
 .scroll-container p {
@@ -90,7 +88,7 @@
 .loading {
   @extend .h-center;
   align-items: center;
-
+  height: 100%;
   margin: 0.5em;
 }
 
@@ -164,7 +162,8 @@
 .item {
   width: 100%;
   min-height: 8em;
-  background-color: white;
+
+  @include color-primary;
   border-radius: inherit;
   border: 0px;
   padding: 0;

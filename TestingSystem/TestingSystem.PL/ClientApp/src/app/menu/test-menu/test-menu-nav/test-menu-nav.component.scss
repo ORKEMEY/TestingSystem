@@ -1,3 +1,5 @@
+@import '../../../../styles/styles.scss';
+
 .navigation {
   display: grid;
 
@@ -10,13 +12,50 @@
 
 .nav {
   grid-area: nav;
-  padding: 0 15px;
+  margin: 0 15px;
 }
 
-.navigation button:first-child {
-  border-top-left-radius: 0;
-}
+/*---------------------------------------*/
 
-.navigation button:last-child {
-  border-top-right-radius: 0;
+ul {
+  position: relative;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 0.3em;
+  margin: 0;
+  font-size: 0;
+  background: transparent;
+  user-select: none;
+
+  li {
+    display: inline-block;
+    padding: 0 0.5em;
+    flex-grow: 1;
+    font-size: medium;
+    text-align: center;
+    line-height: 50px;
+
+    text-transform: uppercase;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+
+    &:hover {
+      color: $bs-color;
+      background: rgba(211, 211, 211, 0.4);
+      border-bottom: 4px solid $bs-color-translucent;
+    }
+
+    &.slider {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100px;
+      height: 4px;
+      background: $bs-color;
+      transition: left 0.5s, width 0.5s;
+    }
+  }
 }

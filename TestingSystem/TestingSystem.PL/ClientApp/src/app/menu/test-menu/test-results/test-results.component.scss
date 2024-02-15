@@ -1,6 +1,6 @@
+@import '../../../../styles/styles.scss';
+
 .page {
-  min-height: 100%;
-  height: 100%;
   display: grid;
   grid-template-areas:
     '. . .'
@@ -35,6 +35,14 @@
 }
 
 /*-----------------------------------*/
+
+table {
+  color: $bs-font-color;
+
+  tr:hover {
+    color: $bs-font-color;
+  }
+}
 
 .results-table {
   display: flex;

@@ -1,11 +1,7 @@
 export default abstract class Paginator<T> {
   protected abstract items: T[] | null;
 
-  private currentPage: number;
-
-  private numberOfElemsOnPage: number;
-
-  constructor(numberOfElemsOnPage: number = 10, currentPage: number = 1) {
+  constructor(private numberOfElemsOnPage: number = 10, private currentPage: number = 1) {
     this.currentPage = currentPage;
     this.numberOfElemsOnPage = numberOfElemsOnPage;
   }

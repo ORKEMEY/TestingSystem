@@ -1,6 +1,12 @@
+@import '../../../styles/styles.scss';
+
 .info {
   display: flex;
   justify-content: space-between;
+}
+
+.bg-dark-theme {
+  background-color: lighten($info, 20%);
 }
 
 .close {

@@ -1,6 +1,6 @@
+@import '../../../../styles/styles.scss';
+
 .page {
-  min-height: 100%;
-  height: 100%;
   display: grid;
   grid-template-areas:
     '. . .'
@@ -46,9 +46,50 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
   margin-top: 2em;
 }
 
-.form-group .card-header {
+.card-header {
   padding-left: 0;
   padding-right: 0;
+
+  background-color: $bs-bg-color;
+
+  label {
+    color: $bs-font-color;
+  }
+}
+
+.card-body {
+  @include color-secondary;
+
+  &.switch-container {
+    padding-top: 1em;
+  }
+
+  &.textarea-container {
+    padding: 0;
+
+    textarea {
+      border: 0;
+      @include color-secondary;
+
+      &::placeholder {
+        color: $bs-font-secondary;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.btn-collapse {
+  padding: 0;
+
+  &:hover label {
+    cursor: pointer;
+    color: $bs-color;
+  }
+
+  h6 {
+    margin: 0;
+  }
 }
 
 .submit-btn-container {
@@ -56,30 +97,6 @@ div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
   justify-content: flex-end;
 }
 
-.btn-collapse {
-  padding: 0;
-}
-
 .col-form-label {
   padding-left: 0.75rem;
-}
-
-.card-body.textarea-container {
-  padding: 0;
-}
-
-.card-body textarea {
-  border: 0;
-}
-
-.btn-collapse h6 {
-  margin: 0;
-}
-
-.btn-collapse:hover {
-  color: #0056b3;
-}
-
-.switch-container {
-  padding-top: 1em;
 }

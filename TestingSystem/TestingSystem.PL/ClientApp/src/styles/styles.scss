@@ -1,15 +1,54 @@
-﻿@import 'footer';
+﻿@import 'themes';
+@import 'footer';
 @import 'border';
-@import 'pagination';
 @import 'loader';
 @import 'scrollbar';
 
-.background {
-  background-color: #ffffff;
-  background: linear-gradient(135deg, #625f6555 25%, transparent 25%) -27px 0/ 54px 54px,
-    linear-gradient(225deg, #625f65 25%, transparent 25%) -27px 0/ 54px 54px,
-    linear-gradient(315deg, #625f6555 25%, transparent 25%) 0px 0/ 54px 54px,
-    linear-gradient(45deg, #625f65 25%, #ffffff 25%) 0px 0/ 54px 54px;
+body {
+  background-color: $bs-body-bg-color;
+  background: linear-gradient(135deg, $bs-secondary-translucent 25%, transparent 25%) -27px 0/ 54px
+      54px,
+    linear-gradient(225deg, $bs-secondary 25%, transparent 25%) -27px 0/ 54px 54px,
+    linear-gradient(315deg, $bs-secondary-translucent 25%, transparent 25%) 0px 0/ 54px 54px,
+    linear-gradient(45deg, $bs-secondary 25%, $bs-body-bg-color 25%) 0px 0/ 54px 54px;
+  color: $bs-font-color;
+
+  hr {
+    border-color: $bs-secondary-translucent;
+  }
+
+  nav {
+    background-color: $bs-color;
+  }
+
+  input:not([type='submit'], [type='button'], [type='reset']),
+  textarea,
+  select {
+    &,
+    &:focus {
+      @include color-secondary;
+    }
+
+    &::placeholder {
+      color: $bs-font-secondary;
+      opacity: 0.8;
+    }
+
+    &[disabled],
+    &[readonly] {
+      background-color: $bs-bg-tertiary;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin bg-translucent {
+  background-color: $bs-bg-color-translucent;
+  backdrop-filter: blur(2px);
+}
+
+.spinner-border {
+  color: $bs-color;
 }
 
 /*---------------------------------*/

@@ -1,4 +1,5 @@
-<div id="Warning" class="alert alert-warning col-12 warning" *ngIf="isVisible" [@bounceInOnEnter] [@zoomOutOnLeave]>
+<div id="Warning" class="alert alert-warning col-12 warning" [ngClass]="{'bg-dark-theme' : isDarkModeOn}"
+  *ngIf="isVisible" [@bounceInOnEnter] [@zoomOutOnLeave]>
   <div>
     {{message}}
   </div>

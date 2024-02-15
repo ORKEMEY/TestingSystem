@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import MenuComponent from './menu.component';
 import NotFoundComponent from '../shared/not-found/not-found.component';
+import SettingsComponent from './settings/settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'menu/testmenu', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
     component: MenuComponent,
     children: [
       { path: '', redirectTo: 'testmenu', pathMatch: 'full' },
+      { path: 'settings', component: SettingsComponent },
       {
         path: 'testmenu',
         loadChildren: () => import('./test-menu/test-menu.module').then((m) => m.default),

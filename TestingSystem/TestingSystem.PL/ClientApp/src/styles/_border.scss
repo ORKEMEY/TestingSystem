@@ -1,5 +1,5 @@
 $border-radius: 1rem;
-$border-color: grey;
+$border-color: $bs-font-secondary;
 $border-width: 1px;
 
 @mixin border($width: $border-width, $color: $border-color, $radius: $border-radius) {
