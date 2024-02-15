@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observer } from 'rxjs';
 import TestService from '../../../core/services/test.service';
-import Paginator from '../../../shared/paginator';
+import Paginator from '../../../shared/utils/paginator';
 import Test from '../../../core/models/test.model';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import InfoBoxHandler from '../../../shared/utils/info-box-handler';
@@ -83,7 +83,7 @@ export default class TestListComponent extends Paginator<Test> implements OnInit
       });
 
       this.loadingState.stopLoading();
-    }, 100); */
+    }, 2000); */
   }
 
   ngOnInit(): void {

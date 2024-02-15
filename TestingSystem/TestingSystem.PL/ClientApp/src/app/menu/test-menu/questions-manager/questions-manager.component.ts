@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { fadeInOnEnterAnimation } from 'angular-animations';
 import { Observer, Subscription } from 'rxjs';
 import TestVariantService from '../../../core/services/test-variant.service';
-import Paginator from '../../../shared/paginator';
+import Paginator from '../../../shared/utils/paginator';
 import TestVariant from '../../../core/models/test-variant.model';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 import LoadingState from '../../../shared/utils/loading-state';

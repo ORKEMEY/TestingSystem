@@ -5,7 +5,7 @@ import { fadeInOnEnterAnimation } from 'angular-animations';
 import Log from '../../../core/models/log.model';
 import LogService from '../../../core/services/log.service';
 import TestResultCalc from '../../../core/utils/test-result-calc';
-import Paginator from '../../../shared/paginator';
+import Paginator from '../../../shared/utils/paginator';
 import WarningBoxHandler from '../../../shared/utils/warning-box-handler';
 import AlertBoxHandler from '../../../shared/utils/alert-box-handler';
 import LoadingState from '../../../shared/utils/loading-state';

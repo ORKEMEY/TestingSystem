@@ -7,7 +7,7 @@ import Test from '../../../core/models/test.model';
 import TestVariant from '../../../core/models/test-variant.model';
 import Question from '../../../core/models/question.model';
 import Log from '../../../core/models/log.model';
-import Paginator from '../../../shared/paginator';
+import Paginator from '../../../shared/utils/paginator';
 import LoadingState from '../../../shared/utils/loading-state';
 import Scroller from '../../../shared/utils/scroller';
 

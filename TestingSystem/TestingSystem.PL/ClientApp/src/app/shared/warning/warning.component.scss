@@ -1,6 +1,12 @@
+@import '../../../styles/styles.scss';
+
 .warning {
   display: flex;
   justify-content: space-between;
+}
+
+.bg-dark-theme {
+  background-color: lighten($warning, 20%);
 }
 
 .disappearance {
@@ -39,9 +45,9 @@
 
   height: fit-content;
   width: fit-content;
-}
 
-.close:hover {
-  color: red;
-  cursor: pointer;
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
 }

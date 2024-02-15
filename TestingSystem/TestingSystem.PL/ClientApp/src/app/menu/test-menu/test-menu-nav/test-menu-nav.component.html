@@ -1,16 +1,17 @@
 <div class="navigation">
-  <div class="btn-group nav" role="group">
-    <button type="button" class="btn btn-light" (click)="activateBtn('BasicSettings')"
-      [ngClass]="{active: this.isBtnActive['BasicSettings']}"
-      [routerLink]="['/menus/menu/testmenu/test', testId, 'settings']">Basic Settings</button>
-    <button type="button" class="btn btn-light" (click)="activateBtn('QuestionsManager')"
-      [ngClass]="{active: this.isBtnActive['QuestionsManager']}"
-      [routerLink]="['/menus/menu/testmenu/test', testId, 'questionsmanager']">Questions Manager</button>
-    <button type="button" class="btn btn-light" (click)="activateBtn('TestAccess')"
-      [ngClass]="{active: this.isBtnActive['TestAccess']}"
-      [routerLink]="['/menus/menu/testmenu/test', testId, 'testaccess']">Test Access</button>
-    <button type="button" class="btn btn-light" (click)="activateBtn('Results')"
-      [ngClass]="{active: this.isBtnActive['Results']}"
-      [routerLink]="['/menus/menu/testmenu/test', testId, 'testresults']">Results</button>
-  </div>
+  <ul class="nav" #menuEl>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['/menus/menu/testmenu/test', testId, 'settings']">
+      Basic Settings
+    </li>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['/menus/menu/testmenu/test', testId, 'questionsmanager']">
+      Questions Manager
+    </li>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['/menus/menu/testmenu/test', testId, 'testaccess']">
+      Test Access
+    </li>
+    <li (click)="onMenuItemClick($event)" [routerLink]="['/menus/menu/testmenu/test', testId, 'testresults']">
+      Results
+    </li>
+    <li class="slider" #sliderEl></li>
+  </ul>
 </div>

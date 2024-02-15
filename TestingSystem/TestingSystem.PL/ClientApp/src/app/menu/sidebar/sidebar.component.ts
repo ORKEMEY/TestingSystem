@@ -16,7 +16,7 @@ export default class SidebarComponent implements AfterViewInit {
 
   public isAccountSubMenuCollapsed: boolean = true;
 
-  public Login: string = this.credentialsService.getLogin().trim();
+  public Login: string = this.credentialsService.getLogin()?.trim();
 
   public get Logo(): string {
     return this.Login?.[0] || '+';
@@ -24,7 +24,9 @@ export default class SidebarComponent implements AfterViewInit {
 
   public get Gratitude(): string {
     if (this.Login) {
-      return `Hello, ${this.Login}`;
+      let str = `Hello, ${this.Login}`;
+      if (this.isGratitudeElOverflown) str += ' * ';
+      return str;
     }
     return 'Menu';
   }

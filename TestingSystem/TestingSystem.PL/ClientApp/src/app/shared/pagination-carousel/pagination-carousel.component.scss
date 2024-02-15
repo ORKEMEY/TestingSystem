@@ -1,0 +1,25 @@
+@import '../../../styles/styles.scss';
+
+.carousel-container {
+  margin: 0.5em 0;
+  /*  display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+ul.pagination-carousel {
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+
+  li {
+    display: inline;
+    margin: 0 0.5em;
+
+    &:hover {
+      color: $bs-color;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

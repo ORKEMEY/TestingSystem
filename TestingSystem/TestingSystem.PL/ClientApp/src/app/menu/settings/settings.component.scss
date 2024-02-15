@@ -1,6 +1,6 @@
-@import '../../../../styles/styles.scss';
-
 .page {
+  min-height: 100%;
+  height: 100%;
   display: grid;
   grid-template-areas:
     '. . .'
@@ -30,33 +30,35 @@
   width: 100%;
 }
 
-.submit-btn-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
 /*-----------------------------------*/
 
 input.ng-touched.ng-invalid.ng-dirty,
-textarea.ng-touched.ng-invalid.ng-dirty {
-  border: solid red 1px;
-}
-
-div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty,
-div.ng-touched.ng-invalid.ng-dirty textarea.ng-touched.ng-dirty {
+div.ng-touched.ng-invalid.ng-dirty input.ng-touched.ng-dirty {
   border: solid red 1px;
 }
 
 /*-----------------------------------*/
 
-textarea,
-select {
-  @include color-secondary;
+.input-row {
+  display: flex;
+  justify-content: space-between;
 
-  &::placeholder {
-    color: $bs-font-secondary;
-    opacity: 0.8;
+  input {
+    margin: 0 0.75em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
+}
+
+.submit-btn-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .col-form-label {
