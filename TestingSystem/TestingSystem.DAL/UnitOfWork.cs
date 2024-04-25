@@ -25,9 +25,7 @@ namespace TestingSystem.DAL
 
 		private TagRepository _tagRepository { get; set; }
 
-		private ModelRepository _modelRepository { get; set; }
-		private QuestionsAssemblyRepository _questionsAssemblyRepository { get; set; }
-		private QuestionTypeRepository _questionTypeRepository { get; set; } 
+		private QuestionTypeRepository _questionTypeRepository { get; set; }
 		private QuestionRepository _questionRepository { get; set; }
 		private VariantOfAnswerRepository _variantOfAnswerRepository { get; set; }
 
@@ -110,25 +108,6 @@ namespace TestingSystem.DAL
 				if (_tagRepository == null)
 					_tagRepository = new TagRepository(db);
 				return _tagRepository;
-			}
-		}
-
-		public IRepository<Model> Models
-		{
-			get
-			{
-				if (_modelRepository == null)
-					_modelRepository = new ModelRepository(db);
-				return _modelRepository;
-			}
-		}
-		public IRepository<QuestionsAssembly> QuestionsAssemblies
-		{
-			get
-			{
-				if (_questionsAssemblyRepository == null)
-					_questionsAssemblyRepository = new QuestionsAssemblyRepository(db);
-				return _questionsAssemblyRepository;
 			}
 		}
 		public IRepository<QuestionType> QuestionTypes

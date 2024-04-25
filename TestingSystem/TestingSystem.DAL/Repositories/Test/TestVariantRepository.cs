@@ -25,9 +25,6 @@ namespace TestingSystem.DAL.Repositories
 				.ThenInclude(q => q.Answers)
 
 				.Include(c => c.Questions)
-				.ThenInclude(q => q.Model)
-
-				.Include(c => c.Questions)
 				.ThenInclude(q => q.QuestionType)
 
 				.FirstOrDefault(x => x.Id == id);
@@ -57,9 +54,6 @@ namespace TestingSystem.DAL.Repositories
 			return db.TestVariants.Where(predicate)
 				.Include(c => c.Questions)
 				.ThenInclude(q => q.Answers)
-
-				.Include(c => c.Questions)
-				.ThenInclude(q => q.Model)
 
 				.Include(c => c.Questions)
 				.ThenInclude(q => q.QuestionType);

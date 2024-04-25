@@ -37,13 +37,6 @@ namespace TestingSystem.BLL
 				cfg.CreateMap<Tag, TagDTO>();
 				cfg.CreateMap<TagDTO, Tag>();
 
-
-				cfg.CreateMap<Model, ModelDTO>();
-				cfg.CreateMap<ModelDTO, Model>();
-
-				cfg.CreateMap<QuestionsAssembly, QuestionsAssemblyDTO>();
-				cfg.CreateMap<QuestionsAssemblyDTO, QuestionsAssembly>();
-
 				cfg.CreateMap<QuestionType, QuestionTypeDTO>();
 				cfg.CreateMap<QuestionTypeDTO, QuestionType>();
 

@@ -18,7 +18,6 @@ namespace TestingSystem.BLL.DTO
 		public IEnumerable<LogDTO> Logs { get; set; }
 		public IEnumerable<TestDTO> OwnedTests { get; set; }
 		public IEnumerable<TestDTO> AccessibleTests { get; set; }
-		public IEnumerable<QuestionsAssemblyDTO> QuestionsAssemblyies{ get; set; }
 
 	}
 }

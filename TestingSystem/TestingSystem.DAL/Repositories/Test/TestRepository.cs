@@ -31,7 +31,7 @@ namespace TestingSystem.DAL.Repositories
 
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)
-				.ThenInclude(q => q.Model)
+
 
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)
@@ -72,7 +72,7 @@ namespace TestingSystem.DAL.Repositories
 
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)
-				.ThenInclude(q => q.Model)
+
 
 				.Include(u => u.TestVariants)
 				.ThenInclude(tv => tv.Questions)

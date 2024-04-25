@@ -22,13 +22,11 @@ namespace TestingSystem.DAL
 
 		IRepository<Tag> Tags { get; }
 
-		IRepository<Model> Models { get; }
-		IRepository<QuestionsAssembly> QuestionsAssemblies { get; }
 		IRepository<QuestionType> QuestionTypes { get; }
 		IRepository<Question> Questions { get; }
 		IRepository<VariantOfAnswer> VariantsOfAnswer { get; }
 
 		void Save();
-		
+
 	}
 }

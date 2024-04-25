@@ -14,8 +14,6 @@ namespace TestingSystem.PL.Models
 		public IEnumerable<VariantOfAnswerViewModel> Answers { get; set; }
 		public IEnumerable<TagViewModel> Tags { get; set; }
 
-		public int ModelId { get; set; }
-		public ModelViewModel Model { get; set; }
 
 		public int QuestionTypeId { get; set; }
 		public QuestionTypeViewModel QuestionType { get; set; }

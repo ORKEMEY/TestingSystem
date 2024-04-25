@@ -20,7 +20,7 @@ namespace TestingSystem.DAL.Repositories
 
 		public Question GetItem(int id)
 		{
-			return db.Questions.Include(u => u.Model)
+			return db.Questions
 				.Include(u => u.QuestionType)
 				.Include(u => u.Answers)
 				.Include(u => u.Tags)
@@ -50,7 +50,6 @@ namespace TestingSystem.DAL.Repositories
 		public IEnumerable<Question> GetItems(Expression<Func<Question, bool>> predicate)
 		{
 			return db.Questions.Where(predicate)
-				.Include(u => u.Model)
 				.Include(u => u.QuestionType)
 				.Include(u => u.Answers)
 				.Include(u => u.Tags);

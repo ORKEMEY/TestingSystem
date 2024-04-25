@@ -42,12 +42,6 @@ namespace TestingSystem.PL
 				cfg.CreateMap<TagDTO, TagViewModel>();
 
 
-				cfg.CreateMap<ModelViewModel, ModelDTO>();
-				cfg.CreateMap<ModelDTO, ModelViewModel>();
-
-				cfg.CreateMap<QuestionsAssemblyViewModel, QuestionsAssemblyDTO>();
-				cfg.CreateMap<QuestionsAssemblyDTO, QuestionsAssemblyViewModel>();
-
 				cfg.CreateMap<QuestionTypeViewModel, QuestionTypeDTO>();
 				cfg.CreateMap<QuestionTypeDTO, QuestionTypeViewModel>();
 

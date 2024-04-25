@@ -9,7 +9,7 @@ using TestingSystem.DAL.Repositories;
 
 namespace TestingSystem.DAL
 {
-	
+
 	public class TestContext : DbContext
 	{
 		public DbSet<User> Users { get; set; }
@@ -22,8 +22,6 @@ namespace TestingSystem.DAL
 
 		public DbSet<Tag> Tags { get; set; }
 
-		public DbSet<Model> Models { get; set; }
-		public DbSet<QuestionsAssembly> QuestionsAssemblies { get; set; }
 		public DbSet<QuestionType> QuestionTypes { get; set; }
 		public DbSet<Question> Questions { get; set; }
 		public DbSet<VariantOfAnswer> VariantsOfAnswer { get; set; }
@@ -31,9 +29,9 @@ namespace TestingSystem.DAL
 		public TestContext(DbContextOptions options) : base(options)
 		{
 
-				//Database.EnsureDeleted();
-				//Database.EnsureCreated();
-				//this.Seed();
+			//Database.EnsureDeleted();
+			//Database.EnsureCreated();
+			//this.Seed();
 
 		}
 
@@ -57,27 +55,16 @@ namespace TestingSystem.DAL
 
 			//----------------------------------------------------------------
 
-			var firstQa = new QuestionsAssembly() { Name = "first", Owner = firstU };
-			var secondQa = new QuestionsAssembly() { Name = "second", Owner = secondU };
-
-			this.QuestionsAssemblies.AddRange(firstQa, secondQa);
-
-			var firstM = new Model() { Name = "1PL" };
-			var secondM = new Model() { Name = "2PL" };
-			var thirdM = new Model() { Name = "3PL" };
-
-			this.Models.AddRange(firstM, secondM, thirdM);
-
 			var firstQt = new QuestionType() { Name = "Single Choise" };
 			var secondQt = new QuestionType() { Name = "True / False" };
 			var thirdQt = new QuestionType() { Name = "Short Answer" };
 
 			this.QuestionTypes.AddRange(firstQt, secondQt, thirdQt);
 
-			var firstQ = new Question() { Query = "first", Model = firstM, QuestionType = firstQt, QuestionsAssembly = firstQa, Tags = new[] { firstTg } };
-			var secondQ = new Question() { Query = "second", Model = secondM, QuestionType = secondQt, QuestionsAssembly = firstQa, Tags = new[] { firstTg, secondTg } };
-			var thirdQ = new Question() { Query = "third", Model = thirdM, QuestionType = secondQt, QuestionsAssembly = secondQa, Tags = new[] { secondTg } };
-			var fourthQ = new Question() { Query = "fourth", Model = secondM, QuestionType = thirdQt, QuestionsAssembly = secondQa, Tags = new[] { secondTg } };
+			var firstQ = new Question() { Query = "first", QuestionType = firstQt, Tags = new[] { firstTg } };
+			var secondQ = new Question() { Query = "second", QuestionType = secondQt, Tags = new[] { firstTg, secondTg } };
+			var thirdQ = new Question() { Query = "third", QuestionType = secondQt, Tags = new[] { secondTg } };
+			var fourthQ = new Question() { Query = "fourth", QuestionType = thirdQt, Tags = new[] { secondTg } };
 
 			this.Questions.AddRange(firstQ, secondQ, thirdQ, fourthQ);
 
@@ -88,7 +75,7 @@ namespace TestingSystem.DAL
 			var fifthVoa = new VariantOfAnswer() { Answer = "True", IsCorrect = true, Question = thirdQ };
 			var sixthVoa = new VariantOfAnswer() { Answer = "False", IsCorrect = false, Question = thirdQ };
 			var seventhVoa = new VariantOfAnswer() { Answer = "Short Answer", IsCorrect = true, Question = fourthQ };
-			
+
 
 			this.VariantsOfAnswer.AddRange(firstVoa, secondVoa, thirdVoa);
 			this.VariantsOfAnswer.AddRange(fourthVoa, fifthVoa, sixthVoa, seventhVoa);
@@ -104,12 +91,34 @@ namespace TestingSystem.DAL
 			this.TestVariants.AddRange(firstTv, secondTv, thirdTv);
 
 
-			var firstT = new Test() { Name = "first", Description = "Description1", Duration = new TimeSpan(0, 1, 0), ClosureTime = new DateTime(2024, 07, 01), IsAccessOpen = true,
-				OpeningTime = new DateTime(2023, 01, 01) , Owner = firstU, NumberOfVariants = 1, TestVariants = new[] { firstTv }, Tags = new[] { firstTg, secondTg } };
-			
-			var secondT = new Test() { Name = "second", Description = "Description2", Duration = new TimeSpan(0, 2, 0), ClosureTime = new DateTime(2024, 07, 01),
-				IsAccessOpen = false, AllowedUsers = new[] { firstU, secondU },
-				OpeningTime = new DateTime(2023, 01, 01), Owner = secondU, NumberOfVariants = 2, TestVariants = new[] { secondTv, thirdTv }, Tags = new[] { secondTg } };
+			var firstT = new Test()
+			{
+				Name = "first",
+				Description = "Description1",
+				Duration = new TimeSpan(0, 1, 0),
+				ClosureTime = new DateTime(2024, 07, 01),
+				IsAccessOpen = true,
+				OpeningTime = new DateTime(2023, 01, 01),
+				Owner = firstU,
+				NumberOfVariants = 1,
+				TestVariants = new[] { firstTv },
+				Tags = new[] { firstTg, secondTg }
+			};
+
+			var secondT = new Test()
+			{
+				Name = "second",
+				Description = "Description2",
+				Duration = new TimeSpan(0, 2, 0),
+				ClosureTime = new DateTime(2024, 07, 01),
+				IsAccessOpen = false,
+				AllowedUsers = new[] { firstU, secondU },
+				OpeningTime = new DateTime(2023, 01, 01),
+				Owner = secondU,
+				NumberOfVariants = 2,
+				TestVariants = new[] { secondTv, thirdTv },
+				Tags = new[] { secondTg }
+			};
 
 			this.Tests.AddRange(firstT, secondT);
 
@@ -120,7 +129,7 @@ namespace TestingSystem.DAL
 			this.SaveChanges();
 		}
 
-			
+
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -156,12 +165,8 @@ namespace TestingSystem.DAL
 				.WithMany(t => t.OwnedTests)
 				.HasForeignKey(p => p.OwnerId);
 
-			modelBuilder.Entity<QuestionsAssembly>()
-				.HasOne(p => p.Owner)
-				.WithMany(t => t.QuestionsAssemblyies)
-				.HasForeignKey(p => p.OwnerId);
 
 		}
 	}
-	
+
 }

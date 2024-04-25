@@ -27,14 +27,13 @@ namespace TestingSystem.PL
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			
+
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<ITokenService, TokenService>();
 			services.AddTransient<IPasswordService, PasswordService>();
 			services.AddTransient<ITestService, TestService>();
 			services.AddTransient<ITestVariantService, TestVariantService>();
 			services.AddTransient<IQuestionService, QuestionService>();
-			services.AddTransient<IModelService, ModelService>();
 			services.AddTransient<IQuestionTypeService, QuestionTypeService>();
 			services.AddTransient<IVariantOfAnswerService, VariantOfAnswerService>();
 			services.AddTransient<ILogService, LogService>();
@@ -45,7 +44,7 @@ namespace TestingSystem.PL
 			{
 				optionsBuilder.UseSqlServer(
 					new ServiceModule(Configuration).GetConnectionStringFromConfig()
-					);	
+					);
 			});
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -106,7 +105,7 @@ namespace TestingSystem.PL
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -155,4 +154,3 @@ namespace TestingSystem.PL
 		}
 	}
 }
- 
