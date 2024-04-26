@@ -107,31 +107,9 @@ export default class QuestionSettingsComponent {
     }
   }
 
-  onDiscriminationChange() {
-    const res = this.basicSettingsForm.validateDiscrimination();
-
-    if (!res) {
-      this.DiscriminationAlertBox.hideAlert();
-    } else {
-      this.DiscriminationAlertBox.Alert(res);
-    }
-  }
-
-  onPseudoGuessingChange() {
-    const res = this.basicSettingsForm.validatePseudoGuessing();
-
-    if (!res) {
-      this.PseudoGuessingAlertBox.hideAlert();
-    } else {
-      this.PseudoGuessingAlertBox.Alert(res);
-    }
-  }
-
   validateForm() {
     this.onQueryChange();
     this.onDifficultyChange();
-    this.onDiscriminationChange();
-    this.onPseudoGuessingChange();
   }
   // #endregion
 

@@ -79,42 +79,6 @@
                     </alert-component>
                 </div>
 
-                <div class="form-group col-12">
-                    <!-- Discrimination -->
-                    <label class="col-form-label">
-                        <h6>Discrimination:</h6>
-                    </label>
-                    <div>
-                        <input formControlName="Discrimination" type="number" class="input-block-level form-control"
-                            (ngModelChange)="onDiscriminationChange()" step="0.01" placeholder="1" min="0.001" max="20">
-                    </div>
-                </div>
-                <div class="form-group col-12">
-                    <!-- Discrimination Alert-->
-                    <alert-component [isVisible]="DiscriminationAlertBox.isVisible"
-                        (closeButtonPushed)="DiscriminationAlertBox.hideAlert()" class="warning-component"
-                        [message]="DiscriminationAlertBox.Message">
-                    </alert-component>
-                </div>
-
-                <div class="form-group col-12">
-                    <!-- Pseudo-Guessing -->
-                    <label class="col-form-label">
-                        <h6>Pseudo-Guessing:</h6>
-                    </label>
-                    <div>
-                        <input formControlName="PseudoGuessing" type="number" class="input-block-level form-control"
-                            (ngModelChange)="onPseudoGuessingChange()" step="0.001" placeholder="1" min="0" max="1">
-                    </div>
-                </div>
-                <div class="form-group col-12">
-                    <!-- Pseudo-Guessing -->
-                    <alert-component [isVisible]="PseudoGuessingAlertBox.isVisible"
-                        (closeButtonPushed)="PseudoGuessingAlertBox.hideAlert()" class="warning-component"
-                        [message]="PseudoGuessingAlertBox.Message">
-                    </alert-component>
-                </div>
-
                 <br>
                 <div class="submit-btn-container col-12">
                     <input type="submit" [disabled]="form.invalid" class="btn btn-large btn-success" value="Save">
@@ -123,6 +87,5 @@
             </form>
         </div>
     </div>
-
 
 </div>
