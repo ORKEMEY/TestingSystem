@@ -51,7 +51,7 @@ namespace TestingSystem.BLL.Services
 			logDTO.Zero = -10;
 			logDTO.MaxNumberOfCorrectAnswers = testVarDAL.Questions.Count();
 			foreach (var q in testVarDAL.Questions)
-				logDTO.MaxPoints += q.bParam;
+				logDTO.MaxPoints += q.Difficulty;
 
 
 			foreach (var questionAns in testDTO.TestVariants.First().Questions)
@@ -70,7 +70,7 @@ namespace TestingSystem.BLL.Services
 
 				if (res)
 				{
-					logDTO.Mark += questionModel.bParam;
+					logDTO.Mark += questionModel.Difficulty;
 					logDTO.NumberOfCorrectAnswers++;
 				}
 			}

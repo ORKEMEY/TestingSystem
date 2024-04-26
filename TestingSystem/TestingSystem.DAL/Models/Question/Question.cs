@@ -20,9 +20,8 @@ namespace TestingSystem.DAL.Models
 
 		public string Query { get; set; }
 
-		public double bParam { get; set; }
-		public double aParam { get; set; }
-		public double cParam { get; set; }
+		public double Difficulty { get; set; }
+	
 
 		public Question()
 		{

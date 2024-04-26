@@ -26,13 +26,9 @@ namespace TestingSystem.BLL.Services
 		{
 			if (questionDTO.Query == null)
 				throw new ValidationException("Wrong or empty properties", "Query");
-			if (questionDTO.bParam < -10 || questionDTO.bParam > 10)
+			if (questionDTO.Difficulty < -10 || questionDTO.Difficulty > 10)
 				throw new ValidationException("Wrong or empty difficulty property", "bParam");
-			if (questionDTO.aParam <= 0 || questionDTO.aParam > 20)
-				throw new ValidationException("Wrong or empty discrimination property", "aParam");
-			if (questionDTO.cParam < 0 || questionDTO.cParam > 1)
-				throw new ValidationException("Wrong or empty pseudo guessing property", "cParam");
-
+			
 			var questionDAL = MapperBLL.Mapper.Map<Question>(questionDTO);
 			uof.Questions.Create(questionDAL);
 			uof.Save();
