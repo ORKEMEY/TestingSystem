@@ -48,7 +48,6 @@ namespace TestingSystem.BLL.Services
 			var qustionsDAL = uof.Questions.GetItems(q => questionIds.Contains(q.Id));
 
 			
-			logDTO.Zero = -10;
 			logDTO.MaxNumberOfCorrectAnswers = testVarDAL.Questions.Count();
 			foreach (var q in testVarDAL.Questions)
 				logDTO.MaxPoints += q.Difficulty;

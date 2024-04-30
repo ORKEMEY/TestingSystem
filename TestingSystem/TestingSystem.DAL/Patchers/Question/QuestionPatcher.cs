@@ -14,7 +14,7 @@ namespace TestingSystem.DAL.Patchers
 			if (patch?.Query is not null)
 				old.Query = patch?.Query;
 
-			if (patch.Difficulty >= -10 && patch.Difficulty <= 10)
+			if (patch.Difficulty > 0 && patch.Difficulty <= 100)
 				old.Difficulty = patch.Difficulty;
 						
 			if (patch.QuestionTypeId > 0)

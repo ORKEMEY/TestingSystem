@@ -28,9 +28,7 @@ namespace TestingSystem.DAL.Patchers
 
 			if (patch?.VariantNumer > 0)
 				old.VariantNumer = patch.VariantNumer;
-
-			
-				old.Zero = patch.Zero;
+									
 	
 				old.MaxPoints = patch.MaxPoints;
 

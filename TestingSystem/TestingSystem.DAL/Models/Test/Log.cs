@@ -20,8 +20,6 @@ namespace TestingSystem.DAL.Models
 		public DateTime DateTime { get; set; }
 		public int VariantNumer { get; set; }
 
-		public double Zero { get; set; }
-
 		public double MaxPoints { get; set; }
 		public double Mark { get; set; }
 
