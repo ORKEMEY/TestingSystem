@@ -17,8 +17,6 @@ export default class Log {
 
   public id?: Number;
 
-  public zero: number;
-
   public mark: number;
 
   public maxPoints: number;

@@ -3,12 +3,12 @@ import Log from '../models/log.model';
 export default class TestResultCalc {
   public GetAbsPoints(log: Log): number {
     if (!log) return 0;
-    return log.mark - log.zero * log.numberOfCorrectAnswers;
+    return log.mark;
   }
 
   public GetAbsMaxPoints(log: Log): number {
     if (!log) return 0;
-    return log.maxPoints - log.zero * log.maxNumberOfCorrectAnswers;
+    return log.maxPoints;
   }
 
   public GetPercentOfCorrectAnswers(log: Log): number {
